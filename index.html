@@ -32,11 +32,11 @@
             </div>
           </div>
           <div class="topbar-links">
-            <a class="ghost-link" href="#pick">先看这场</a>
-            <a class="ghost-link" href="#tournament">整届走势</a>
-            <a class="ghost-link" href="#history">过去表现</a>
-            <a class="ghost-link" href="#updates">数据更新</a>
-            <a class="ghost-link" href="#tips">使用提醒</a>
+            <a class="ghost-link" href="#pick" data-module-link="pick">单场参考</a>
+            <a class="ghost-link" href="#tournament" data-module-link="tournament">整届走势</a>
+            <a class="ghost-link" href="#history" data-module-link="history">过去表现</a>
+            <a class="ghost-link" href="#updates" data-module-link="updates">数据说明</a>
+            <a class="ghost-link" href="#tips" data-module-link="tips">使用提醒</a>
           </div>
         </nav>
 
@@ -50,8 +50,8 @@
             </p>
 
             <div class="cta-row">
-              <a class="primary-btn" href="#pick">开始看比赛</a>
-              <a class="secondary-btn" href="#updates">看看数据怎么更新</a>
+              <a class="primary-btn" href="#pick" data-module-link="pick">开始看比赛</a>
+              <a class="secondary-btn" href="#updates" data-module-link="updates">看看数据怎么更新</a>
             </div>
 
             <ul class="hero-points">
@@ -122,7 +122,18 @@
           </div>
         </section>
 
-        <section class="section" id="pick">
+        <section class="section module-switcher-section">
+          <div class="module-switcher" id="module-switcher">
+            <button class="module-tab is-active" type="button" data-module-target="pick" aria-pressed="true">单场参考</button>
+            <button class="module-tab" type="button" data-module-target="tournament" aria-pressed="false">整届走势</button>
+            <button class="module-tab" type="button" data-module-target="history" aria-pressed="false">过去表现</button>
+            <button class="module-tab" type="button" data-module-target="updates" aria-pressed="false">数据说明</button>
+            <button class="module-tab" type="button" data-module-target="tips" aria-pressed="false">使用提醒</button>
+          </div>
+          <p class="module-switcher-note">现在改成按模块切换，先选你要看的内容，再看下面这一块，不用整页来回翻。</p>
+        </section>
+
+        <section class="section" id="pick" data-module-panel="pick">
           <div class="section-heading">
             <div>
               <p class="eyebrow">先看单场</p>
@@ -237,7 +248,7 @@
           </div>
         </section>
 
-        <section class="section" id="tournament">
+        <section class="section" id="tournament" data-module-panel="tournament">
           <div class="section-heading">
             <div>
               <p class="eyebrow">再看整届</p>
@@ -293,7 +304,7 @@
           </div>
         </section>
 
-        <section class="section" id="history">
+        <section class="section" id="history" data-module-panel="history">
           <div class="section-heading">
             <div>
               <p class="eyebrow">回看过去</p>
@@ -416,7 +427,7 @@
           </details>
         </section>
 
-        <section class="section" id="updates">
+        <section class="section" id="updates" data-module-panel="updates">
           <div class="section-heading">
             <div>
               <p class="eyebrow">数据说明</p>
@@ -459,7 +470,7 @@
           </div>
         </section>
 
-        <section class="section" id="tips">
+        <section class="section" id="tips" data-module-panel="tips">
           <div class="section-heading">
             <div>
               <p class="eyebrow">使用提醒</p>

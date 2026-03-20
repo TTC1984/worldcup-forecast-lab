@@ -1,4 +1,7 @@
 const elements = {
+  moduleTabs: [...document.querySelectorAll("[data-module-target]")],
+  moduleLinks: [...document.querySelectorAll("[data-module-link]")],
+  modulePanels: [...document.querySelectorAll("[data-module-panel]")],
   heroMatchTitle: document.getElementById("hero-match-title"),
   heroMainPick: document.getElementById("hero-main-pick"),
   heroRiskLevel: document.getElementById("hero-risk-level"),
@@ -60,6 +63,7 @@ const state = {
   prematchFeed: null,
   sources: [],
   activeGroup: null,
+  activeModule: "pick",
 };
 
 const teamTranslations = {
@@ -126,6 +130,65 @@ function renderSummary() {
   const generatedAt = formatDateTime(state.model.generatedAt);
   elements.dataStatus.textContent =
     `整站最近更新于 ${generatedAt}，当前有 ${state.summary.fixtureCount} 场比赛参考、${state.summary.prematchCoverageCount} 场赛前消息覆盖。`;
+}
+
+function resolveModuleFromHash() {
+  const rawHash = window.location.hash.replace("#", "");
+  const matchedPanel = elements.modulePanels.find((panel) => panel.id === rawHash);
+  return matchedPanel?.dataset.modulePanel || "pick";
+}
+
+function setActiveModule(moduleId, options = {}) {
+  document.body.classList.add("has-module-tabs");
+  const nextModule = elements.modulePanels.some((panel) => panel.dataset.modulePanel === moduleId) ? moduleId : "pick";
+  state.activeModule = nextModule;
+
+  elements.moduleTabs.forEach((button) => {
+    const isActive = button.dataset.moduleTarget === nextModule;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  elements.modulePanels.forEach((panel) => {
+    panel.classList.toggle("is-active", panel.dataset.modulePanel === nextModule);
+  });
+
+  if (options.updateHash) {
+    const nextHash = `#${nextModule}`;
+
+    if (window.location.hash !== nextHash) {
+      window.history.replaceState(null, "", nextHash);
+    }
+  }
+
+  if (options.scroll) {
+    document.getElementById(nextModule)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function bindModuleNavigation() {
+  elements.moduleTabs.forEach((button) => {
+    button.addEventListener("click", () => {
+      setActiveModule(button.dataset.moduleTarget, { updateHash: true, scroll: true });
+    });
+  });
+
+  elements.moduleLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const moduleId = link.dataset.moduleLink;
+
+      if (!moduleId) {
+        return;
+      }
+
+      event.preventDefault();
+      setActiveModule(moduleId, { updateHash: true, scroll: true });
+    });
+  });
+
+  window.addEventListener("hashchange", () => {
+    setActiveModule(resolveModuleFromHash(), { updateHash: false, scroll: false });
+  });
 }
 
 function getVisibleFixtures() {
@@ -435,13 +498,19 @@ function renderUpdateSection() {
   const placeholderFixtureCount = state.fixtures.filter((fixture) => fixture.hasPlaceholderTeam).length;
   const generatedAt = formatDateTime(state.model.generatedAt);
   const feedGeneratedAt = formatDateTime(state.prematchFeed.generatedAt);
+  const feedTitle = friendlyFeedTitle(state.prematchFeed.name, state.prematchFeed.mode);
+  const usesLiveSignals = state.prematchFeed.mode === "hybrid-live" || state.prematchFeed.mode === "live";
 
-  elements.updateFeedTitle.textContent = "赛前消息整理流";
+  elements.updateFeedTitle.textContent = feedTitle;
   elements.updateFeedMeta.textContent = `整站结果 ${generatedAt} 更新 · 赛前消息 ${feedGeneratedAt} 更新`;
   elements.updateFeedList.innerHTML = [
     `当前一共覆盖 ${state.summary.prematchCoverageCount} 场赛前消息，其中 ${state.summary.prematchFixtureOverrideCount} 场是单场细化更新。`,
-    `目前这页用的是“官方赛程快照 + 历史样本 + 赛前消息整理”的组合。`,
-    `现在还没有完全接成正式实时接口，所以临近开赛前最好再刷一次。`,
+    usesLiveSignals
+      ? `目前这页用的是“官方赛程快照 + 历史样本 + 实时供应商快照 + 人工兜底”的组合。`
+      : `目前这页用的是“官方赛程快照 + 历史样本 + 赛前消息整理”的组合。`,
+    usesLiveSignals
+      ? `这版已经能吃到真实动态数据，但临近开赛前还是建议再刷一次，确认最后一轮变化。`
+      : `现在还没有完全接成正式实时接口，所以临近开赛前最好再刷一次。`,
   ]
     .map((item) => `<li>${item}</li>`)
     .join("");
@@ -459,7 +528,7 @@ function renderUpdateSection() {
     placeholderFixtureCount > 0
       ? `现在还有 ${placeholderFixtureCount} 场带资格赛占位队，完整名单落位后结果会再更新。`
       : null,
-    "部分赛前消息仍是人工整理后接入的，不是全部自动直连。",
+    usesLiveSignals ? "目前仍保留人工兜底信号，用来补足供应商暂时没给到的细节。" : "部分赛前消息仍是人工整理后接入的，不是全部自动直连。",
     "整届淘汰赛里，部分第三名落位还是近似处理。",
     "后面如果接入真实接口，这一页的临场参考价值会更高。",
   ].filter(Boolean);
@@ -601,6 +670,14 @@ function simplifyBacktestNote(note) {
 
 function simplifySourceLabel(label) {
   return label
+    .replace("sportmonks fixtures", "Sportmonks 赛前数据")
+    .replace("the odds api", "The Odds API 赔率")
+    .replace("market consensus", "市场共识")
+    .replace("official lineups", "官方首发")
+    .replace("expected lineups", "预计首发")
+    .replace("prematch news", "赛前新闻")
+    .replace("sidelined", "伤停名单")
+    .replace("live sync", "实时同步")
     .replace("manual desk", "人工整理")
     .replace("training brief", "赛前简报")
     .replace("local media", "本地消息")
@@ -663,6 +740,22 @@ function friendlyCoverageLabel(coverage) {
   return "还没叠加新消息";
 }
 
+function friendlyFeedTitle(name, mode) {
+  if (mode === "hybrid-live") {
+    return "真实动态信号流";
+  }
+
+  if (mode === "live") {
+    return "实时赛前信号流";
+  }
+
+  if (mode === "seeded" || /seed|prematch/i.test(name || "")) {
+    return "赛前消息整理流";
+  }
+
+  return name || "赛前消息整理流";
+}
+
 function formatGroupLabel(label) {
   return label.replace("Group ", "") + "组";
 }
@@ -718,6 +811,7 @@ function unique(items) {
 
 async function loadForecast() {
   try {
+    bindModuleNavigation();
     const response = await fetch("./data/generated/worldcup-forecast.json");
 
     if (!response.ok) {
@@ -740,6 +834,7 @@ async function loadForecast() {
     renderBacktest();
     renderUpdateSection();
     updateFixture(getVisibleFixtures()[0]?.id);
+    setActiveModule(resolveModuleFromHash(), { updateHash: false, scroll: false });
   } catch (error) {
     elements.dataStatus.textContent = "页面加载失败。请先运行 `npm run generate:predictions`，再用静态服务打开。";
     console.error(error);

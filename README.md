@@ -29,14 +29,18 @@
 - `data/source/worldcup-{2014,2018,2022}-openfootball-cup.txt`：历史世界杯小组赛快照
 - `data/source/history-teams.json`：历史球队强度补充种子
 - `data/source/prematch-signals.json`：赛前动态情报 seed feed
+- `data/source/prematch-signals.live.json`：由真实供应商快照合成的 live feed
 - `data/source/tournament.json`：赛事元数据与来源说明
 - `scripts/sync-2026-source.mjs`：同步 openfootball 最新快照
 - `scripts/validate-prematch-signals.mjs`：校验赛前情报 feed 结构与场次命中
+- `scripts/sync-live-snapshots.mjs`：抓取 Sportmonks / The Odds API 原始快照
+- `scripts/build-live-signals.mjs`：把供应商快照映射成前台可消费的 live signal
 - `scripts/generate-predictions.mjs`：baseline 预测生成脚本
 - `data/generated/worldcup-forecast.json`：前端直接消费的预测结果
 - `signal-console.html` / `signal-console.js`：静态情报控制台
 - `delivery-board.html` / `delivery-board.js`：客户交付看板
 - `docs/worldcup-client-delivery-report-2026-03-20.md`：第一阶段客户交付报告
+- `docs/realtime-data-integration-plan.md`：真实动态数据接入实施稿
 
 ## Data Source
 
@@ -50,6 +54,12 @@
 其内容和 FIFA 在 2025-12-06 公布的 2026 世界杯赛程框架一致，但仍包含 6 个尚未决出的资格赛占位队，因此部分比赛会保留 `UEFA Path X winner` / `IC Path X winner` 的占位名称。
 
 赛前动态层目前使用仓库内的 `prematch-signals.json` 作为 seed feed，用来演示后续接入真实赔率、伤停和首发确认度的结构。
+
+现在仓库已经补了真实动态数据的接入脚手架。接入顺序是：
+
+1. 通过供应商抓取原始快照，写入 `data/source/live/*.json`
+2. 把原始快照映射成 `data/source/prematch-signals.live.json`
+3. 预测生成脚本优先读取 live feed；如果没有，再回退到 seed feed
 
 如需刷新快照：
 
@@ -76,6 +86,32 @@ npm run check:signals
 ```bash
 npm run check
 ```
+
+## Real-time Feed
+
+先把 [.env.example](/Users/ttc/Documents/New%20project/worldcup-predictor-mvp/.env.example) 复制成 `.env.local`，填入供应商密钥。
+
+抓取供应商快照：
+
+```bash
+npm run sync:live:snapshots
+```
+
+把快照转成前台可消费的 live signal：
+
+```bash
+npm run build:live:signals
+```
+
+一键串起来：
+
+```bash
+npm run sync:live
+```
+
+实施细节见：
+
+- [realtime-data-integration-plan.md](/Users/ttc/Documents/New%20project/worldcup-predictor-mvp/docs/realtime-data-integration-plan.md)
 
 ## Local Preview
 
@@ -106,5 +142,6 @@ python3 -m http.server 4173
 - 仍有 6 个资格赛占位队未最终落位
 - 历史回测仍使用统一静态球队强度向过去回放，不是按当届赛前 Elo 逐年重建
 - 赛前动态目前还是本地 seed feed，尚未接真实赔率、伤停流、首发接口与自动刷新数据库
+- 真实动态数据的抓取与映射脚手架已经补上，但仍需配置真实供应商账号和密钥才能开始拉数
 - 情报控制台当前是“编辑 + 导出 JSON”模式，还没有账号体系、审核流和直接回写仓库能力
 - 当前已经提供草稿对比、发布说明和发布包导出，但仍属于静态工作流，不会直接写回仓库

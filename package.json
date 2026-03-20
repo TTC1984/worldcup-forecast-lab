@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "sync:source": "node scripts/sync-2026-source.mjs",
+    "sync:live:snapshots": "node scripts/sync-live-snapshots.mjs",
+    "build:live:signals": "node scripts/build-live-signals.mjs",
+    "sync:live": "node scripts/sync-live-snapshots.mjs && node scripts/build-live-signals.mjs",
     "generate:predictions": "node scripts/generate-predictions.mjs",
     "build:data": "npm run generate:predictions",
     "check:signals": "node scripts/validate-prematch-signals.mjs",
-    "check": "node scripts/validate-prematch-signals.mjs && node scripts/generate-predictions.mjs && node --check script.js && node --check signal-console.js && node --check delivery-board.js"
+    "check": "node scripts/validate-prematch-signals.mjs && node scripts/generate-predictions.mjs && node --check script.js && node --check signal-console.js && node --check delivery-board.js && node --check scripts/live-data-utils.mjs && node --check scripts/sync-live-snapshots.mjs && node --check scripts/build-live-signals.mjs"
   }
 }

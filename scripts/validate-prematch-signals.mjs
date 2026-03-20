@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -7,7 +7,10 @@ const rootDir = resolve(__dirname, "..");
 const sourceDir = resolve(rootDir, "data", "source");
 
 const teams = JSON.parse(readFileSync(resolve(sourceDir, "teams.json"), "utf8"));
-const prematchSignals = JSON.parse(readFileSync(resolve(sourceDir, "prematch-signals.json"), "utf8"));
+const prematchSignalsPath = existsSync(resolve(sourceDir, "prematch-signals.live.json"))
+  ? resolve(sourceDir, "prematch-signals.live.json")
+  : resolve(sourceDir, "prematch-signals.json");
+const prematchSignals = JSON.parse(readFileSync(prematchSignalsPath, "utf8"));
 const groupStageSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup.txt"), "utf8");
 
 const teamNames = new Set(teams.map((team) => team.name));
@@ -27,7 +30,7 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `Validated prematch signals: ${Object.keys(prematchSignals.teamSignals || {}).length} team entries, ${(
+  `Validated prematch signals (${prematchSignals.feed?.mode || "unknown"}): ${Object.keys(prematchSignals.teamSignals || {}).length} team entries, ${(
     prematchSignals.fixtureSignals || []
   ).length} fixture overrides.`
 );

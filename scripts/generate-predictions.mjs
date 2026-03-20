@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -9,7 +9,10 @@ const outputDir = resolve(rootDir, "data", "generated");
 
 const teams = JSON.parse(readFileSync(resolve(sourceDir, "teams.json"), "utf8"));
 const historicalTeams = JSON.parse(readFileSync(resolve(sourceDir, "history-teams.json"), "utf8"));
-const prematchSignalSource = JSON.parse(readFileSync(resolve(sourceDir, "prematch-signals.json"), "utf8"));
+const prematchSignalPath = existsSync(resolve(sourceDir, "prematch-signals.live.json"))
+  ? resolve(sourceDir, "prematch-signals.live.json")
+  : resolve(sourceDir, "prematch-signals.json");
+const prematchSignalSource = JSON.parse(readFileSync(prematchSignalPath, "utf8"));
 const tournamentConfig = JSON.parse(readFileSync(resolve(sourceDir, "tournament.json"), "utf8"));
 const groupStageSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup.txt"), "utf8");
 const finalsSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup_finals.txt"), "utf8");
