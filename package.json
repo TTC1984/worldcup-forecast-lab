@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "sync:source": "node scripts/sync-2026-source.mjs",
     "generate:predictions": "node scripts/generate-predictions.mjs",
     "build:data": "npm run generate:predictions",
     "check": "node scripts/generate-predictions.mjs && node --check script.js"

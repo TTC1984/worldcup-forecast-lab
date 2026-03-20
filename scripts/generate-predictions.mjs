@@ -9,20 +9,50 @@ const outputDir = resolve(rootDir, "data", "generated");
 
 const teams = JSON.parse(readFileSync(resolve(sourceDir, "teams.json"), "utf8"));
 const tournamentConfig = JSON.parse(readFileSync(resolve(sourceDir, "tournament.json"), "utf8"));
+const groupStageSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup.txt"), "utf8");
+const finalsSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup_finals.txt"), "utf8");
 
-const teamMap = new Map(teams.map((team) => [team.name, team]));
+const confederationAttackBoost = {
+  UEFA: 0.03,
+  CONMEBOL: 0.04,
+  CONCACAF: 0.01,
+  CAF: 0,
+  AFC: -0.01,
+  OFC: -0.03,
+  Intercontinental: -0.02,
+};
 
-const pairings = [
-  [0, 1],
-  [2, 3],
-  [0, 2],
-  [3, 1],
-  [3, 0],
-  [1, 2],
-];
+const confederationDefenseBoost = {
+  UEFA: 0.03,
+  CONMEBOL: 0.02,
+  CONCACAF: 0,
+  CAF: 0,
+  AFC: -0.01,
+  OFC: -0.04,
+  Intercontinental: -0.02,
+};
 
-const roundOffsets = [0, 0, 4, 4, 8, 8];
-const kickoffSlots = ["13:00", "20:00", "16:00", "22:00", "18:00", "22:00"];
+const teamMap = new Map(teams.map((team) => [team.name, normalizeTeam(team)]));
+
+const monthMap = {
+  Jan: "01",
+  January: "01",
+  Feb: "02",
+  February: "02",
+  Mar: "03",
+  March: "03",
+  Apr: "04",
+  April: "04",
+  May: "05",
+  Jun: "06",
+  June: "06",
+  Jul: "07",
+  July: "07",
+};
+
+function normalizeWhitespace(value) {
+  return value.replace(/\t/g, " ").replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
+}
 
 function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
@@ -32,10 +62,24 @@ function percentage(probability) {
   return `${(probability * 100).toFixed(1)}%`;
 }
 
-function addDays(dateString, days) {
-  const date = new Date(`${dateString}T00:00:00Z`);
-  date.setUTCDate(date.getUTCDate() + days);
-  return date.toISOString().slice(0, 10);
+function toDateString(monthName, day) {
+  return `2026-${monthMap[monthName]}-${String(day).padStart(2, "0")}`;
+}
+
+function normalizeTeam(team) {
+  const attack =
+    team.attack ??
+    clamp((team.rating - 1750) / 320 + (confederationAttackBoost[team.confederation] || 0), -0.18, 0.46);
+  const defense =
+    team.defense ??
+    clamp((team.rating - 1760) / 360 + (confederationDefenseBoost[team.confederation] || 0), -0.18, 0.32);
+
+  return {
+    ...team,
+    attack,
+    defense,
+    form: team.form || 0,
+  };
 }
 
 function poisson(lambda, maxGoals = 6) {
@@ -76,18 +120,6 @@ function outcomeKey(homeGoals, awayGoals) {
   }
 
   return "draw";
-}
-
-function outcomeLabel(key) {
-  if (key === "home") {
-    return "主胜";
-  }
-
-  if (key === "away") {
-    return "客胜";
-  }
-
-  return "平";
 }
 
 function statusLabel(key) {
@@ -133,11 +165,11 @@ function rankOutcomeConfidence(probabilities) {
   const sorted = [...probabilities].sort((left, right) => right - left);
   const gap = sorted[0] - sorted[1];
 
-  if (sorted[0] >= 0.52 && gap >= 0.14) {
+  if (sorted[0] >= 0.56 && gap >= 0.15) {
     return "高置信";
   }
 
-  if (sorted[0] >= 0.46 && gap >= 0.09) {
+  if (sorted[0] >= 0.49 && gap >= 0.1) {
     return "中高置信";
   }
 
@@ -176,40 +208,217 @@ function buildHalftimeFulltime(homeLambda, awayLambda) {
     }));
 }
 
+function detectVenueCountry(venue) {
+  if (venue.includes("Mexico City") || venue.includes("Guadalajara") || venue.includes("Monterrey")) {
+    return "Mexico";
+  }
+
+  if (venue.includes("Toronto") || venue.includes("Vancouver")) {
+    return "Canada";
+  }
+
+  return "United States";
+}
+
+function parseGroupDefinitions(text) {
+  const lines = text.split("\n");
+  const groups = new Map();
+
+  lines
+    .filter((line) => line.startsWith("Group "))
+    .forEach((line) => {
+      const [groupLabel, teamsPart] = line.split("|");
+      const label = normalizeWhitespace(groupLabel);
+      const groupId = label.split(" ")[1];
+      const teamsInGroup = teamsPart
+        .replace(/\t/g, "  ")
+        .trim()
+        .split(/\s{2,}/)
+        .map((team) => normalizeWhitespace(team));
+
+      groups.set(label, {
+        id: groupId,
+        label,
+        teams: teamsInGroup,
+      });
+    });
+
+  return groups;
+}
+
+function parseGroupFixtures(text, groupDefinitions) {
+  const lines = text.split("\n");
+  const fixtures = [];
+  let currentGroup = null;
+  let currentDate = null;
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      return;
+    }
+
+    if (trimmed.startsWith("▪ Group ")) {
+      currentGroup = groupDefinitions.get(trimmed.replace("▪ ", ""));
+      return;
+    }
+
+    const dateMatch = trimmed.match(/^[A-Za-z]{3}\s+([A-Za-z]+)\s+(\d{1,2})$/);
+
+    if (dateMatch) {
+      currentDate = toDateString(dateMatch[1], Number(dateMatch[2]));
+      return;
+    }
+
+    const normalizedLine = normalizeWhitespace(line);
+    const fixtureMatch = normalizedLine.match(/^(\d{1,2}:\d{2}) (UTC[+-]\d) (.+) @ (.+)$/);
+
+    if (fixtureMatch && currentGroup && currentDate) {
+      const [, kickoff, utcOffset, matchup, venue] = fixtureMatch;
+      const [homeTeam, awayTeam] = matchup.split(/\s+v\s+/);
+      const normalizedHomeTeam = normalizeWhitespace(homeTeam);
+      const normalizedAwayTeam = normalizeWhitespace(awayTeam);
+      const normalizedVenue = normalizeWhitespace(venue);
+
+      fixtures.push({
+        id: `${currentGroup.id.toLowerCase()}-${fixtures.filter((item) => item.group === currentGroup.label).length + 1}-${normalizedHomeTeam.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${normalizedAwayTeam.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+        stage: "Group Stage",
+        group: currentGroup.label,
+        groupId: currentGroup.id,
+        date: currentDate,
+        kickoff,
+        utcOffset,
+        homeTeam: normalizedHomeTeam,
+        awayTeam: normalizedAwayTeam,
+        venue: normalizedVenue,
+        venueCountry: detectVenueCountry(normalizedVenue),
+      });
+    }
+  });
+
+  return fixtures;
+}
+
+function parseKnockoutFixtures(text) {
+  const lines = text.split("\n");
+  const fixtures = [];
+  let currentStage = null;
+  let currentDate = null;
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      return;
+    }
+
+    if (trimmed.startsWith("▪ ")) {
+      currentStage = trimmed.replace("▪ ", "");
+      return;
+    }
+
+    const dateMatch = trimmed.match(/^[A-Za-z]{3}\s+([A-Za-z]{3,})\s+(\d{1,2})$/);
+
+    if (dateMatch) {
+      currentDate = toDateString(dateMatch[1], Number(dateMatch[2]));
+      return;
+    }
+
+    const normalizedLine = normalizeWhitespace(line);
+    const fixtureMatch = normalizedLine.match(/^\((\d+)\) (\d{1,2}:\d{2}) (UTC[+-]\d) (.+) @ (.+)$/);
+
+    if (fixtureMatch && currentStage && currentDate) {
+      const [, matchNumber, kickoff, utcOffset, matchup, venue] = fixtureMatch;
+      const [homeTeam, awayTeam] = matchup.split(/\s+v\s+/);
+      fixtures.push({
+        id: `knockout-${matchNumber}`,
+        stage: currentStage,
+        date: currentDate,
+        kickoff,
+        utcOffset,
+        homeTeam: normalizeWhitespace(homeTeam),
+        awayTeam: normalizeWhitespace(awayTeam),
+        venue: normalizeWhitespace(venue),
+      });
+      return;
+    }
+
+    const unnumberedFixtureMatch = normalizedLine.match(/^(\d{1,2}:\d{2}) (UTC[+-]\d) (.+) @ (.+)$/);
+
+    if (unnumberedFixtureMatch && currentStage && currentDate) {
+      const [, kickoff, utcOffset, matchup, venue] = unnumberedFixtureMatch;
+      const [homeTeam, awayTeam] = matchup.split(/\s+v\s+/);
+      fixtures.push({
+        id: `knockout-${fixtures.length + 1}`,
+        stage: currentStage,
+        date: currentDate,
+        kickoff,
+        utcOffset,
+        homeTeam: normalizeWhitespace(homeTeam),
+        awayTeam: normalizeWhitespace(awayTeam),
+        venue: normalizeWhitespace(venue),
+      });
+    }
+  });
+
+  return fixtures;
+}
+
 function deriveRiskNotes({
-  hostAdvantage,
+  fixture,
   homeWinProbability,
   drawProbability,
   awayWinProbability,
   over25Probability,
   under25Probability,
   topScoreProbability,
+  hostAdvantage,
 }) {
   const notes = [];
+  const pushNote = (note) => {
+    if (!notes.includes(note)) {
+      notes.push(note);
+    }
+  };
+
+  if (fixture.hasPlaceholderTeam) {
+    pushNote("本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。");
+  }
 
   if (Math.abs(homeWinProbability - awayWinProbability) <= 0.08 || drawProbability >= 0.3) {
-    notes.push("对阵接近，平局与临场名单的影响会明显放大。");
+    pushNote("对阵接近，平局与临场名单的影响会明显放大。");
   }
 
   if (under25Probability >= 0.56) {
-    notes.push("模型偏向低比分区间，更适合展示胜平负和小比分组合。");
+    pushNote("模型偏向低比分区间，更适合展示胜平负和小比分组合。");
   } else if (over25Probability >= 0.58) {
-    notes.push("比赛节奏偏开放，单点比分离散度较高，建议结合总进球一起看。");
+    pushNote("比赛节奏偏开放，单点比分离散度较高，建议结合总进球一起看。");
   }
 
   if (topScoreProbability <= 0.14) {
-    notes.push("精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。");
+    pushNote("精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。");
   }
 
   if (hostAdvantage) {
-    notes.push("主办国在本国城市作赛时已纳入轻微场地熟悉度加成。");
+    pushNote("主办国在本国城市作赛时已纳入轻微场地熟悉度加成。");
   }
 
-  while (notes.length < 3) {
-    notes.push("当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。");
+  const fallbackNotes = [
+    "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+    "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+    "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。",
+  ];
+
+  for (const note of fallbackNotes) {
+    if (notes.length >= 3) {
+      break;
+    }
+
+    pushNote(note);
   }
 
-  return notes.slice(0, 3);
+  return [...new Set(notes)].slice(0, 3);
 }
 
 function deriveBestPick({
@@ -226,7 +435,7 @@ function deriveBestPick({
     { label: "客胜", probability: awayWinProbability },
   ].sort((left, right) => right.probability - left.probability);
 
-  if (ordered[0].label !== "平局倾向" && ordered[0].probability >= 0.47 && over25Probability >= 0.56) {
+  if (ordered[0].label !== "平局倾向" && ordered[0].probability >= 0.48 && over25Probability >= 0.56) {
     return `${ordered[0].label} + 大2.5`;
   }
 
@@ -244,6 +453,11 @@ function deriveBestPick({
 function generateFixturePrediction(fixture) {
   const homeTeam = teamMap.get(fixture.homeTeam);
   const awayTeam = teamMap.get(fixture.awayTeam);
+
+  if (!homeTeam || !awayTeam) {
+    throw new Error(`Missing team rating seed for fixture: ${fixture.homeTeam} vs ${fixture.awayTeam}`);
+  }
+
   const ratingDelta = (homeTeam.rating - awayTeam.rating) / 400;
   const hostAdvantage =
     fixture.venueCountry === homeTeam.country && homeTeam.hostNation
@@ -253,18 +467,18 @@ function generateFixturePrediction(fixture) {
         : 0;
 
   const homeLambda = clamp(
-    1.22 +
-      ratingDelta * 0.62 +
-      (homeTeam.attack - awayTeam.defense) * 0.72 +
-      (homeTeam.form - awayTeam.form) * 0.25 +
+    1.2 +
+      ratingDelta * 0.64 +
+      (homeTeam.attack - awayTeam.defense) * 0.7 +
+      (homeTeam.form - awayTeam.form) * 0.24 +
       hostAdvantage,
-    0.35,
-    3.4
+    0.3,
+    3.5
   );
   const awayLambda = clamp(
-    1.08 -
-      ratingDelta * 0.34 +
-      (awayTeam.attack - homeTeam.defense) * 0.7 +
+    1.05 -
+      ratingDelta * 0.35 +
+      (awayTeam.attack - homeTeam.defense) * 0.68 +
       (awayTeam.form - homeTeam.form) * 0.18 -
       hostAdvantage * 0.35,
     0.25,
@@ -322,15 +536,10 @@ function generateFixturePrediction(fixture) {
   });
 
   return {
-    id: fixture.id,
+    ...fixture,
     label: `${fixture.homeTeam} vs ${fixture.awayTeam}`,
     shortMeta: fixture.group,
-    stage: fixture.stage,
-    meta: `${fixture.group} · ${fixture.date} ${fixture.kickoff} · ${fixture.city}`,
-    homeTeam: fixture.homeTeam,
-    awayTeam: fixture.awayTeam,
-    group: fixture.group,
-    venue: `${fixture.city}, ${fixture.venueCountry}`,
+    meta: `${fixture.group} · ${fixture.date} ${fixture.kickoff} ${fixture.utcOffset} · ${fixture.venue}`,
     bestPick,
     signal: confidence,
     modelDetail: `Baseline xG ${homeLambda.toFixed(2)} : ${awayLambda.toFixed(2)}`,
@@ -342,59 +551,59 @@ function generateFixturePrediction(fixture) {
     scores: topScores,
     goals: [
       ...mostLikelyTotals,
-      { label: over25Probability >= under25Probability ? "大 2.5" : "小 2.5", note: percentage(Math.max(over25Probability, under25Probability)) },
+      {
+        label: over25Probability >= under25Probability ? "大 2.5" : "小 2.5",
+        note: percentage(Math.max(over25Probability, under25Probability)),
+      },
       { label: "双方进球", note: percentage(bothTeamsToScore) },
     ],
     halftime: buildHalftimeFulltime(homeLambda, awayLambda),
     risks: deriveRiskNotes({
-      hostAdvantage: hostAdvantage > 0,
+      fixture,
       homeWinProbability: outcomeTotals.home,
       drawProbability: outcomeTotals.draw,
       awayWinProbability: outcomeTotals.away,
       over25Probability,
       under25Probability,
       topScoreProbability: Number(topScores[0].probability.replace("%", "")) / 100,
+      hostAdvantage: hostAdvantage > 0,
     }),
   };
 }
 
-function generateFixtures() {
-  return tournamentConfig.groups.flatMap((group) =>
-    pairings.map(([homeIndex, awayIndex], fixtureIndex) => ({
-      id: `${group.id.toLowerCase()}-${fixtureIndex + 1}-${group.teams[homeIndex].toLowerCase().replace(/\s+/g, "-")}-${group.teams[awayIndex].toLowerCase().replace(/\s+/g, "-")}`,
-      homeTeam: group.teams[homeIndex],
-      awayTeam: group.teams[awayIndex],
-      group: group.label,
-      stage: "Group Stage",
-      date: addDays(group.baseDate, roundOffsets[fixtureIndex]),
-      kickoff: kickoffSlots[fixtureIndex],
-      city: group.cities[fixtureIndex % group.cities.length],
-      venueCountry: group.venueCountry,
-    }))
-  );
-}
-
-const fixtures = generateFixtures();
-const predictions = fixtures.map(generateFixturePrediction);
+const groupDefinitions = parseGroupDefinitions(groupStageSource);
+const groupFixtures = parseGroupFixtures(groupStageSource, groupDefinitions).map((fixture) => ({
+  ...fixture,
+  hasPlaceholderTeam:
+    teamMap.get(fixture.homeTeam)?.placeholder === true || teamMap.get(fixture.awayTeam)?.placeholder === true,
+}));
+const knockoutFixtures = parseKnockoutFixtures(finalsSource);
+const predictions = groupFixtures.map(generateFixturePrediction);
 
 const output = {
   model: {
-    name: "Baseline Elo-Poisson Sandbox",
-    version: "v0.1.0",
+    name: "Baseline Elo-Poisson 2026 Snapshot",
+    version: "v0.2.0",
     generatedAt: new Date().toISOString(),
     notes: tournamentConfig.tournament.assumptions,
+    sources: tournamentConfig.sources,
   },
   summary: {
     tournamentName: tournamentConfig.tournament.name,
     teamCount: teams.length,
     fixtureCount: predictions.length,
-    groupCount: tournamentConfig.groups.length,
+    groupCount: groupDefinitions.size,
+    knockoutFixtureCount: knockoutFixtures.length,
     scopeNote: tournamentConfig.tournament.scopeNote,
   },
+  groups: [...groupDefinitions.values()],
   fixtures: predictions,
+  knockoutFixtures,
 };
 
 mkdirSync(outputDir, { recursive: true });
 writeFileSync(resolve(outputDir, "worldcup-forecast.json"), JSON.stringify(output, null, 2));
 
-console.log(`Generated ${predictions.length} predictions for ${teams.length} teams.`);
+console.log(
+  `Generated ${predictions.length} group-stage predictions across ${groupDefinitions.size} groups and ${knockoutFixtures.length} knockout fixtures.`
+);

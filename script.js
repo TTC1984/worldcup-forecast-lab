@@ -15,12 +15,15 @@ const elements = {
   summaryTeamCount: document.getElementById("summary-team-count"),
   summaryFixtureCount: document.getElementById("summary-fixture-count"),
   summaryGroupCount: document.getElementById("summary-group-count"),
+  groupFilter: document.getElementById("group-filter"),
 };
 
 const state = {
   model: null,
   summary: null,
   fixtures: [],
+  groups: [],
+  activeGroup: null,
 };
 
 function animateCount(element, value) {
@@ -52,8 +55,25 @@ function renderSummary() {
     `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.scopeNote}`;
 }
 
+function getVisibleFixtures() {
+  return state.fixtures.filter((fixture) => fixture.group === state.activeGroup);
+}
+
+function renderGroupFilter() {
+  elements.groupFilter.innerHTML = state.groups
+    .map((group) => `<option value="${group.label}">${group.label}</option>`)
+    .join("");
+
+  elements.groupFilter.value = state.activeGroup;
+  elements.groupFilter.onchange = () => {
+    state.activeGroup = elements.groupFilter.value;
+    const visibleFixtures = getVisibleFixtures();
+    updateFixture(visibleFixtures[0]?.id);
+  };
+}
+
 function renderSwitcher(activeId) {
-  elements.switcher.innerHTML = state.fixtures
+  elements.switcher.innerHTML = getVisibleFixtures()
     .map(
       (fixture) => `
         <button class="match-button ${fixture.id === activeId ? "is-active" : ""}" data-id="${fixture.id}">
@@ -120,7 +140,12 @@ function renderRisks(risks) {
 }
 
 function updateFixture(id) {
-  const fixture = state.fixtures.find((item) => item.id === id) || state.fixtures[0];
+  const visibleFixtures = getVisibleFixtures();
+  const fixture = visibleFixtures.find((item) => item.id === id) || visibleFixtures[0];
+
+  if (!fixture) {
+    return;
+  }
 
   elements.title.textContent = fixture.label;
   elements.stage.textContent = fixture.stage;
@@ -150,9 +175,12 @@ async function loadForecast() {
     state.model = forecast.model;
     state.summary = forecast.summary;
     state.fixtures = forecast.fixtures;
+    state.groups = forecast.groups;
+    state.activeGroup = forecast.groups[0]?.label || null;
 
     renderSummary();
-    updateFixture(state.fixtures[0].id);
+    renderGroupFilter();
+    updateFixture(getVisibleFixtures()[0]?.id);
   } catch (error) {
     elements.dataStatus.textContent =
       "预测数据加载失败。请先运行 `npm run generate:predictions`，再通过静态服务打开页面。";

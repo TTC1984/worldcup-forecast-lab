@@ -1,12 +1,12 @@
 {
   "tournament": {
-    "name": "2026 World Cup Forecast Sandbox",
+    "name": "2026 World Cup Forecast",
     "season": "2026",
-    "scopeNote": "当前版本先用 4 组演示性种子分组跑通预测链路，等官方抽签与完整名单确认后再切换到正式 48 队赛程。",
+    "scopeNote": "当前版本已切换到 2026 世界杯真实赛程快照，覆盖 12 个小组共 72 场小组赛。淘汰赛对阵结构已导入，但正式晋级预测将在下一阶段接入。",
     "assumptions": [
-      "以球队强度、进攻/防守系数和近期状态做 baseline 估计。",
-      "比赛默认中立场，只有主办国在本国城市时给予轻微主场加成。",
-      "当前阶段不接真实赔率，只输出模型概率和风险提示。"
+      "以球队强度、近期状态和主办国场地因素做 baseline 估计。",
+      "小组赛赛程来自 openfootball 的 2026--usa 数据快照，并与 FIFA 已公开的赛程框架保持一致。",
+      "当前阶段不接真实赔率，只输出模型概率、玩法映射与风险提示。"
     ],
     "metricTargets": {
       "outcomeAccuracy": "50% - 55%",
@@ -14,38 +14,18 @@
       "brierTarget": "0.16 - 0.20"
     }
   },
-  "groups": [
+  "sources": [
     {
-      "id": "A",
-      "label": "Group A",
-      "baseDate": "2026-06-11",
-      "venueCountry": "Mexico",
-      "cities": ["Mexico City", "Guadalajara", "Monterrey"],
-      "teams": ["Mexico", "Japan", "Senegal", "Switzerland"]
+      "name": "openfootball/worldcup 2026--usa group stage snapshot",
+      "type": "snapshot",
+      "path": "data/source/worldcup-2026-openfootball-cup.txt",
+      "upstream": "https://github.com/openfootball/worldcup/tree/master/2026--usa"
     },
     {
-      "id": "B",
-      "label": "Group B",
-      "baseDate": "2026-06-12",
-      "venueCountry": "United States",
-      "cities": ["Los Angeles", "Seattle", "Dallas"],
-      "teams": ["United States", "Croatia", "Morocco", "South Africa"]
-    },
-    {
-      "id": "C",
-      "label": "Group C",
-      "baseDate": "2026-06-13",
-      "venueCountry": "Canada",
-      "cities": ["Toronto", "Vancouver", "Montreal"],
-      "teams": ["Canada", "Brazil", "Denmark", "South Korea"]
-    },
-    {
-      "id": "D",
-      "label": "Group D",
-      "baseDate": "2026-06-14",
-      "venueCountry": "United States",
-      "cities": ["New York", "Atlanta", "Miami"],
-      "teams": ["Argentina", "France", "England", "Uruguay"]
+      "name": "openfootball/worldcup 2026--usa finals snapshot",
+      "type": "snapshot",
+      "path": "data/source/worldcup-2026-openfootball-cup_finals.txt",
+      "upstream": "https://github.com/openfootball/worldcup/tree/master/2026--usa"
     }
   ]
 }

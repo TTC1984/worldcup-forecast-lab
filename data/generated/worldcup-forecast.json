@@ -1,61 +1,204 @@
 {
   "model": {
-    "name": "Baseline Elo-Poisson Sandbox",
-    "version": "v0.1.0",
-    "generatedAt": "2026-03-20T08:59:54.484Z",
+    "name": "Baseline Elo-Poisson 2026 Snapshot",
+    "version": "v0.2.0",
+    "generatedAt": "2026-03-20T09:14:59.766Z",
     "notes": [
-      "以球队强度、进攻/防守系数和近期状态做 baseline 估计。",
-      "比赛默认中立场，只有主办国在本国城市时给予轻微主场加成。",
-      "当前阶段不接真实赔率，只输出模型概率和风险提示。"
+      "以球队强度、近期状态和主办国场地因素做 baseline 估计。",
+      "小组赛赛程来自 openfootball 的 2026--usa 数据快照，并与 FIFA 已公开的赛程框架保持一致。",
+      "当前阶段不接真实赔率，只输出模型概率、玩法映射与风险提示。"
+    ],
+    "sources": [
+      {
+        "name": "openfootball/worldcup 2026--usa group stage snapshot",
+        "type": "snapshot",
+        "path": "data/source/worldcup-2026-openfootball-cup.txt",
+        "upstream": "https://github.com/openfootball/worldcup/tree/master/2026--usa"
+      },
+      {
+        "name": "openfootball/worldcup 2026--usa finals snapshot",
+        "type": "snapshot",
+        "path": "data/source/worldcup-2026-openfootball-cup_finals.txt",
+        "upstream": "https://github.com/openfootball/worldcup/tree/master/2026--usa"
+      }
     ]
   },
   "summary": {
-    "tournamentName": "2026 World Cup Forecast Sandbox",
-    "teamCount": 16,
-    "fixtureCount": 24,
-    "groupCount": 4,
-    "scopeNote": "当前版本先用 4 组演示性种子分组跑通预测链路，等官方抽签与完整名单确认后再切换到正式 48 队赛程。"
+    "tournamentName": "2026 World Cup Forecast",
+    "teamCount": 48,
+    "fixtureCount": 72,
+    "groupCount": 12,
+    "knockoutFixtureCount": 32,
+    "scopeNote": "当前版本已切换到 2026 世界杯真实赛程快照，覆盖 12 个小组共 72 场小组赛。淘汰赛对阵结构已导入，但正式晋级预测将在下一阶段接入。"
   },
+  "groups": [
+    {
+      "id": "A",
+      "label": "Group A",
+      "teams": [
+        "Mexico",
+        "South Africa",
+        "South Korea",
+        "UEFA Path D winner"
+      ]
+    },
+    {
+      "id": "B",
+      "label": "Group B",
+      "teams": [
+        "Canada",
+        "UEFA Path A winner",
+        "Qatar",
+        "Switzerland"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "Group C",
+      "teams": [
+        "Brazil",
+        "Morocco",
+        "Haiti",
+        "Scotland"
+      ]
+    },
+    {
+      "id": "D",
+      "label": "Group D",
+      "teams": [
+        "USA",
+        "Paraguay",
+        "Australia",
+        "UEFA Path C winner"
+      ]
+    },
+    {
+      "id": "E",
+      "label": "Group E",
+      "teams": [
+        "Germany",
+        "Curaçao",
+        "Ivory Coast",
+        "Ecuador"
+      ]
+    },
+    {
+      "id": "F",
+      "label": "Group F",
+      "teams": [
+        "Netherlands",
+        "Japan",
+        "UEFA Path B winner",
+        "Tunisia"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "Group G",
+      "teams": [
+        "Belgium",
+        "Egypt",
+        "Iran",
+        "New Zealand"
+      ]
+    },
+    {
+      "id": "H",
+      "label": "Group H",
+      "teams": [
+        "Spain",
+        "Cape Verde",
+        "Saudi Arabia",
+        "Uruguay"
+      ]
+    },
+    {
+      "id": "I",
+      "label": "Group I",
+      "teams": [
+        "France",
+        "Senegal",
+        "IC Path 2 winner",
+        "Norway"
+      ]
+    },
+    {
+      "id": "J",
+      "label": "Group J",
+      "teams": [
+        "Argentina",
+        "Algeria",
+        "Austria",
+        "Jordan"
+      ]
+    },
+    {
+      "id": "K",
+      "label": "Group K",
+      "teams": [
+        "Portugal",
+        "IC Path 1 winner",
+        "Uzbekistan",
+        "Colombia"
+      ]
+    },
+    {
+      "id": "L",
+      "label": "Group L",
+      "teams": [
+        "England",
+        "Croatia",
+        "Ghana",
+        "Panama"
+      ]
+    }
+  ],
   "fixtures": [
     {
-      "id": "a-1-mexico-japan",
-      "label": "Mexico vs Japan",
-      "shortMeta": "Group A",
+      "id": "a-1-mexico-south-africa",
       "stage": "Group Stage",
-      "meta": "Group A · 2026-06-11 13:00 · Mexico City",
-      "homeTeam": "Mexico",
-      "awayTeam": "Japan",
       "group": "Group A",
-      "venue": "Mexico City, Mexico",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "低置信",
-      "modelDetail": "Baseline xG 1.25 : 1.22",
+      "groupId": "A",
+      "date": "2026-06-11",
+      "kickoff": "13:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "Mexico",
+      "awayTeam": "South Africa",
+      "venue": "Mexico City",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": false,
+      "label": "Mexico vs South Africa",
+      "shortMeta": "Group A",
+      "meta": "Group A · 2026-06-11 13:00 UTC-6 · Mexico City",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.71 : 0.76",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 37
+          "value": 60
         },
         {
           "label": "平",
-          "value": 27.2
+          "value": 23.6
         },
         {
           "label": "客胜",
-          "value": 35.8
+          "value": 16.3
         }
       ],
       "scores": [
         {
-          "score": "1 : 1",
-          "probability": "12.9%"
-        },
-        {
           "score": "1 : 0",
-          "probability": "10.6%"
+          "probability": "14.5%"
         },
         {
-          "score": "0 : 1",
-          "probability": "10.3%"
+          "score": "2 : 0",
+          "probability": "12.4%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.0%"
         }
       ],
       "goals": [
@@ -69,62 +212,68 @@
         },
         {
           "label": "小 2.5",
-          "note": "55.1%"
+          "note": "55.3%"
         },
         {
           "label": "双方进球",
-          "note": "50.3%"
+          "note": "43.5%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "21.8%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "20.9%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "17.1%"
+          "note": "38.2%"
         },
         {
           "label": "平 / 胜",
-          "note": "13.3%"
+          "note": "19.5%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "15.6%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "8.9%"
         }
       ],
       "risks": [
-        "对阵接近，平局与临场名单的影响会明显放大。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "主办国在本国城市作赛时已纳入轻微场地熟悉度加成。"
+        "主办国在本国城市作赛时已纳入轻微场地熟悉度加成。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
       ]
     },
     {
-      "id": "a-2-senegal-switzerland",
-      "label": "Senegal vs Switzerland",
-      "shortMeta": "Group A",
+      "id": "a-2-south-korea-uefa-path-d-winner",
       "stage": "Group Stage",
-      "meta": "Group A · 2026-06-11 20:00 · Guadalajara",
-      "homeTeam": "Senegal",
-      "awayTeam": "Switzerland",
       "group": "Group A",
-      "venue": "Guadalajara, Mexico",
+      "groupId": "A",
+      "date": "2026-06-11",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "South Korea",
+      "awayTeam": "UEFA Path D winner",
+      "venue": "Guadalajara (Zapopan)",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": true,
+      "label": "South Korea vs UEFA Path D winner",
+      "shortMeta": "Group A",
+      "meta": "Group A · 2026-06-11 20:00 UTC-6 · Guadalajara (Zapopan)",
       "bestPick": "小2.5",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.21 : 1.04",
+      "signal": "低置信",
+      "modelDetail": "Baseline xG 1.11 : 1.18",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 40.1
+          "value": 34.2
         },
         {
           "label": "平",
-          "value": 28.6
+          "value": 28.4
         },
         {
           "label": "客胜",
-          "value": 31.3
+          "value": 37.4
         }
       ],
       "scores": [
@@ -133,73 +282,168 @@
           "probability": "13.3%"
         },
         {
-          "score": "1 : 0",
-          "probability": "12.8%"
+          "score": "0 : 1",
+          "probability": "11.9%"
         },
         {
-          "score": "0 : 1",
-          "probability": "10.9%"
+          "score": "1 : 0",
+          "probability": "11.2%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.7%"
+          "note": "26.5%"
         },
         {
           "label": "1 球",
-          "note": "23.7%"
+          "note": "23.1%"
         },
         {
           "label": "小 2.5",
-          "note": "60.9%"
+          "note": "59.8%"
         },
         {
           "label": "双方进球",
-          "note": "45.3%"
+          "note": "46.5%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "21.8%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "19.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.6%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "13.8%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。"
+      ]
+    },
+    {
+      "id": "a-3-uefa-path-d-winner-south-africa",
+      "stage": "Group Stage",
+      "group": "Group A",
+      "groupId": "A",
+      "date": "2026-06-18",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "UEFA Path D winner",
+      "awayTeam": "South Africa",
+      "venue": "Atlanta",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "UEFA Path D winner vs South Africa",
+      "shortMeta": "Group A",
+      "meta": "Group A · 2026-06-18 12:00 UTC-4 · Atlanta",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.73 : 0.67",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 63
+        },
+        {
+          "label": "平",
+          "value": 23.1
+        },
+        {
+          "label": "客胜",
+          "value": 14
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.7%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "13.6%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "10.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.1%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.8%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "57.0%"
+        },
+        {
+          "label": "双方进球",
+          "note": "40.1%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "23.6%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "19.0%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "17.8%"
+          "note": "40.4%"
         },
         {
           "label": "平 / 胜",
-          "note": "14.7%"
+          "note": "20.3%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "15.6%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "7.5%"
         }
       ],
       "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
         "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
       ]
     },
     {
-      "id": "a-3-mexico-senegal",
-      "label": "Mexico vs Senegal",
-      "shortMeta": "Group A",
+      "id": "a-4-mexico-south-korea",
       "stage": "Group Stage",
-      "meta": "Group A · 2026-06-15 16:00 · Monterrey",
-      "homeTeam": "Mexico",
-      "awayTeam": "Senegal",
       "group": "Group A",
-      "venue": "Monterrey, Mexico",
+      "groupId": "A",
+      "date": "2026-06-18",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "Mexico",
+      "awayTeam": "South Korea",
+      "venue": "Guadalajara (Zapopan)",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": false,
+      "label": "Mexico vs South Korea",
+      "shortMeta": "Group A",
+      "meta": "Group A · 2026-06-18 19:00 UTC-6 · Guadalajara (Zapopan)",
       "bestPick": "比分关注 1 : 1",
-      "signal": "低置信",
-      "modelDetail": "Baseline xG 1.25 : 1.17",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.32 : 1.07",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 38.2
+          "value": 42.4
         },
         {
           "label": "平",
@@ -207,173 +451,274 @@
         },
         {
           "label": "客胜",
-          "value": 34.4
+          "value": 30.2
         }
       ],
       "scores": [
         {
           "score": "1 : 1",
-          "probability": "13.0%"
+          "probability": "12.9%"
         },
         {
           "score": "1 : 0",
-          "probability": "11.1%"
+          "probability": "12.1%"
         },
         {
           "score": "0 : 1",
-          "probability": "10.4%"
+          "probability": "9.8%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.0%"
+          "note": "26.1%"
         },
         {
           "label": "1 球",
-          "note": "21.4%"
+          "note": "21.8%"
         },
         {
           "label": "小 2.5",
-          "note": "56.2%"
+          "note": "57.1%"
         },
         {
           "label": "双方进球",
-          "note": "49.4%"
+          "note": "48.3%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "22.5%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "20.0%"
+          "note": "25.3%"
         },
         {
           "label": "平 / 平",
-          "note": "17.4%"
+          "note": "17.6%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "17.3%"
         },
         {
           "label": "平 / 胜",
-          "note": "13.7%"
+          "note": "15.0%"
         }
       ],
       "risks": [
-        "对阵接近，平局与临场名单的影响会明显放大。",
         "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "主办国在本国城市作赛时已纳入轻微场地熟悉度加成。"
       ]
     },
     {
-      "id": "a-4-switzerland-japan",
-      "label": "Switzerland vs Japan",
-      "shortMeta": "Group A",
+      "id": "a-5-uefa-path-d-winner-mexico",
       "stage": "Group Stage",
-      "meta": "Group A · 2026-06-15 22:00 · Mexico City",
-      "homeTeam": "Switzerland",
-      "awayTeam": "Japan",
       "group": "Group A",
-      "venue": "Mexico City, Mexico",
-      "bestPick": "小2.5",
-      "signal": "低置信",
-      "modelDetail": "Baseline xG 1.16 : 1.11",
-      "outcomes": [
-        {
-          "label": "主胜",
-          "value": 37
-        },
-        {
-          "label": "平",
-          "value": 28.5
-        },
-        {
-          "label": "客胜",
-          "value": 34.5
-        }
-      ],
-      "scores": [
-        {
-          "score": "1 : 1",
-          "probability": "13.3%"
-        },
-        {
-          "score": "1 : 0",
-          "probability": "11.9%"
-        },
-        {
-          "score": "0 : 1",
-          "probability": "11.4%"
-        }
-      ],
-      "goals": [
-        {
-          "label": "2 球",
-          "note": "26.6%"
-        },
-        {
-          "label": "1 球",
-          "note": "23.3%"
-        },
-        {
-          "label": "小 2.5",
-          "note": "60.1%"
-        },
-        {
-          "label": "双方进球",
-          "note": "46.2%"
-        }
-      ],
-      "halftime": [
-        {
-          "label": "胜 / 胜",
-          "note": "21.6%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "19.9%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "18.8%"
-        },
-        {
-          "label": "平 / 胜",
-          "note": "13.7%"
-        }
-      ],
-      "risks": [
-        "对阵接近，平局与临场名单的影响会明显放大。",
-        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
-      ]
-    },
-    {
-      "id": "a-5-switzerland-mexico",
-      "label": "Switzerland vs Mexico",
-      "shortMeta": "Group A",
-      "stage": "Group Stage",
-      "meta": "Group A · 2026-06-19 18:00 · Guadalajara",
-      "homeTeam": "Switzerland",
+      "groupId": "A",
+      "date": "2026-06-24",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "UEFA Path D winner",
       "awayTeam": "Mexico",
-      "group": "Group A",
-      "venue": "Guadalajara, Mexico",
-      "bestPick": "小2.5",
+      "venue": "Mexico City",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": true,
+      "label": "UEFA Path D winner vs Mexico",
+      "shortMeta": "Group A",
+      "meta": "Group A · 2026-06-24 19:00 UTC-6 · Mexico City",
+      "bestPick": "主胜",
       "signal": "中置信",
-      "modelDetail": "Baseline xG 1.29 : 1.01",
+      "modelDetail": "Baseline xG 1.34 : 0.96",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 42.7
+          "value": 45.3
         },
         {
           "label": "平",
-          "value": 28
+          "value": 27.7
         },
         {
           "label": "客胜",
-          "value": 29.3
+          "value": 27
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.4%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.9%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "10.0%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.5%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.1%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "59.6%"
+        },
+        {
+          "label": "双方进球",
+          "note": "45.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "27.2%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.3%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "16.1%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "15.2%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+      ]
+    },
+    {
+      "id": "a-6-south-africa-south-korea",
+      "stage": "Group Stage",
+      "group": "Group A",
+      "groupId": "A",
+      "date": "2026-06-24",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "South Africa",
+      "awayTeam": "South Korea",
+      "venue": "Monterrey (Guadalupe)",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": false,
+      "label": "South Africa vs South Korea",
+      "shortMeta": "Group A",
+      "meta": "Group A · 2026-06-24 19:00 UTC-6 · Monterrey (Guadalupe)",
+      "bestPick": "客胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 0.82 : 1.36",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 22.5
+        },
+        {
+          "label": "平",
+          "value": 27.8
+        },
+        {
+          "label": "客胜",
+          "value": 49.6
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "15.4%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.6%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "11.3%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.6%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "41.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "30.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "19.1%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "17.7%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "12.4%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "b-1-canada-uefa-path-a-winner",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "groupId": "B",
+      "date": "2026-06-12",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Canada",
+      "awayTeam": "UEFA Path A winner",
+      "venue": "Toronto",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": true,
+      "label": "Canada vs UEFA Path A winner",
+      "shortMeta": "Group B",
+      "meta": "Group B · 2026-06-12 15:00 UTC-4 · Toronto",
+      "bestPick": "比分关注 1 : 1",
+      "signal": "低置信",
+      "modelDetail": "Baseline xG 1.18 : 1.20",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 35.7
+        },
+        {
+          "label": "平",
+          "value": 27.8
+        },
+        {
+          "label": "客胜",
+          "value": 36.5
         }
       ],
       "scores": [
@@ -382,12 +727,368 @@
           "probability": "13.1%"
         },
         {
+          "score": "0 : 1",
+          "probability": "11.1%"
+        },
+        {
           "score": "1 : 0",
-          "probability": "12.9%"
+          "probability": "11.0%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.2%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.1%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "57.6%"
+        },
+        {
+          "label": "双方进球",
+          "note": "48.3%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "21.3%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "20.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "17.9%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "13.3%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。"
+      ]
+    },
+    {
+      "id": "b-2-qatar-switzerland",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "groupId": "B",
+      "date": "2026-06-13",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Qatar",
+      "awayTeam": "Switzerland",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Qatar vs Switzerland",
+      "shortMeta": "Group B",
+      "meta": "Group B · 2026-06-13 12:00 UTC-7 · San Francisco Bay Area (Santa Clara)",
+      "bestPick": "客胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 0.74 : 1.44",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 19.2
+        },
+        {
+          "label": "平",
+          "value": 26.9
+        },
+        {
+          "label": "客胜",
+          "value": 53.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "16.3%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.0%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "11.7%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.6%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "40.0%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "33.1%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "18.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.6%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "10.4%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "b-3-switzerland-uefa-path-a-winner",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "groupId": "B",
+      "date": "2026-06-18",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Switzerland",
+      "awayTeam": "UEFA Path A winner",
+      "venue": "Los Angeles (Inglewood)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "Switzerland vs UEFA Path A winner",
+      "shortMeta": "Group B",
+      "meta": "Group B · 2026-06-18 12:00 UTC-7 · Los Angeles (Inglewood)",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.22 : 1.09",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 39.1
+        },
+        {
+          "label": "平",
+          "value": 28.2
+        },
+        {
+          "label": "客胜",
+          "value": 32.7
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.2%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "12.1%"
         },
         {
           "score": "0 : 1",
-          "probability": "10.1%"
+          "probability": "10.8%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.5%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.8%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "59.1%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.9%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "23.0%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "18.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.4%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "14.2%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。"
+      ]
+    },
+    {
+      "id": "b-4-canada-qatar",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "groupId": "B",
+      "date": "2026-06-18",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Canada",
+      "awayTeam": "Qatar",
+      "venue": "Vancouver",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": false,
+      "label": "Canada vs Qatar",
+      "shortMeta": "Group B",
+      "meta": "Group B · 2026-06-18 15:00 UTC-7 · Vancouver",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.65 : 0.79",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 57.9
+        },
+        {
+          "label": "平",
+          "value": 24.3
+        },
+        {
+          "label": "客胜",
+          "value": 17.8
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "14.3%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "11.8%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.4%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.8%"
+        },
+        {
+          "label": "双方进球",
+          "note": "44.2%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "36.5%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "19.0%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.0%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "9.7%"
+        }
+      ],
+      "risks": [
+        "主办国在本国城市作赛时已纳入轻微场地熟悉度加成。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "b-5-switzerland-canada",
+      "stage": "Group Stage",
+      "group": "Group B",
+      "groupId": "B",
+      "date": "2026-06-24",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Switzerland",
+      "awayTeam": "Canada",
+      "venue": "Vancouver",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": false,
+      "label": "Switzerland vs Canada",
+      "shortMeta": "Group B",
+      "meta": "Group B · 2026-06-24 12:00 UTC-7 · Vancouver",
+      "bestPick": "主胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.35 : 0.95",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 46.1
+        },
+        {
+          "label": "平",
+          "value": 27.6
+        },
+        {
+          "label": "客胜",
+          "value": 26.3
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.5%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.8%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "10.0%"
         }
       ],
       "goals": [
@@ -401,111 +1102,28 @@
         },
         {
           "label": "小 2.5",
-          "note": "59.5%"
+          "note": "59.6%"
         },
         {
           "label": "双方进球",
-          "note": "46.2%"
+          "note": "45.4%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "25.4%"
+          "note": "27.8%"
         },
         {
           "label": "平 / 平",
-          "note": "18.4%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "16.6%"
+          "note": "18.2%"
         },
         {
           "label": "平 / 胜",
-          "note": "15.4%"
-        }
-      ],
-      "risks": [
-        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
-      ]
-    },
-    {
-      "id": "a-6-japan-senegal",
-      "label": "Japan vs Senegal",
-      "shortMeta": "Group A",
-      "stage": "Group Stage",
-      "meta": "Group A · 2026-06-19 22:00 · Monterrey",
-      "homeTeam": "Japan",
-      "awayTeam": "Senegal",
-      "group": "Group A",
-      "venue": "Monterrey, Mexico",
-      "bestPick": "小2.5",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.27 : 1.07",
-      "outcomes": [
-        {
-          "label": "主胜",
-          "value": 40.8
-        },
-        {
-          "label": "平",
-          "value": 27.9
-        },
-        {
-          "label": "客胜",
-          "value": 31.3
-        }
-      ],
-      "scores": [
-        {
-          "score": "1 : 1",
-          "probability": "13.1%"
-        },
-        {
-          "score": "1 : 0",
-          "probability": "12.2%"
-        },
-        {
-          "score": "0 : 1",
-          "probability": "10.3%"
-        }
-      ],
-      "goals": [
-        {
-          "label": "2 球",
-          "note": "26.4%"
-        },
-        {
-          "label": "1 球",
-          "note": "22.5%"
-        },
-        {
-          "label": "小 2.5",
-          "note": "58.5%"
-        },
-        {
-          "label": "双方进球",
-          "note": "47.3%"
-        }
-      ],
-      "halftime": [
-        {
-          "label": "胜 / 胜",
-          "note": "24.1%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "18.1%"
+          "note": "16.3%"
         },
         {
           "label": "负 / 负",
-          "note": "18.0%"
-        },
-        {
-          "label": "平 / 胜",
           "note": "14.7%"
         }
       ],
@@ -516,210 +1134,139 @@
       ]
     },
     {
-      "id": "b-1-united-states-croatia",
-      "label": "United States vs Croatia",
-      "shortMeta": "Group B",
+      "id": "b-6-uefa-path-a-winner-qatar",
       "stage": "Group Stage",
-      "meta": "Group B · 2026-06-12 13:00 · Los Angeles",
-      "homeTeam": "United States",
-      "awayTeam": "Croatia",
       "group": "Group B",
-      "venue": "Los Angeles, United States",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.33 : 1.15",
-      "outcomes": [
-        {
-          "label": "主胜",
-          "value": 40.8
-        },
-        {
-          "label": "平",
-          "value": 27
-        },
-        {
-          "label": "客胜",
-          "value": 32.1
-        }
-      ],
-      "scores": [
-        {
-          "score": "1 : 1",
-          "probability": "12.8%"
-        },
-        {
-          "score": "1 : 0",
-          "probability": "11.2%"
-        },
-        {
-          "score": "0 : 1",
-          "probability": "9.7%"
-        }
-      ],
-      "goals": [
-        {
-          "label": "2 球",
-          "note": "25.8%"
-        },
-        {
-          "label": "3 球",
-          "note": "21.3%"
-        },
-        {
-          "label": "小 2.5",
-          "note": "55.1%"
-        },
-        {
-          "label": "双方进球",
-          "note": "50.1%"
-        }
-      ],
-      "halftime": [
-        {
-          "label": "胜 / 胜",
-          "note": "24.3%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "18.6%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "17.0%"
-        },
-        {
-          "label": "平 / 胜",
-          "note": "14.4%"
-        }
-      ],
-      "risks": [
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "主办国在本国城市作赛时已纳入轻微场地熟悉度加成。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
-      ]
-    },
-    {
-      "id": "b-2-morocco-south-africa",
-      "label": "Morocco vs South Africa",
+      "groupId": "B",
+      "date": "2026-06-24",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "UEFA Path A winner",
+      "awayTeam": "Qatar",
+      "venue": "Seattle",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "UEFA Path A winner vs Qatar",
       "shortMeta": "Group B",
-      "stage": "Group Stage",
-      "meta": "Group B · 2026-06-12 20:00 · Seattle",
-      "homeTeam": "Morocco",
-      "awayTeam": "South Africa",
-      "group": "Group B",
-      "venue": "Seattle, United States",
+      "meta": "Group B · 2026-06-24 12:00 UTC-7 · Seattle",
       "bestPick": "主胜",
       "signal": "高置信",
-      "modelDetail": "Baseline xG 1.81 : 0.68",
+      "modelDetail": "Baseline xG 1.71 : 0.68",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 64.3
+          "value": 62.1
         },
         {
           "label": "平",
-          "value": 22.2
+          "value": 23.4
         },
         {
           "label": "客胜",
-          "value": 13.5
+          "value": 14.5
         }
       ],
       "scores": [
         {
           "score": "1 : 0",
-          "probability": "15.0%"
+          "probability": "15.7%"
         },
         {
           "score": "2 : 0",
-          "probability": "13.5%"
+          "probability": "13.4%"
         },
         {
           "score": "1 : 1",
-          "probability": "10.2%"
+          "probability": "10.7%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "25.7%"
+          "note": "26.2%"
         },
         {
-          "label": "3 球",
-          "note": "21.3%"
+          "label": "1 球",
+          "note": "21.9%"
         },
         {
           "label": "小 2.5",
-          "note": "54.7%"
+          "note": "57.3%"
         },
         {
           "label": "双方进球",
-          "note": "41.4%"
+          "note": "40.4%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "41.6%"
+          "note": "39.7%"
         },
         {
           "label": "平 / 胜",
-          "note": "20.3%"
+          "note": "20.2%"
         },
         {
           "label": "平 / 平",
-          "note": "14.8%"
+          "note": "15.8%"
         },
         {
           "label": "负 / 负",
-          "note": "7.2%"
+          "note": "7.8%"
         }
       ],
       "risks": [
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
       ]
     },
     {
-      "id": "b-3-united-states-morocco",
-      "label": "United States vs Morocco",
-      "shortMeta": "Group B",
+      "id": "c-1-brazil-morocco",
       "stage": "Group Stage",
-      "meta": "Group B · 2026-06-16 16:00 · Dallas",
-      "homeTeam": "United States",
+      "group": "Group C",
+      "groupId": "C",
+      "date": "2026-06-13",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Brazil",
       "awayTeam": "Morocco",
-      "group": "Group B",
-      "venue": "Dallas, United States",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "低置信",
-      "modelDetail": "Baseline xG 1.23 : 1.23",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Brazil vs Morocco",
+      "shortMeta": "Group C",
+      "meta": "Group C · 2026-06-13 18:00 UTC-4 · New York/New Jersey (East Rutherford)",
+      "bestPick": "主胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.43 : 1.02",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 36.3
+          "value": 46.4
         },
         {
           "label": "平",
-          "value": 27.3
+          "value": 26.7
         },
         {
           "label": "客胜",
-          "value": 36.4
+          "value": 27
         }
       ],
       "scores": [
         {
           "score": "1 : 1",
-          "probability": "12.9%"
-        },
-        {
-          "score": "0 : 1",
-          "probability": "10.5%"
+          "probability": "12.6%"
         },
         {
           "score": "1 : 0",
-          "probability": "10.5%"
+          "probability": "12.4%"
+        },
+        {
+          "score": "2 : 1",
+          "probability": "9.0%"
         }
       ],
       "goals": [
@@ -728,225 +1275,154 @@
           "note": "25.9%"
         },
         {
-          "label": "3 球",
+          "label": "1 球",
           "note": "21.2%"
         },
         {
           "label": "小 2.5",
-          "note": "55.5%"
+          "note": "55.8%"
         },
         {
           "label": "双方进球",
-          "note": "50.0%"
+          "note": "48.6%"
         }
       ],
       "halftime": [
         {
-          "label": "负 / 负",
-          "note": "21.4%"
-        },
-        {
           "label": "胜 / 胜",
-          "note": "21.3%"
+          "note": "28.1%"
         },
         {
           "label": "平 / 平",
-          "note": "17.2%"
+          "note": "17.0%"
         },
         {
-          "label": "平 / 负",
-          "note": "13.2%"
+          "label": "平 / 胜",
+          "note": "16.0%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "15.3%"
         }
       ],
       "risks": [
-        "对阵接近，平局与临场名单的影响会明显放大。",
         "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "主办国在本国城市作赛时已纳入轻微场地熟悉度加成。"
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
       ]
     },
     {
-      "id": "b-4-south-africa-croatia",
-      "label": "South Africa vs Croatia",
-      "shortMeta": "Group B",
+      "id": "c-2-haiti-scotland",
       "stage": "Group Stage",
-      "meta": "Group B · 2026-06-16 22:00 · Los Angeles",
-      "homeTeam": "South Africa",
-      "awayTeam": "Croatia",
-      "group": "Group B",
-      "venue": "Los Angeles, United States",
+      "group": "Group C",
+      "groupId": "C",
+      "date": "2026-06-13",
+      "kickoff": "21:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Haiti",
+      "awayTeam": "Scotland",
+      "venue": "Boston (Foxborough)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Haiti vs Scotland",
+      "shortMeta": "Group C",
+      "meta": "Group C · 2026-06-13 21:00 UTC-4 · Boston (Foxborough)",
       "bestPick": "客胜",
       "signal": "高置信",
-      "modelDetail": "Baseline xG 0.77 : 1.43",
+      "modelDetail": "Baseline xG 0.59 : 1.53",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 20.2
+          "value": 14.2
         },
         {
           "label": "平",
-          "value": 27.1
+          "value": 25.6
         },
         {
           "label": "客胜",
-          "value": 52.7
+          "value": 60.2
         }
       ],
       "scores": [
         {
           "score": "0 : 1",
-          "probability": "15.9%"
-        },
-        {
-          "score": "1 : 1",
-          "probability": "12.2%"
+          "probability": "18.3%"
         },
         {
           "score": "0 : 2",
-          "probability": "11.3%"
-        }
-      ],
-      "goals": [
-        {
-          "label": "2 球",
-          "note": "26.8%"
-        },
-        {
-          "label": "1 球",
-          "note": "24.4%"
-        },
-        {
-          "label": "小 2.5",
-          "note": "62.3%"
-        },
-        {
-          "label": "双方进球",
-          "note": "40.8%"
-        }
-      ],
-      "halftime": [
-        {
-          "label": "负 / 负",
-          "note": "32.3%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "18.7%"
-        },
-        {
-          "label": "平 / 负",
-          "note": "18.5%"
-        },
-        {
-          "label": "胜 / 胜",
-          "note": "11.0%"
-        }
-      ],
-      "risks": [
-        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
-      ]
-    },
-    {
-      "id": "b-5-south-africa-united-states",
-      "label": "South Africa vs United States",
-      "shortMeta": "Group B",
-      "stage": "Group Stage",
-      "meta": "Group B · 2026-06-20 18:00 · Seattle",
-      "homeTeam": "South Africa",
-      "awayTeam": "United States",
-      "group": "Group B",
-      "venue": "Seattle, United States",
-      "bestPick": "客胜",
-      "signal": "中高置信",
-      "modelDetail": "Baseline xG 0.82 : 1.41",
-      "outcomes": [
-        {
-          "label": "主胜",
-          "value": 21.9
-        },
-        {
-          "label": "平",
-          "value": 27.3
-        },
-        {
-          "label": "客胜",
-          "value": 50.9
-        }
-      ],
-      "scores": [
-        {
-          "score": "0 : 1",
-          "probability": "15.1%"
-        },
-        {
-          "score": "1 : 1",
-          "probability": "12.4%"
+          "probability": "14.0%"
         },
         {
           "score": "0 : 0",
-          "probability": "10.7%"
+          "probability": "12.0%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.7%"
+          "note": "27.0%"
         },
         {
           "label": "1 球",
-          "note": "23.9%"
+          "note": "25.4%"
         },
         {
           "label": "小 2.5",
-          "note": "61.4%"
+          "note": "64.4%"
         },
         {
           "label": "双方进球",
-          "note": "42.4%"
+          "note": "35.0%"
         }
       ],
       "halftime": [
         {
           "label": "负 / 负",
-          "note": "31.0%"
+          "note": "37.7%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "20.7%"
         },
         {
           "label": "平 / 平",
           "note": "18.5%"
         },
         {
-          "label": "平 / 负",
-          "note": "17.9%"
-        },
-        {
           "label": "胜 / 胜",
-          "note": "12.0%"
+          "note": "7.5%"
         }
       ],
       "risks": [
         "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
       ]
     },
     {
-      "id": "b-6-croatia-morocco",
-      "label": "Croatia vs Morocco",
-      "shortMeta": "Group B",
+      "id": "c-3-scotland-morocco",
       "stage": "Group Stage",
-      "meta": "Group B · 2026-06-20 22:00 · Dallas",
-      "homeTeam": "Croatia",
+      "group": "Group C",
+      "groupId": "C",
+      "date": "2026-06-19",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Scotland",
       "awayTeam": "Morocco",
-      "group": "Group B",
-      "venue": "Dallas, United States",
+      "venue": "Boston (Foxborough)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Scotland vs Morocco",
+      "shortMeta": "Group C",
+      "meta": "Group C · 2026-06-19 18:00 UTC-4 · Boston (Foxborough)",
       "bestPick": "小2.5",
-      "signal": "低置信",
-      "modelDetail": "Baseline xG 1.13 : 1.18",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.06 : 1.23",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 34.8
+          "value": 31.6
         },
         {
           "label": "平",
@@ -954,7 +1430,7 @@
         },
         {
           "label": "客胜",
-          "value": 36.9
+          "value": 40.1
         }
       ],
       "scores": [
@@ -964,94 +1440,367 @@
         },
         {
           "score": "0 : 1",
-          "probability": "11.7%"
+          "probability": "12.5%"
         },
         {
           "score": "1 : 0",
-          "probability": "11.2%"
+          "probability": "10.7%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.5%"
+          "note": "26.6%"
         },
         {
           "label": "1 球",
-          "note": "22.9%"
+          "note": "23.2%"
         },
         {
           "label": "小 2.5",
-          "note": "59.3%"
+          "note": "59.9%"
         },
         {
           "label": "双方进球",
-          "note": "47.0%"
+          "note": "46.2%"
         }
       ],
       "halftime": [
         {
           "label": "负 / 负",
-          "note": "21.6%"
-        },
-        {
-          "label": "胜 / 胜",
-          "note": "20.2%"
+          "note": "23.6%"
         },
         {
           "label": "平 / 平",
-          "note": "18.4%"
+          "note": "18.6%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "18.1%"
         },
         {
           "label": "平 / 负",
-          "note": "13.6%"
+          "note": "14.6%"
         }
       ],
       "risks": [
-        "对阵接近，平局与临场名单的影响会明显放大。",
         "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
       ]
     },
     {
-      "id": "c-1-canada-brazil",
-      "label": "Canada vs Brazil",
-      "shortMeta": "Group C",
+      "id": "c-4-brazil-haiti",
       "stage": "Group Stage",
-      "meta": "Group C · 2026-06-13 13:00 · Toronto",
-      "homeTeam": "Canada",
-      "awayTeam": "Brazil",
       "group": "Group C",
-      "venue": "Toronto, Canada",
-      "bestPick": "客胜",
-      "signal": "中高置信",
-      "modelDetail": "Baseline xG 0.95 : 1.51",
+      "groupId": "C",
+      "date": "2026-06-19",
+      "kickoff": "21:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Brazil",
+      "awayTeam": "Haiti",
+      "venue": "Philadelphia",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Brazil vs Haiti",
+      "shortMeta": "Group C",
+      "meta": "Group C · 2026-06-19 21:00 UTC-4 · Philadelphia",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 2.21 : 0.39",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 23.8
+          "value": 79.4
         },
         {
           "label": "平",
-          "value": 26
+          "value": 15.4
         },
         {
           "label": "客胜",
-          "value": 50.3
+          "value": 5.2
+        }
+      ],
+      "scores": [
+        {
+          "score": "2 : 0",
+          "probability": "18.1%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "16.3%"
+        },
+        {
+          "score": "3 : 0",
+          "probability": "13.3%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.1%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.8%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "51.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "29.0%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "55.2%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "22.4%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "11.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "2.7%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "c-5-scotland-brazil",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "groupId": "C",
+      "date": "2026-06-24",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Scotland",
+      "awayTeam": "Brazil",
+      "venue": "Miami (Miami Gardens)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Scotland vs Brazil",
+      "shortMeta": "Group C",
+      "meta": "Group C · 2026-06-24 18:00 UTC-4 · Miami (Miami Gardens)",
+      "bestPick": "客胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 0.93 : 1.36",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 25.7
+        },
+        {
+          "label": "平",
+          "value": 27.6
+        },
+        {
+          "label": "客胜",
+          "value": 46.7
         }
       ],
       "scores": [
         {
           "score": "0 : 1",
+          "probability": "13.8%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.8%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "10.2%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.6%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.3%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "60.0%"
+        },
+        {
+          "label": "双方进球",
+          "note": "44.9%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "28.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.3%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "16.5%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "14.4%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "c-6-morocco-haiti",
+      "stage": "Group Stage",
+      "group": "Group C",
+      "groupId": "C",
+      "date": "2026-06-24",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Morocco",
+      "awayTeam": "Haiti",
+      "venue": "Atlanta",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Morocco vs Haiti",
+      "shortMeta": "Group C",
+      "meta": "Group C · 2026-06-24 18:00 UTC-4 · Atlanta",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 2.03 : 0.47",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 74.5
+        },
+        {
+          "label": "平",
+          "value": 18.1
+        },
+        {
+          "label": "客胜",
+          "value": 7.4
+        }
+      ],
+      "scores": [
+        {
+          "score": "2 : 0",
+          "probability": "16.9%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "16.6%"
+        },
+        {
+          "score": "3 : 0",
+          "probability": "11.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.6%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "54.3%"
+        },
+        {
+          "label": "双方进球",
+          "note": "32.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "50.3%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "22.2%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "12.9%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "3.8%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "d-1-usa-paraguay",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "groupId": "D",
+      "date": "2026-06-12",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "USA",
+      "awayTeam": "Paraguay",
+      "venue": "Los Angeles (Inglewood)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "USA vs Paraguay",
+      "shortMeta": "Group D",
+      "meta": "Group D · 2026-06-12 18:00 UTC-7 · Los Angeles (Inglewood)",
+      "bestPick": "主胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 1.51 : 0.95",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 50.5
+        },
+        {
+          "label": "平",
+          "value": 25.9
+        },
+        {
+          "label": "客胜",
+          "value": 23.6
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
           "probability": "12.9%"
         },
         {
           "score": "1 : 1",
-          "probability": "12.3%"
+          "probability": "12.2%"
         },
         {
-          "score": "0 : 2",
-          "probability": "9.7%"
+          "score": "2 : 0",
+          "probability": "9.8%"
         }
       ],
       "goals": [
@@ -1069,25 +1818,25 @@
         },
         {
           "label": "双方进球",
-          "note": "47.8%"
+          "note": "47.7%"
         }
       ],
       "halftime": [
         {
-          "label": "负 / 负",
-          "note": "30.9%"
+          "label": "胜 / 胜",
+          "note": "31.1%"
         },
         {
-          "label": "平 / 负",
-          "note": "17.0%"
+          "label": "平 / 胜",
+          "note": "17.1%"
         },
         {
           "label": "平 / 平",
           "note": "16.6%"
         },
         {
-          "label": "胜 / 胜",
-          "note": "13.3%"
+          "label": "负 / 负",
+          "note": "13.2%"
         }
       ],
       "risks": [
@@ -1097,80 +1846,442 @@
       ]
     },
     {
-      "id": "c-2-denmark-south-korea",
-      "label": "Denmark vs South Korea",
-      "shortMeta": "Group C",
+      "id": "d-2-australia-uefa-path-c-winner",
       "stage": "Group Stage",
-      "meta": "Group C · 2026-06-13 20:00 · Vancouver",
-      "homeTeam": "Denmark",
-      "awayTeam": "South Korea",
-      "group": "Group C",
-      "venue": "Vancouver, Canada",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.35 : 1.02",
+      "group": "Group D",
+      "groupId": "D",
+      "date": "2026-06-13",
+      "kickoff": "21:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Australia",
+      "awayTeam": "UEFA Path C winner",
+      "venue": "Vancouver",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": true,
+      "label": "Australia vs UEFA Path C winner",
+      "shortMeta": "Group D",
+      "meta": "Group D · 2026-06-13 21:00 UTC-7 · Vancouver",
+      "bestPick": "小2.5",
+      "signal": "低置信",
+      "modelDetail": "Baseline xG 1.15 : 1.14",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 44.3
+          "value": 36.1
         },
         {
           "label": "平",
-          "value": 27.4
+          "value": 28.4
         },
         {
           "label": "客胜",
-          "value": 28.3
+          "value": 35.5
         }
       ],
       "scores": [
         {
           "score": "1 : 1",
-          "probability": "12.9%"
+          "probability": "13.3%"
         },
         {
           "score": "1 : 0",
-          "probability": "12.6%"
+          "probability": "11.6%"
         },
         {
           "score": "0 : 1",
-          "probability": "9.5%"
+          "probability": "11.5%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.2%"
+          "note": "26.5%"
         },
         {
           "label": "1 球",
-          "note": "22.1%"
+          "note": "23.1%"
         },
         {
           "label": "小 2.5",
-          "note": "57.7%"
+          "note": "59.7%"
         },
         {
           "label": "双方进球",
-          "note": "47.4%"
+          "note": "46.6%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "26.6%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "17.7%"
+          "note": "21.0%"
         },
         {
           "label": "负 / 负",
-          "note": "16.1%"
+          "note": "20.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.6%"
         },
         {
           "label": "平 / 胜",
-          "note": "15.6%"
+          "note": "13.4%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。"
+      ]
+    },
+    {
+      "id": "d-3-usa-australia",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "groupId": "D",
+      "date": "2026-06-19",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "USA",
+      "awayTeam": "Australia",
+      "venue": "Seattle",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "USA vs Australia",
+      "shortMeta": "Group D",
+      "meta": "Group D · 2026-06-19 12:00 UTC-7 · Seattle",
+      "bestPick": "主胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 1.53 : 0.92",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 51.5
+        },
+        {
+          "label": "平",
+          "value": 25.8
+        },
+        {
+          "label": "客胜",
+          "value": 22.7
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.2%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.2%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "10.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "47.1%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "31.8%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "17.4%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.6%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "12.6%"
+        }
+      ],
+      "risks": [
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "主办国在本国城市作赛时已纳入轻微场地熟悉度加成。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "d-4-uefa-path-c-winner-paraguay",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "groupId": "D",
+      "date": "2026-06-19",
+      "kickoff": "21:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "UEFA Path C winner",
+      "awayTeam": "Paraguay",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "UEFA Path C winner vs Paraguay",
+      "shortMeta": "Group D",
+      "meta": "Group D · 2026-06-19 21:00 UTC-7 · San Francisco Bay Area (Santa Clara)",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.29 : 1.04",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 42.1
+        },
+        {
+          "label": "平",
+          "value": 27.9
+        },
+        {
+          "label": "客胜",
+          "value": 30
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.1%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "12.5%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "10.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.4%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.7%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "58.8%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.9%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "25.0%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "17.1%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "15.1%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+      ]
+    },
+    {
+      "id": "d-5-uefa-path-c-winner-usa",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "groupId": "D",
+      "date": "2026-06-25",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "UEFA Path C winner",
+      "awayTeam": "USA",
+      "venue": "Los Angeles (Inglewood)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "UEFA Path C winner vs USA",
+      "shortMeta": "Group D",
+      "meta": "Group D · 2026-06-25 19:00 UTC-7 · Los Angeles (Inglewood)",
+      "bestPick": "小2.5",
+      "signal": "低置信",
+      "modelDetail": "Baseline xG 1.09 : 1.16",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 34.1
+        },
+        {
+          "label": "平",
+          "value": 28.7
+        },
+        {
+          "label": "客胜",
+          "value": 37.2
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.3%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "12.2%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "11.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.7%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.7%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "60.9%"
+        },
+        {
+          "label": "双方进球",
+          "note": "45.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "21.6%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "19.7%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "19.0%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "13.8%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。"
+      ]
+    },
+    {
+      "id": "d-6-paraguay-australia",
+      "stage": "Group Stage",
+      "group": "Group D",
+      "groupId": "D",
+      "date": "2026-06-25",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Paraguay",
+      "awayTeam": "Australia",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Paraguay vs Australia",
+      "shortMeta": "Group D",
+      "meta": "Group D · 2026-06-25 19:00 UTC-7 · San Francisco Bay Area (Santa Clara)",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.25 : 1.06",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 40.7
+        },
+        {
+          "label": "平",
+          "value": 28.1
+        },
+        {
+          "label": "客胜",
+          "value": 31.2
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.1%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "12.4%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "10.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.5%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.9%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "59.2%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.7%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "24.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.4%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "17.8%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "14.7%"
         }
       ],
       "risks": [
@@ -1180,26 +2291,121 @@
       ]
     },
     {
-      "id": "c-3-canada-denmark",
-      "label": "Canada vs Denmark",
-      "shortMeta": "Group C",
+      "id": "e-1-germany-cura-ao",
       "stage": "Group Stage",
-      "meta": "Group C · 2026-06-17 16:00 · Montreal",
-      "homeTeam": "Canada",
-      "awayTeam": "Denmark",
-      "group": "Group C",
-      "venue": "Montreal, Canada",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "低置信",
-      "modelDetail": "Baseline xG 1.23 : 1.20",
+      "group": "Group E",
+      "groupId": "E",
+      "date": "2026-06-14",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Germany",
+      "awayTeam": "Curaçao",
+      "venue": "Houston",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Germany vs Curaçao",
+      "shortMeta": "Group E",
+      "meta": "Group E · 2026-06-14 12:00 UTC-5 · Houston",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 2.15 : 0.43",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 36.9
+          "value": 77.5
         },
         {
           "label": "平",
-          "value": 27.4
+          "value": 16.4
+        },
+        {
+          "label": "客胜",
+          "value": 6.1
+        }
+      ],
+      "scores": [
+        {
+          "score": "2 : 0",
+          "probability": "17.5%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "16.3%"
+        },
+        {
+          "score": "3 : 0",
+          "probability": "12.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.2%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.7%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "52.3%"
+        },
+        {
+          "label": "双方进球",
+          "note": "31.0%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "53.3%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "22.3%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "11.8%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "3.1%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "e-2-ivory-coast-ecuador",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "groupId": "E",
+      "date": "2026-06-14",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Ivory Coast",
+      "awayTeam": "Ecuador",
+      "venue": "Philadelphia",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Ivory Coast vs Ecuador",
+      "shortMeta": "Group E",
+      "meta": "Group E · 2026-06-14 19:00 UTC-4 · Philadelphia",
+      "bestPick": "小2.5",
+      "signal": "低置信",
+      "modelDetail": "Baseline xG 1.16 : 1.15",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 36.1
+        },
+        {
+          "label": "平",
+          "value": 28.2
         },
         {
           "label": "客胜",
@@ -1209,47 +2415,47 @@
       "scores": [
         {
           "score": "1 : 1",
-          "probability": "13.0%"
+          "probability": "13.2%"
         },
         {
           "score": "1 : 0",
-          "probability": "10.8%"
+          "probability": "11.5%"
         },
         {
           "score": "0 : 1",
-          "probability": "10.6%"
+          "probability": "11.4%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.0%"
+          "note": "26.5%"
         },
         {
           "label": "1 球",
-          "note": "21.3%"
+          "note": "22.8%"
         },
         {
           "label": "小 2.5",
-          "note": "56.1%"
+          "note": "59.1%"
         },
         {
           "label": "双方进球",
-          "note": "49.5%"
+          "note": "47.1%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "21.7%"
+          "note": "21.0%"
         },
         {
           "label": "负 / 负",
-          "note": "20.8%"
+          "note": "20.7%"
         },
         {
           "label": "平 / 平",
-          "note": "17.4%"
+          "note": "18.4%"
         },
         {
           "label": "平 / 胜",
@@ -1263,293 +2469,139 @@
       ]
     },
     {
-      "id": "c-4-south-korea-brazil",
-      "label": "South Korea vs Brazil",
-      "shortMeta": "Group C",
+      "id": "e-3-germany-ivory-coast",
       "stage": "Group Stage",
-      "meta": "Group C · 2026-06-17 22:00 · Toronto",
-      "homeTeam": "South Korea",
-      "awayTeam": "Brazil",
-      "group": "Group C",
-      "venue": "Toronto, Canada",
-      "bestPick": "客胜",
-      "signal": "高置信",
-      "modelDetail": "Baseline xG 0.85 : 1.49",
-      "outcomes": [
-        {
-          "label": "主胜",
-          "value": 21.6
-        },
-        {
-          "label": "平",
-          "value": 26.3
-        },
-        {
-          "label": "客胜",
-          "value": 52
-        }
-      ],
-      "scores": [
-        {
-          "score": "0 : 1",
-          "probability": "14.3%"
-        },
-        {
-          "score": "1 : 1",
-          "probability": "12.2%"
-        },
-        {
-          "score": "0 : 2",
-          "probability": "10.6%"
-        }
-      ],
-      "goals": [
-        {
-          "label": "2 球",
-          "note": "26.4%"
-        },
-        {
-          "label": "1 球",
-          "note": "22.5%"
-        },
-        {
-          "label": "小 2.5",
-          "note": "58.5%"
-        },
-        {
-          "label": "双方进球",
-          "note": "44.5%"
-        }
-      ],
-      "halftime": [
-        {
-          "label": "负 / 负",
-          "note": "32.0%"
-        },
-        {
-          "label": "平 / 负",
-          "note": "17.8%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "17.4%"
-        },
-        {
-          "label": "胜 / 胜",
-          "note": "11.9%"
-        }
-      ],
-      "risks": [
-        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
-      ]
-    },
-    {
-      "id": "c-5-south-korea-canada",
-      "label": "South Korea vs Canada",
-      "shortMeta": "Group C",
-      "stage": "Group Stage",
-      "meta": "Group C · 2026-06-21 18:00 · Vancouver",
-      "homeTeam": "South Korea",
-      "awayTeam": "Canada",
-      "group": "Group C",
-      "venue": "Vancouver, Canada",
-      "bestPick": "小2.5",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.27 : 1.09",
-      "outcomes": [
-        {
-          "label": "主胜",
-          "value": 40.4
-        },
-        {
-          "label": "平",
-          "value": 27.8
-        },
-        {
-          "label": "客胜",
-          "value": 31.8
-        }
-      ],
-      "scores": [
-        {
-          "score": "1 : 1",
-          "probability": "13.1%"
-        },
-        {
-          "score": "1 : 0",
-          "probability": "12.0%"
-        },
-        {
-          "score": "0 : 1",
-          "probability": "10.3%"
-        }
-      ],
-      "goals": [
-        {
-          "label": "2 球",
-          "note": "26.3%"
-        },
-        {
-          "label": "1 球",
-          "note": "22.3%"
-        },
-        {
-          "label": "小 2.5",
-          "note": "58.0%"
-        },
-        {
-          "label": "双方进球",
-          "note": "47.7%"
-        }
-      ],
-      "halftime": [
-        {
-          "label": "胜 / 胜",
-          "note": "23.9%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "18.2%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "18.0%"
-        },
-        {
-          "label": "平 / 胜",
-          "note": "14.6%"
-        }
-      ],
-      "risks": [
-        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
-      ]
-    },
-    {
-      "id": "c-6-brazil-denmark",
-      "label": "Brazil vs Denmark",
-      "shortMeta": "Group C",
-      "stage": "Group Stage",
-      "meta": "Group C · 2026-06-21 22:00 · Montreal",
-      "homeTeam": "Brazil",
-      "awayTeam": "Denmark",
-      "group": "Group C",
-      "venue": "Montreal, Canada",
+      "group": "Group E",
+      "groupId": "E",
+      "date": "2026-06-20",
+      "kickoff": "16:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Germany",
+      "awayTeam": "Ivory Coast",
+      "venue": "Toronto",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": false,
+      "label": "Germany vs Ivory Coast",
+      "shortMeta": "Group E",
+      "meta": "Group E · 2026-06-20 16:00 UTC-4 · Toronto",
       "bestPick": "主胜",
       "signal": "高置信",
-      "modelDetail": "Baseline xG 1.63 : 0.90",
+      "modelDetail": "Baseline xG 1.64 : 0.83",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 54.5
+          "value": 56.5
         },
         {
           "label": "平",
-          "value": 24.7
+          "value": 24.6
         },
         {
           "label": "客胜",
-          "value": 20.8
+          "value": 19
         }
       ],
       "scores": [
         {
           "score": "1 : 0",
-          "probability": "13.0%"
+          "probability": "13.9%"
         },
         {
           "score": "1 : 1",
-          "probability": "11.7%"
-        },
-        {
-          "score": "2 : 0",
-          "probability": "10.6%"
-        }
-      ],
-      "goals": [
-        {
-          "label": "2 球",
-          "note": "25.5%"
-        },
-        {
-          "label": "3 球",
-          "note": "21.5%"
-        },
-        {
-          "label": "小 2.5",
-          "note": "53.6%"
-        },
-        {
-          "label": "双方进球",
-          "note": "47.7%"
-        }
-      ],
-      "halftime": [
-        {
-          "label": "胜 / 胜",
-          "note": "34.1%"
-        },
-        {
-          "label": "平 / 胜",
-          "note": "17.9%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "15.7%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "11.5%"
-        }
-      ],
-      "risks": [
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
-      ]
-    },
-    {
-      "id": "d-1-argentina-france",
-      "label": "Argentina vs France",
-      "shortMeta": "Group D",
-      "stage": "Group Stage",
-      "meta": "Group D · 2026-06-14 13:00 · New York",
-      "homeTeam": "Argentina",
-      "awayTeam": "France",
-      "group": "Group D",
-      "venue": "New York, United States",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.34 : 1.12",
-      "outcomes": [
-        {
-          "label": "主胜",
-          "value": 41.8
-        },
-        {
-          "label": "平",
-          "value": 27.1
-        },
-        {
-          "label": "客胜",
-          "value": 31.1
-        }
-      ],
-      "scores": [
-        {
-          "score": "1 : 1",
-          "probability": "12.8%"
-        },
-        {
-          "score": "1 : 0",
           "probability": "11.5%"
         },
         {
-          "score": "0 : 1",
-          "probability": "9.6%"
+          "score": "2 : 0",
+          "probability": "11.3%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.8%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.2%"
+        },
+        {
+          "label": "双方进球",
+          "note": "45.5%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "35.5%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "18.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.0%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "10.4%"
+        }
+      ],
+      "risks": [
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "e-4-ecuador-cura-ao",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "groupId": "E",
+      "date": "2026-06-20",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Ecuador",
+      "awayTeam": "Curaçao",
+      "venue": "Kansas City",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Ecuador vs Curaçao",
+      "shortMeta": "Group E",
+      "meta": "Group E · 2026-06-20 19:00 UTC-5 · Kansas City",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.83 : 0.62",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 66.4
+        },
+        {
+          "label": "平",
+          "value": 21.6
+        },
+        {
+          "label": "客胜",
+          "value": 12
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.7%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "14.4%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "9.8%"
         }
       ],
       "goals": [
@@ -1567,50 +2619,56 @@
         },
         {
           "label": "双方进球",
-          "note": "49.6%"
+          "note": "39.0%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "25.0%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "17.9%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "17.1%"
+          "note": "43.3%"
         },
         {
           "label": "平 / 胜",
+          "note": "20.9%"
+        },
+        {
+          "label": "平 / 平",
           "note": "14.7%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "6.4%"
         }
       ],
       "risks": [
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
       ]
     },
     {
-      "id": "d-2-england-uruguay",
-      "label": "England vs Uruguay",
-      "shortMeta": "Group D",
+      "id": "e-5-cura-ao-ivory-coast",
       "stage": "Group Stage",
-      "meta": "Group D · 2026-06-14 20:00 · Atlanta",
-      "homeTeam": "England",
-      "awayTeam": "Uruguay",
-      "group": "Group D",
-      "venue": "Atlanta, United States",
-      "bestPick": "主胜",
+      "group": "Group E",
+      "groupId": "E",
+      "date": "2026-06-25",
+      "kickoff": "16:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Curaçao",
+      "awayTeam": "Ivory Coast",
+      "venue": "Philadelphia",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Curaçao vs Ivory Coast",
+      "shortMeta": "Group E",
+      "meta": "Group E · 2026-06-25 16:00 UTC-4 · Philadelphia",
+      "bestPick": "客胜",
       "signal": "中高置信",
-      "modelDetail": "Baseline xG 1.42 : 1.01",
+      "modelDetail": "Baseline xG 0.69 : 1.45",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 46.5
+          "value": 17.7
         },
         {
           "label": "平",
@@ -1618,57 +2676,146 @@
         },
         {
           "label": "客胜",
-          "value": 26.7
+          "value": 55.5
         }
       ],
       "scores": [
         {
-          "score": "1 : 1",
-          "probability": "12.6%"
+          "score": "0 : 1",
+          "probability": "17.1%"
         },
         {
-          "score": "1 : 0",
-          "probability": "12.6%"
+          "score": "0 : 2",
+          "probability": "12.4%"
         },
         {
-          "score": "2 : 1",
-          "probability": "9.0%"
+          "score": "0 : 0",
+          "probability": "11.8%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.0%"
+          "note": "26.9%"
         },
         {
           "label": "1 球",
-          "note": "21.5%"
+          "note": "25.2%"
         },
         {
           "label": "小 2.5",
-          "note": "56.4%"
+          "note": "63.9%"
         },
         {
           "label": "双方进球",
-          "note": "48.0%"
+          "note": "38.0%"
         }
       ],
       "halftime": [
         {
-          "label": "胜 / 胜",
-          "note": "28.2%"
+          "label": "负 / 负",
+          "note": "34.2%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "19.4%"
         },
         {
           "label": "平 / 平",
-          "note": "17.2%"
+          "note": "18.9%"
         },
         {
-          "label": "平 / 胜",
-          "note": "16.1%"
+          "label": "胜 / 胜",
+          "note": "9.5%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "e-6-ecuador-germany",
+      "stage": "Group Stage",
+      "group": "Group E",
+      "groupId": "E",
+      "date": "2026-06-25",
+      "kickoff": "16:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Ecuador",
+      "awayTeam": "Germany",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Ecuador vs Germany",
+      "shortMeta": "Group E",
+      "meta": "Group E · 2026-06-25 16:00 UTC-4 · New York/New Jersey (East Rutherford)",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 0.98 : 1.34",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 27.4
         },
+        {
+          "label": "平",
+          "value": 27.7
+        },
+        {
+          "label": "客胜",
+          "value": 44.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "13.2%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.9%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "9.9%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.5%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.8%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "59.1%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.1%"
+        }
+      ],
+      "halftime": [
         {
           "label": "负 / 负",
-          "note": "15.1%"
+          "note": "27.0%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.2%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "16.0%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "15.4%"
         }
       ],
       "risks": [
@@ -1678,44 +2825,228 @@
       ]
     },
     {
-      "id": "d-3-argentina-england",
-      "label": "Argentina vs England",
-      "shortMeta": "Group D",
+      "id": "f-1-netherlands-japan",
       "stage": "Group Stage",
-      "meta": "Group D · 2026-06-18 16:00 · Miami",
-      "homeTeam": "Argentina",
-      "awayTeam": "England",
-      "group": "Group D",
-      "venue": "Miami, United States",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.38 : 1.07",
+      "group": "Group F",
+      "groupId": "F",
+      "date": "2026-06-14",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Netherlands",
+      "awayTeam": "Japan",
+      "venue": "Dallas (Arlington)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Netherlands vs Japan",
+      "shortMeta": "Group F",
+      "meta": "Group F · 2026-06-14 15:00 UTC-5 · Dallas (Arlington)",
+      "bestPick": "主胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 1.51 : 0.93",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 43.9
+          "value": 51
         },
         {
           "label": "平",
-          "value": 26.9
+          "value": 26
         },
         {
           "label": "客胜",
-          "value": 29.1
+          "value": 23.1
         }
       ],
       "scores": [
         {
-          "score": "1 : 1",
-          "probability": "12.7%"
+          "score": "1 : 0",
+          "probability": "13.2%"
         },
         {
+          "score": "1 : 1",
+          "probability": "12.2%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "10.0%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.3%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.9%"
+        },
+        {
+          "label": "双方进球",
+          "note": "47.1%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "31.4%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "17.3%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.7%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "12.9%"
+        }
+      ],
+      "risks": [
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "f-2-uefa-path-b-winner-tunisia",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "groupId": "F",
+      "date": "2026-06-14",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "UEFA Path B winner",
+      "awayTeam": "Tunisia",
+      "venue": "Monterrey (Guadalupe)",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": true,
+      "label": "UEFA Path B winner vs Tunisia",
+      "shortMeta": "Group F",
+      "meta": "Group F · 2026-06-14 20:00 UTC-6 · Monterrey (Guadalupe)",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.60 : 0.77",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 57.1
+        },
+        {
+          "label": "平",
+          "value": 24.9
+        },
+        {
+          "label": "客胜",
+          "value": 17.9
+        }
+      ],
+      "scores": [
+        {
           "score": "1 : 0",
+          "probability": "15.0%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "12.0%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.3%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "57.8%"
+        },
+        {
+          "label": "双方进球",
+          "note": "42.9%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "35.8%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "19.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.6%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "9.7%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "f-3-netherlands-uefa-path-b-winner",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "groupId": "F",
+      "date": "2026-06-20",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Netherlands",
+      "awayTeam": "UEFA Path B winner",
+      "venue": "Houston",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "Netherlands vs UEFA Path B winner",
+      "shortMeta": "Group F",
+      "meta": "Group F · 2026-06-20 12:00 UTC-5 · Houston",
+      "bestPick": "主胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 1.57 : 0.88",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 53.4
+        },
+        {
+          "label": "平",
+          "value": 25.4
+        },
+        {
+          "label": "客胜",
+          "value": 21.2
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.5%"
+        },
+        {
+          "score": "1 : 1",
           "probability": "11.9%"
         },
         {
-          "score": "0 : 1",
-          "probability": "9.2%"
+          "score": "2 : 0",
+          "probability": "10.6%"
         }
       ],
       "goals": [
@@ -1729,137 +3060,149 @@
         },
         {
           "label": "小 2.5",
-          "note": "55.7%"
+          "note": "55.6%"
         },
         {
           "label": "双方进球",
-          "note": "49.2%"
+          "note": "46.5%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "26.4%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "17.1%"
-        },
-        {
-          "label": "负 / 负",
-          "note": "16.7%"
+          "note": "33.2%"
         },
         {
           "label": "平 / 胜",
-          "note": "15.3%"
+          "note": "17.9%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.4%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "11.8%"
         }
       ],
       "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
         "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
       ]
     },
     {
-      "id": "d-4-uruguay-france",
-      "label": "Uruguay vs France",
-      "shortMeta": "Group D",
+      "id": "f-4-tunisia-japan",
       "stage": "Group Stage",
-      "meta": "Group D · 2026-06-18 22:00 · New York",
-      "homeTeam": "Uruguay",
-      "awayTeam": "France",
-      "group": "Group D",
-      "venue": "New York, United States",
-      "bestPick": "小2.5",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.06 : 1.28",
+      "group": "Group F",
+      "groupId": "F",
+      "date": "2026-06-20",
+      "kickoff": "22:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "Tunisia",
+      "awayTeam": "Japan",
+      "venue": "Monterrey (Guadalupe)",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": false,
+      "label": "Tunisia vs Japan",
+      "shortMeta": "Group F",
+      "meta": "Group F · 2026-06-20 22:00 UTC-6 · Monterrey (Guadalupe)",
+      "bestPick": "客胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 0.79 : 1.41",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 30.8
+          "value": 20.9
         },
         {
           "label": "平",
-          "value": 27.9
+          "value": 27.3
         },
         {
           "label": "客胜",
-          "value": 41.4
+          "value": 51.8
         }
       ],
       "scores": [
         {
-          "score": "1 : 1",
-          "probability": "13.1%"
+          "score": "0 : 1",
+          "probability": "15.6%"
         },
         {
-          "score": "0 : 1",
+          "score": "1 : 1",
           "probability": "12.3%"
         },
         {
-          "score": "1 : 0",
-          "probability": "10.2%"
+          "score": "0 : 0",
+          "probability": "11.1%"
         }
       ],
       "goals": [
         {
           "label": "2 球",
-          "note": "26.4%"
+          "note": "26.8%"
         },
         {
           "label": "1 球",
-          "note": "22.5%"
+          "note": "24.3%"
         },
         {
           "label": "小 2.5",
-          "note": "58.6%"
+          "note": "62.2%"
         },
         {
           "label": "双方进球",
-          "note": "47.2%"
+          "note": "41.3%"
         }
       ],
       "halftime": [
         {
           "label": "负 / 负",
-          "note": "24.5%"
+          "note": "31.6%"
         },
         {
           "label": "平 / 平",
-          "note": "18.1%"
-        },
-        {
-          "label": "胜 / 胜",
-          "note": "17.6%"
+          "note": "18.7%"
         },
         {
           "label": "平 / 负",
-          "note": "14.9%"
+          "note": "18.2%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "11.5%"
         }
       ],
       "risks": [
         "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
       ]
     },
     {
-      "id": "d-5-uruguay-argentina",
-      "label": "Uruguay vs Argentina",
-      "shortMeta": "Group D",
+      "id": "f-5-japan-uefa-path-b-winner",
       "stage": "Group Stage",
-      "meta": "Group D · 2026-06-22 18:00 · Atlanta",
-      "homeTeam": "Uruguay",
-      "awayTeam": "Argentina",
-      "group": "Group D",
-      "venue": "Atlanta, United States",
+      "group": "Group F",
+      "groupId": "F",
+      "date": "2026-06-25",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Japan",
+      "awayTeam": "UEFA Path B winner",
+      "venue": "Dallas (Arlington)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "Japan vs UEFA Path B winner",
+      "shortMeta": "Group F",
+      "meta": "Group F · 2026-06-25 18:00 UTC-5 · Dallas (Arlington)",
       "bestPick": "小2.5",
       "signal": "中置信",
-      "modelDetail": "Baseline xG 1.01 : 1.31",
+      "modelDetail": "Baseline xG 1.29 : 1.05",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 28.9
+          "value": 42.1
         },
         {
           "label": "平",
@@ -1867,7 +3210,7 @@
         },
         {
           "label": "客胜",
-          "value": 43.4
+          "value": 30
         }
       ],
       "scores": [
@@ -1876,12 +3219,12 @@
           "probability": "13.0%"
         },
         {
-          "score": "0 : 1",
-          "probability": "12.8%"
+          "score": "1 : 0",
+          "probability": "12.5%"
         },
         {
-          "score": "1 : 0",
-          "probability": "9.9%"
+          "score": "0 : 1",
+          "probability": "10.1%"
         }
       ],
       "goals": [
@@ -1891,80 +3234,175 @@
         },
         {
           "label": "1 球",
-          "note": "22.7%"
+          "note": "22.6%"
         },
         {
           "label": "小 2.5",
-          "note": "58.9%"
+          "note": "58.6%"
         },
         {
           "label": "双方进球",
-          "note": "46.6%"
+          "note": "47.1%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "25.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.1%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "17.1%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "15.1%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+      ]
+    },
+    {
+      "id": "f-6-tunisia-netherlands",
+      "stage": "Group Stage",
+      "group": "Group F",
+      "groupId": "F",
+      "date": "2026-06-25",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Tunisia",
+      "awayTeam": "Netherlands",
+      "venue": "Kansas City",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Tunisia vs Netherlands",
+      "shortMeta": "Group F",
+      "meta": "Group F · 2026-06-25 18:00 UTC-5 · Kansas City",
+      "bestPick": "客胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 0.57 : 1.63",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 12.7
+        },
+        {
+          "label": "平",
+          "value": 24
+        },
+        {
+          "label": "客胜",
+          "value": 63.3
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "18.0%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "14.7%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "11.0%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.8%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.3%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.1%"
+        },
+        {
+          "label": "双方进球",
+          "note": "35.1%"
         }
       ],
       "halftime": [
         {
           "label": "负 / 负",
-          "note": "25.9%"
-        },
-        {
-          "label": "平 / 平",
-          "note": "18.2%"
-        },
-        {
-          "label": "胜 / 胜",
-          "note": "16.4%"
+          "note": "40.2%"
         },
         {
           "label": "平 / 负",
-          "note": "15.5%"
+          "note": "21.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "17.2%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "6.7%"
         }
       ],
       "risks": [
         "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
-        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
-        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
       ]
     },
     {
-      "id": "d-6-france-england",
-      "label": "France vs England",
-      "shortMeta": "Group D",
+      "id": "g-1-belgium-egypt",
       "stage": "Group Stage",
-      "meta": "Group D · 2026-06-22 22:00 · Miami",
-      "homeTeam": "France",
-      "awayTeam": "England",
-      "group": "Group D",
-      "venue": "Miami, United States",
-      "bestPick": "比分关注 1 : 1",
-      "signal": "中置信",
-      "modelDetail": "Baseline xG 1.33 : 1.10",
+      "group": "Group G",
+      "groupId": "G",
+      "date": "2026-06-15",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Belgium",
+      "awayTeam": "Egypt",
+      "venue": "Seattle",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Belgium vs Egypt",
+      "shortMeta": "Group G",
+      "meta": "Group G · 2026-06-15 12:00 UTC-7 · Seattle",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.68 : 0.76",
       "outcomes": [
         {
           "label": "主胜",
-          "value": 41.9
+          "value": 59.4
         },
         {
           "label": "平",
-          "value": 27.2
+          "value": 24
         },
         {
           "label": "客胜",
-          "value": 30.9
+          "value": 16.6
         }
       ],
       "scores": [
         {
-          "score": "1 : 1",
-          "probability": "12.9%"
-        },
-        {
           "score": "1 : 0",
-          "probability": "11.7%"
+          "probability": "14.7%"
         },
         {
-          "score": "0 : 1",
-          "probability": "9.7%"
+          "score": "2 : 0",
+          "probability": "12.3%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.1%"
         }
       ],
       "goals": [
@@ -1978,29 +3416,207 @@
         },
         {
           "label": "小 2.5",
-          "note": "56.0%"
+          "note": "56.1%"
         },
         {
           "label": "双方进球",
-          "note": "49.2%"
+          "note": "43.1%"
         }
       ],
       "halftime": [
         {
           "label": "胜 / 胜",
-          "note": "25.0%"
+          "note": "37.7%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "19.4%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "15.9%"
         },
         {
           "label": "负 / 负",
+          "note": "9.0%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "g-2-iran-new-zealand",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "groupId": "G",
+      "date": "2026-06-15",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Iran",
+      "awayTeam": "New Zealand",
+      "venue": "Los Angeles (Inglewood)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Iran vs New Zealand",
+      "shortMeta": "Group G",
+      "meta": "Group G · 2026-06-15 18:00 UTC-7 · Los Angeles (Inglewood)",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.66 : 0.73",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 59.7
+        },
+        {
+          "label": "平",
+          "value": 24.1
+        },
+        {
+          "label": "客胜",
+          "value": 16.2
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.2%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "12.6%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.2%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.9%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "57.3%"
+        },
+        {
+          "label": "双方进球",
+          "note": "41.9%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "37.8%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "19.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "8.7%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "g-3-belgium-iran",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "groupId": "G",
+      "date": "2026-06-21",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Belgium",
+      "awayTeam": "Iran",
+      "venue": "Los Angeles (Inglewood)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Belgium vs Iran",
+      "shortMeta": "Group G",
+      "meta": "Group G · 2026-06-21 12:00 UTC-7 · Los Angeles (Inglewood)",
+      "bestPick": "主胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 1.53 : 0.88",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 52.7
+        },
+        {
+          "label": "平",
+          "value": 25.8
+        },
+        {
+          "label": "客胜",
+          "value": 21.5
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.8%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.1%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "10.6%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.1%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.6%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "56.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "45.8%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "32.6%"
+        },
+        {
+          "label": "平 / 胜",
           "note": "17.8%"
         },
         {
           "label": "平 / 平",
-          "note": "17.3%"
+          "note": "16.8%"
         },
         {
-          "label": "平 / 胜",
-          "note": "14.8%"
+          "label": "负 / 负",
+          "note": "11.9%"
         }
       ],
       "risks": [
@@ -2008,6 +3624,3265 @@
         "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
       ]
+    },
+    {
+      "id": "g-4-new-zealand-egypt",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "groupId": "G",
+      "date": "2026-06-21",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "New Zealand",
+      "awayTeam": "Egypt",
+      "venue": "Vancouver",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": false,
+      "label": "New Zealand vs Egypt",
+      "shortMeta": "Group G",
+      "meta": "Group G · 2026-06-21 18:00 UTC-7 · Vancouver",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 0.92 : 1.28",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 26.6
+        },
+        {
+          "label": "平",
+          "value": 28.5
+        },
+        {
+          "label": "客胜",
+          "value": 44.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "14.2%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "13.0%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "11.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.8%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.3%"
+        },
+        {
+          "label": "双方进球",
+          "note": "43.4%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "26.7%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "19.3%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "16.2%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "14.9%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "g-5-egypt-iran",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "groupId": "G",
+      "date": "2026-06-26",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Egypt",
+      "awayTeam": "Iran",
+      "venue": "Seattle",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Egypt vs Iran",
+      "shortMeta": "Group G",
+      "meta": "Group G · 2026-06-26 20:00 UTC-7 · Seattle",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.08 : 1.19",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 32.9
+        },
+        {
+          "label": "平",
+          "value": 28.5
+        },
+        {
+          "label": "客胜",
+          "value": 38.6
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.3%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "12.3%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "11.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.6%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "60.4%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.0%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "22.6%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "18.9%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.8%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "14.2%"
+        }
+      ],
+      "risks": [
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+      ]
+    },
+    {
+      "id": "g-6-new-zealand-belgium",
+      "stage": "Group Stage",
+      "group": "Group G",
+      "groupId": "G",
+      "date": "2026-06-26",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "New Zealand",
+      "awayTeam": "Belgium",
+      "venue": "Vancouver",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": false,
+      "label": "New Zealand vs Belgium",
+      "shortMeta": "Group G",
+      "meta": "Group G · 2026-06-26 20:00 UTC-7 · Vancouver",
+      "bestPick": "客胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 0.51 : 1.65",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 11.2
+        },
+        {
+          "label": "平",
+          "value": 23.6
+        },
+        {
+          "label": "客胜",
+          "value": 65.3
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "19.0%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "15.6%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "11.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.9%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "63.4%"
+        },
+        {
+          "label": "双方进球",
+          "note": "32.4%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "41.7%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "21.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "17.3%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "5.8%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "h-1-spain-cape-verde",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "groupId": "H",
+      "date": "2026-06-15",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Spain",
+      "awayTeam": "Cape Verde",
+      "venue": "Atlanta",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Spain vs Cape Verde",
+      "shortMeta": "Group H",
+      "meta": "Group H · 2026-06-15 12:00 UTC-4 · Atlanta",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.91 : 0.61",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 68.6
+        },
+        {
+          "label": "平",
+          "value": 20.5
+        },
+        {
+          "label": "客胜",
+          "value": 10.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.4%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "14.7%"
+        },
+        {
+          "score": "3 : 0",
+          "probability": "9.4%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.5%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.5%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "53.9%"
+        },
+        {
+          "label": "双方进球",
+          "note": "38.8%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "45.3%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "21.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "13.9%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "5.8%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "h-2-saudi-arabia-uruguay",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "groupId": "H",
+      "date": "2026-06-15",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Saudi Arabia",
+      "awayTeam": "Uruguay",
+      "venue": "Miami (Miami Gardens)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Saudi Arabia vs Uruguay",
+      "shortMeta": "Group H",
+      "meta": "Group H · 2026-06-15 18:00 UTC-4 · Miami (Miami Gardens)",
+      "bestPick": "客胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 0.63 : 1.56",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 15
+        },
+        {
+          "label": "平",
+          "value": 25.2
+        },
+        {
+          "label": "客胜",
+          "value": 59.8
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "17.4%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "13.6%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "11.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.8%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.4%"
+        },
+        {
+          "label": "双方进球",
+          "note": "37.1%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "37.5%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "20.3%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "17.8%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "8.0%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "h-3-spain-saudi-arabia",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "groupId": "H",
+      "date": "2026-06-21",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Spain",
+      "awayTeam": "Saudi Arabia",
+      "venue": "Atlanta",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Spain vs Saudi Arabia",
+      "shortMeta": "Group H",
+      "meta": "Group H · 2026-06-21 12:00 UTC-4 · Atlanta",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 2.01 : 0.52",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 72.6
+        },
+        {
+          "label": "平",
+          "value": 18.8
+        },
+        {
+          "label": "客胜",
+          "value": 8.6
+        }
+      ],
+      "scores": [
+        {
+          "score": "2 : 0",
+          "probability": "16.0%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "15.9%"
+        },
+        {
+          "score": "3 : 0",
+          "probability": "10.7%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.5%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.5%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "53.5%"
+        },
+        {
+          "label": "双方进球",
+          "note": "35.4%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "48.8%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "21.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "13.1%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "4.5%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "h-4-uruguay-cape-verde",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "groupId": "H",
+      "date": "2026-06-21",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Uruguay",
+      "awayTeam": "Cape Verde",
+      "venue": "Miami (Miami Gardens)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Uruguay vs Cape Verde",
+      "shortMeta": "Group H",
+      "meta": "Group H · 2026-06-21 18:00 UTC-4 · Miami (Miami Gardens)",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.74 : 0.69",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 62.6
+        },
+        {
+          "label": "平",
+          "value": 23
+        },
+        {
+          "label": "客胜",
+          "value": 14.4
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.3%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "13.3%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "10.6%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.0%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "56.2%"
+        },
+        {
+          "label": "双方进球",
+          "note": "41.0%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "40.2%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "20.2%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "15.5%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "7.7%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "h-5-cape-verde-saudi-arabia",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "groupId": "H",
+      "date": "2026-06-26",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Cape Verde",
+      "awayTeam": "Saudi Arabia",
+      "venue": "Houston",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Cape Verde vs Saudi Arabia",
+      "shortMeta": "Group H",
+      "meta": "Group H · 2026-06-26 19:00 UTC-5 · Houston",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.31 : 0.98",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 44.1
+        },
+        {
+          "label": "平",
+          "value": 27.9
+        },
+        {
+          "label": "客胜",
+          "value": 27.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.2%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "13.0%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "10.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.5%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.1%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "59.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "45.7%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "26.4%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.4%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "15.8%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "15.8%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "h-6-uruguay-spain",
+      "stage": "Group Stage",
+      "group": "Group H",
+      "groupId": "H",
+      "date": "2026-06-26",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "Uruguay",
+      "awayTeam": "Spain",
+      "venue": "Guadalajara (Zapopan)",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": false,
+      "label": "Uruguay vs Spain",
+      "shortMeta": "Group H",
+      "meta": "Group H · 2026-06-26 18:00 UTC-6 · Guadalajara (Zapopan)",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.12 : 1.23",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 33.5
+        },
+        {
+          "label": "平",
+          "value": 28
+        },
+        {
+          "label": "客胜",
+          "value": 38.6
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.1%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "11.7%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "10.7%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.3%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "58.2%"
+        },
+        {
+          "label": "双方进球",
+          "note": "47.7%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "22.7%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "19.3%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.1%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "14.0%"
+        }
+      ],
+      "risks": [
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+      ]
+    },
+    {
+      "id": "i-1-france-senegal",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "groupId": "I",
+      "date": "2026-06-16",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "France",
+      "awayTeam": "Senegal",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "France vs Senegal",
+      "shortMeta": "Group I",
+      "meta": "Group I · 2026-06-16 15:00 UTC-4 · New York/New Jersey (East Rutherford)",
+      "bestPick": "主胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 1.59 : 0.88",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 54.1
+        },
+        {
+          "label": "平",
+          "value": 25.1
+        },
+        {
+          "label": "客胜",
+          "value": 20.8
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.5%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.8%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "10.7%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.8%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.2%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "33.7%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "18.0%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "11.5%"
+        }
+      ],
+      "risks": [
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "i-2-ic-path-2-winner-norway",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "groupId": "I",
+      "date": "2026-06-16",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "IC Path 2 winner",
+      "awayTeam": "Norway",
+      "venue": "Boston (Foxborough)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "IC Path 2 winner vs Norway",
+      "shortMeta": "Group I",
+      "meta": "Group I · 2026-06-16 18:00 UTC-4 · Boston (Foxborough)",
+      "bestPick": "客胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 0.79 : 1.43",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 20.9
+        },
+        {
+          "label": "平",
+          "value": 27.1
+        },
+        {
+          "label": "客胜",
+          "value": 52
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "15.5%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.3%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "11.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.8%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.1%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "61.8%"
+        },
+        {
+          "label": "双方进球",
+          "note": "41.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "31.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.5%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "18.2%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "11.4%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "i-3-france-ic-path-2-winner",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "groupId": "I",
+      "date": "2026-06-22",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "France",
+      "awayTeam": "IC Path 2 winner",
+      "venue": "Philadelphia",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "France vs IC Path 2 winner",
+      "shortMeta": "Group I",
+      "meta": "Group I · 2026-06-22 17:00 UTC-4 · Philadelphia",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.92 : 0.60",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 69
+        },
+        {
+          "label": "平",
+          "value": 20.3
+        },
+        {
+          "label": "客胜",
+          "value": 10.7
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.5%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "14.9%"
+        },
+        {
+          "score": "3 : 0",
+          "probability": "9.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.6%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.5%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "53.9%"
+        },
+        {
+          "label": "双方进球",
+          "note": "38.4%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "45.6%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "21.2%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "13.8%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "5.6%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "i-4-norway-senegal",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "groupId": "I",
+      "date": "2026-06-22",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Norway",
+      "awayTeam": "Senegal",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Norway vs Senegal",
+      "shortMeta": "Group I",
+      "meta": "Group I · 2026-06-22 20:00 UTC-4 · New York/New Jersey (East Rutherford)",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.33 : 1.01",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 44
+        },
+        {
+          "label": "平",
+          "value": 27.6
+        },
+        {
+          "label": "客胜",
+          "value": 28.4
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "12.9%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "12.8%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "9.7%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.4%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.5%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "58.5%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.8%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "26.4%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.0%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "16.1%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "15.6%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "i-5-norway-france",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "groupId": "I",
+      "date": "2026-06-26",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Norway",
+      "awayTeam": "France",
+      "venue": "Boston (Foxborough)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Norway vs France",
+      "shortMeta": "Group I",
+      "meta": "Group I · 2026-06-26 15:00 UTC-4 · Boston (Foxborough)",
+      "bestPick": "小2.5",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.04 : 1.28",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 30.2
+        },
+        {
+          "label": "平",
+          "value": 28
+        },
+        {
+          "label": "客胜",
+          "value": 41.8
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.1%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "12.6%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "10.2%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.5%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.8%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "59.1%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "24.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.3%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "17.2%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "15.1%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "i-6-senegal-ic-path-2-winner",
+      "stage": "Group Stage",
+      "group": "Group I",
+      "groupId": "I",
+      "date": "2026-06-26",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Senegal",
+      "awayTeam": "IC Path 2 winner",
+      "venue": "Toronto",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": true,
+      "label": "Senegal vs IC Path 2 winner",
+      "shortMeta": "Group I",
+      "meta": "Group I · 2026-06-26 15:00 UTC-4 · Toronto",
+      "bestPick": "主胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 1.57 : 0.80",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 55.5
+        },
+        {
+          "label": "平",
+          "value": 25.3
+        },
+        {
+          "label": "客胜",
+          "value": 19.2
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "14.6%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.8%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "11.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.2%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.1%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "57.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "43.7%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "34.6%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "18.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.8%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "10.5%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "j-1-argentina-algeria",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "groupId": "J",
+      "date": "2026-06-16",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Argentina",
+      "awayTeam": "Algeria",
+      "venue": "Kansas City",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Argentina vs Algeria",
+      "shortMeta": "Group J",
+      "meta": "Group J · 2026-06-16 20:00 UTC-5 · Kansas City",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.80 : 0.71",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 63.7
+        },
+        {
+          "label": "平",
+          "value": 22.3
+        },
+        {
+          "label": "客胜",
+          "value": 14.1
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "14.7%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "13.2%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "10.4%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.6%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "54.1%"
+        },
+        {
+          "label": "双方进球",
+          "note": "42.3%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "41.2%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "20.1%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "14.7%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "7.6%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "j-2-austria-jordan",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "groupId": "J",
+      "date": "2026-06-16",
+      "kickoff": "21:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Austria",
+      "awayTeam": "Jordan",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Austria vs Jordan",
+      "shortMeta": "Group J",
+      "meta": "Group J · 2026-06-16 21:00 UTC-7 · San Francisco Bay Area (Santa Clara)",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.96 : 0.51",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 72
+        },
+        {
+          "label": "平",
+          "value": 19.3
+        },
+        {
+          "label": "客胜",
+          "value": 8.7
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "16.6%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "16.2%"
+        },
+        {
+          "score": "3 : 0",
+          "probability": "10.6%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.8%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.2%"
+        },
+        {
+          "label": "双方进球",
+          "note": "34.4%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "48.0%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "21.9%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "13.6%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "4.5%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "j-3-argentina-austria",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "groupId": "J",
+      "date": "2026-06-22",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Argentina",
+      "awayTeam": "Austria",
+      "venue": "Dallas (Arlington)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Argentina vs Austria",
+      "shortMeta": "Group J",
+      "meta": "Group J · 2026-06-22 12:00 UTC-5 · Dallas (Arlington)",
+      "bestPick": "主胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.45 : 1.01",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 47.1
+        },
+        {
+          "label": "平",
+          "value": 26.5
+        },
+        {
+          "label": "客胜",
+          "value": 26.4
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "12.5%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "12.4%"
+        },
+        {
+          "score": "2 : 1",
+          "probability": "9.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.9%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.5%"
+        },
+        {
+          "label": "双方进球",
+          "note": "48.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "28.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.9%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "16.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "14.9%"
+        }
+      ],
+      "risks": [
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "j-4-jordan-algeria",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "groupId": "J",
+      "date": "2026-06-22",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "Jordan",
+      "awayTeam": "Algeria",
+      "venue": "San Francisco Bay Area (Santa Clara)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Jordan vs Algeria",
+      "shortMeta": "Group J",
+      "meta": "Group J · 2026-06-22 20:00 UTC-7 · San Francisco Bay Area (Santa Clara)",
+      "bestPick": "客胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 0.85 : 1.33",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 23.9
+        },
+        {
+          "label": "平",
+          "value": 28.2
+        },
+        {
+          "label": "客胜",
+          "value": 47.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "15.1%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.8%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "11.3%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.7%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.9%"
+        },
+        {
+          "label": "双方进球",
+          "note": "42.1%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "28.8%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "19.3%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "17.2%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "13.2%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "j-5-algeria-austria",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "groupId": "J",
+      "date": "2026-06-27",
+      "kickoff": "21:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Algeria",
+      "awayTeam": "Austria",
+      "venue": "Kansas City",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Algeria vs Austria",
+      "shortMeta": "Group J",
+      "meta": "Group J · 2026-06-27 21:00 UTC-5 · Kansas City",
+      "bestPick": "客胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 0.87 : 1.38",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 23.6
+        },
+        {
+          "label": "平",
+          "value": 27.6
+        },
+        {
+          "label": "客胜",
+          "value": 48.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "14.6%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.6%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "10.6%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.7%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.8%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "61.1%"
+        },
+        {
+          "label": "双方进球",
+          "note": "43.3%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "29.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.5%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "17.3%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "13.0%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "j-6-jordan-argentina",
+      "stage": "Group Stage",
+      "group": "Group J",
+      "groupId": "J",
+      "date": "2026-06-27",
+      "kickoff": "21:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Jordan",
+      "awayTeam": "Argentina",
+      "venue": "Dallas (Arlington)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Jordan vs Argentina",
+      "shortMeta": "Group J",
+      "meta": "Group J · 2026-06-27 21:00 UTC-5 · Dallas (Arlington)",
+      "bestPick": "客胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 0.34 : 1.77",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 6.5
+        },
+        {
+          "label": "平",
+          "value": 20.6
+        },
+        {
+          "label": "客胜",
+          "value": 72.9
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "21.4%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "18.9%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "12.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "27.0%"
+        },
+        {
+          "label": "1 球",
+          "note": "25.6%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "64.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "24.0%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "47.9%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "23.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.2%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "3.3%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "k-1-portugal-ic-path-1-winner",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "groupId": "K",
+      "date": "2026-06-17",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Portugal",
+      "awayTeam": "IC Path 1 winner",
+      "venue": "Houston",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "Portugal vs IC Path 1 winner",
+      "shortMeta": "Group K",
+      "meta": "Group K · 2026-06-17 12:00 UTC-5 · Houston",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.78 : 0.70",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 63.5
+        },
+        {
+          "label": "平",
+          "value": 22.5
+        },
+        {
+          "label": "客胜",
+          "value": 14.1
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "14.9%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "13.3%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "10.4%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.8%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.3%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "54.9%"
+        },
+        {
+          "label": "双方进球",
+          "note": "41.7%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "41.0%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "20.2%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "15.0%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "7.5%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "k-2-uzbekistan-colombia",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "groupId": "K",
+      "date": "2026-06-17",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "Uzbekistan",
+      "awayTeam": "Colombia",
+      "venue": "Mexico City",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": false,
+      "label": "Uzbekistan vs Colombia",
+      "shortMeta": "Group K",
+      "meta": "Group K · 2026-06-17 20:00 UTC-6 · Mexico City",
+      "bestPick": "客胜",
+      "signal": "中高置信",
+      "modelDetail": "Baseline xG 0.85 : 1.40",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 22.6
+        },
+        {
+          "label": "平",
+          "value": 27.3
+        },
+        {
+          "label": "客胜",
+          "value": 50.1
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "14.8%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.5%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "10.5%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.7%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.7%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "60.9%"
+        },
+        {
+          "label": "双方进球",
+          "note": "43.1%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "30.5%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.4%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "17.6%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "12.5%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "k-3-portugal-uzbekistan",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "groupId": "K",
+      "date": "2026-06-23",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "Portugal",
+      "awayTeam": "Uzbekistan",
+      "venue": "Houston",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Portugal vs Uzbekistan",
+      "shortMeta": "Group K",
+      "meta": "Group K · 2026-06-23 12:00 UTC-5 · Houston",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.75 : 0.72",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 62
+        },
+        {
+          "label": "平",
+          "value": 23
+        },
+        {
+          "label": "客胜",
+          "value": 15
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "14.7%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "12.9%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "10.7%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.8%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.3%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.0%"
+        },
+        {
+          "label": "双方进球",
+          "note": "42.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "39.8%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "19.9%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "15.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "8.1%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "k-4-colombia-ic-path-1-winner",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "groupId": "K",
+      "date": "2026-06-23",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "Colombia",
+      "awayTeam": "IC Path 1 winner",
+      "venue": "Guadalajara (Zapopan)",
+      "venueCountry": "Mexico",
+      "hasPlaceholderTeam": true,
+      "label": "Colombia vs IC Path 1 winner",
+      "shortMeta": "Group K",
+      "meta": "Group K · 2026-06-23 20:00 UTC-6 · Guadalajara (Zapopan)",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.67 : 0.75",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 59.4
+        },
+        {
+          "label": "平",
+          "value": 24.1
+        },
+        {
+          "label": "客胜",
+          "value": 16.5
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "14.9%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "12.4%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.1%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.1%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.6%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "56.6%"
+        },
+        {
+          "label": "双方进球",
+          "note": "42.7%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "37.7%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "19.5%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.0%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "8.9%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "k-5-colombia-portugal",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "groupId": "K",
+      "date": "2026-06-27",
+      "kickoff": "19:30",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Colombia",
+      "awayTeam": "Portugal",
+      "venue": "Miami (Miami Gardens)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Colombia vs Portugal",
+      "shortMeta": "Group K",
+      "meta": "Group K · 2026-06-27 19:30 UTC-4 · Miami (Miami Gardens)",
+      "bestPick": "比分关注 1 : 1",
+      "signal": "低置信",
+      "modelDetail": "Baseline xG 1.18 : 1.20",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 35.8
+        },
+        {
+          "label": "平",
+          "value": 27.8
+        },
+        {
+          "label": "客胜",
+          "value": 36.4
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.1%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "11.1%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "11.0%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.2%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.0%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "57.5%"
+        },
+        {
+          "label": "双方进球",
+          "note": "48.4%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "21.3%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "20.9%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "17.9%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "13.3%"
+        }
+      ],
+      "risks": [
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。"
+      ]
+    },
+    {
+      "id": "k-6-ic-path-1-winner-uzbekistan",
+      "stage": "Group Stage",
+      "group": "Group K",
+      "groupId": "K",
+      "date": "2026-06-27",
+      "kickoff": "19:30",
+      "utcOffset": "UTC-4",
+      "homeTeam": "IC Path 1 winner",
+      "awayTeam": "Uzbekistan",
+      "venue": "Atlanta",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": true,
+      "label": "IC Path 1 winner vs Uzbekistan",
+      "shortMeta": "Group K",
+      "meta": "Group K · 2026-06-27 19:30 UTC-4 · Atlanta",
+      "bestPick": "小2.5",
+      "signal": "低置信",
+      "modelDetail": "Baseline xG 1.19 : 1.10",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 38
+        },
+        {
+          "label": "平",
+          "value": 28.4
+        },
+        {
+          "label": "客胜",
+          "value": 33.6
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 1",
+          "probability": "13.3%"
+        },
+        {
+          "score": "1 : 0",
+          "probability": "12.1%"
+        },
+        {
+          "score": "0 : 1",
+          "probability": "11.2%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.6%"
+        },
+        {
+          "label": "1 球",
+          "note": "23.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "60.0%"
+        },
+        {
+          "label": "双方进球",
+          "note": "46.3%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "22.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "19.3%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.7%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "14.0%"
+        }
+      ],
+      "risks": [
+        "本场包含尚未决出的附加赛占位队，实际对阵强度会在资格赛落位后重新计算。",
+        "对阵接近，平局与临场名单的影响会明显放大。",
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。"
+      ]
+    },
+    {
+      "id": "l-1-england-croatia",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "groupId": "L",
+      "date": "2026-06-17",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "England",
+      "awayTeam": "Croatia",
+      "venue": "Dallas (Arlington)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "England vs Croatia",
+      "shortMeta": "Group L",
+      "meta": "Group L · 2026-06-17 15:00 UTC-5 · Dallas (Arlington)",
+      "bestPick": "主胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.47 : 0.98",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 48.5
+        },
+        {
+          "label": "平",
+          "value": 26.3
+        },
+        {
+          "label": "客胜",
+          "value": 25.2
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "12.7%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.4%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "9.3%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.2%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "55.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "48.1%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "29.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.8%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "16.6%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "14.2%"
+        }
+      ],
+      "risks": [
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "l-2-ghana-panama",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "groupId": "L",
+      "date": "2026-06-17",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Ghana",
+      "awayTeam": "Panama",
+      "venue": "Toronto",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": false,
+      "label": "Ghana vs Panama",
+      "shortMeta": "Group L",
+      "meta": "Group L · 2026-06-17 19:00 UTC-4 · Toronto",
+      "bestPick": "主胜",
+      "signal": "中置信",
+      "modelDetail": "Baseline xG 1.35 : 0.96",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 45.9
+        },
+        {
+          "label": "平",
+          "value": 27.6
+        },
+        {
+          "label": "客胜",
+          "value": 26.5
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "13.4%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "12.9%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "9.9%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.5%"
+        },
+        {
+          "label": "1 球",
+          "note": "22.9%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "59.3%"
+        },
+        {
+          "label": "双方进球",
+          "note": "45.7%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "27.6%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.2%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "16.3%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "14.9%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "精确比分命中天然偏低，更适合输出 Top3 覆盖而不是单点承诺。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。"
+      ]
+    },
+    {
+      "id": "l-3-england-ghana",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "groupId": "L",
+      "date": "2026-06-23",
+      "kickoff": "16:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "England",
+      "awayTeam": "Ghana",
+      "venue": "Boston (Foxborough)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "England vs Ghana",
+      "shortMeta": "Group L",
+      "meta": "Group L · 2026-06-23 16:00 UTC-4 · Boston (Foxborough)",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.88 : 0.63",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 67.3
+        },
+        {
+          "label": "平",
+          "value": 21
+        },
+        {
+          "label": "客胜",
+          "value": 11.7
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.3%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "14.4%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "9.6%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "25.6%"
+        },
+        {
+          "label": "3 球",
+          "note": "21.4%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "54.2%"
+        },
+        {
+          "label": "双方进球",
+          "note": "39.6%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "44.1%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "20.9%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "14.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "6.2%"
+        }
+      ],
+      "risks": [
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+      ]
+    },
+    {
+      "id": "l-4-panama-croatia",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "groupId": "L",
+      "date": "2026-06-23",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Panama",
+      "awayTeam": "Croatia",
+      "venue": "Toronto",
+      "venueCountry": "Canada",
+      "hasPlaceholderTeam": false,
+      "label": "Panama vs Croatia",
+      "shortMeta": "Group L",
+      "meta": "Group L · 2026-06-23 19:00 UTC-4 · Toronto",
+      "bestPick": "客胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 0.67 : 1.52",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 16.2
+        },
+        {
+          "label": "平",
+          "value": 25.8
+        },
+        {
+          "label": "客胜",
+          "value": 58
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "17.1%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "13.0%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.4%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.8%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.5%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.6%"
+        },
+        {
+          "label": "双方进球",
+          "note": "38.0%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "36.1%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "19.9%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "18.1%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "8.7%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "l-5-panama-england",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "groupId": "L",
+      "date": "2026-06-27",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Panama",
+      "awayTeam": "England",
+      "venue": "New York/New Jersey (East Rutherford)",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Panama vs England",
+      "shortMeta": "Group L",
+      "meta": "Group L · 2026-06-27 17:00 UTC-4 · New York/New Jersey (East Rutherford)",
+      "bestPick": "客胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 0.50 : 1.69",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 10.4
+        },
+        {
+          "label": "平",
+          "value": 22.8
+        },
+        {
+          "label": "客胜",
+          "value": 66.8
+        }
+      ],
+      "scores": [
+        {
+          "score": "0 : 1",
+          "probability": "19.0%"
+        },
+        {
+          "score": "0 : 2",
+          "probability": "16.0%"
+        },
+        {
+          "score": "0 : 0",
+          "probability": "11.3%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.9%"
+        },
+        {
+          "label": "1 球",
+          "note": "24.6%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "62.7%"
+        },
+        {
+          "label": "双方进球",
+          "note": "31.9%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "负 / 负",
+          "note": "43.0%"
+        },
+        {
+          "label": "平 / 负",
+          "note": "22.0%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.8%"
+        },
+        {
+          "label": "胜 / 胜",
+          "note": "5.4%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    },
+    {
+      "id": "l-6-croatia-ghana",
+      "stage": "Group Stage",
+      "group": "Group L",
+      "groupId": "L",
+      "date": "2026-06-27",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "Croatia",
+      "awayTeam": "Ghana",
+      "venue": "Philadelphia",
+      "venueCountry": "United States",
+      "hasPlaceholderTeam": false,
+      "label": "Croatia vs Ghana",
+      "shortMeta": "Group L",
+      "meta": "Group L · 2026-06-27 17:00 UTC-4 · Philadelphia",
+      "bestPick": "主胜",
+      "signal": "高置信",
+      "modelDetail": "Baseline xG 1.65 : 0.74",
+      "outcomes": [
+        {
+          "label": "主胜",
+          "value": 59.2
+        },
+        {
+          "label": "平",
+          "value": 24.2
+        },
+        {
+          "label": "客胜",
+          "value": 16.5
+        }
+      ],
+      "scores": [
+        {
+          "score": "1 : 0",
+          "probability": "15.1%"
+        },
+        {
+          "score": "2 : 0",
+          "probability": "12.5%"
+        },
+        {
+          "score": "1 : 1",
+          "probability": "11.2%"
+        }
+      ],
+      "goals": [
+        {
+          "label": "2 球",
+          "note": "26.1%"
+        },
+        {
+          "label": "1 球",
+          "note": "21.8%"
+        },
+        {
+          "label": "小 2.5",
+          "note": "57.1%"
+        },
+        {
+          "label": "双方进球",
+          "note": "42.3%"
+        }
+      ],
+      "halftime": [
+        {
+          "label": "胜 / 胜",
+          "note": "37.5%"
+        },
+        {
+          "label": "平 / 胜",
+          "note": "19.5%"
+        },
+        {
+          "label": "平 / 平",
+          "note": "16.2%"
+        },
+        {
+          "label": "负 / 负",
+          "note": "8.9%"
+        }
+      ],
+      "risks": [
+        "模型偏向低比分区间，更适合展示胜平负和小比分组合。",
+        "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
+        "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。"
+      ]
+    }
+  ],
+  "knockoutFixtures": [
+    {
+      "id": "knockout-73",
+      "stage": "Round of 32",
+      "date": "2026-06-28",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "2A",
+      "awayTeam": "2B",
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "id": "knockout-74",
+      "stage": "Round of 32",
+      "date": "2026-06-29",
+      "kickoff": "16:30",
+      "utcOffset": "UTC-4",
+      "homeTeam": "1E",
+      "awayTeam": "3A/B/C/D/F",
+      "venue": "Boston (Foxborough)"
+    },
+    {
+      "id": "knockout-75",
+      "stage": "Round of 32",
+      "date": "2026-06-29",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "1F",
+      "awayTeam": "2C",
+      "venue": "Monterrey (Guadalupe)"
+    },
+    {
+      "id": "knockout-76",
+      "stage": "Round of 32",
+      "date": "2026-06-29",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "1C",
+      "awayTeam": "2F",
+      "venue": "Houston"
+    },
+    {
+      "id": "knockout-77",
+      "stage": "Round of 32",
+      "date": "2026-06-30",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "1I",
+      "awayTeam": "3C/D/F/G/H",
+      "venue": "New York/New Jersey (East Rutherford)"
+    },
+    {
+      "id": "knockout-78",
+      "stage": "Round of 32",
+      "date": "2026-06-30",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "2E",
+      "awayTeam": "2I",
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "id": "knockout-79",
+      "stage": "Round of 32",
+      "date": "2026-06-30",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "1A",
+      "awayTeam": "3C/E/F/H/I",
+      "venue": "Mexico City"
+    },
+    {
+      "id": "knockout-80",
+      "stage": "Round of 32",
+      "date": "2026-07-01",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "1L",
+      "awayTeam": "3E/H/I/J/K",
+      "venue": "Atlanta"
+    },
+    {
+      "id": "knockout-81",
+      "stage": "Round of 32",
+      "date": "2026-07-01",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "1D",
+      "awayTeam": "3B/E/F/I/J",
+      "venue": "San Francisco Bay Area (Santa Clara)"
+    },
+    {
+      "id": "knockout-82",
+      "stage": "Round of 32",
+      "date": "2026-07-01",
+      "kickoff": "13:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "1G",
+      "awayTeam": "3A/E/H/I/J",
+      "venue": "Seattle"
+    },
+    {
+      "id": "knockout-83",
+      "stage": "Round of 32",
+      "date": "2026-07-02",
+      "kickoff": "19:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "2K",
+      "awayTeam": "2L",
+      "venue": "Toronto"
+    },
+    {
+      "id": "knockout-84",
+      "stage": "Round of 32",
+      "date": "2026-07-02",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "1H",
+      "awayTeam": "2J",
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "id": "knockout-85",
+      "stage": "Round of 32",
+      "date": "2026-07-02",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "1B",
+      "awayTeam": "3E/F/G/I/J",
+      "venue": "Vancouver"
+    },
+    {
+      "id": "knockout-86",
+      "stage": "Round of 32",
+      "date": "2026-07-03",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "1J",
+      "awayTeam": "2H",
+      "venue": "Miami (Miami Gardens)"
+    },
+    {
+      "id": "knockout-87",
+      "stage": "Round of 32",
+      "date": "2026-07-03",
+      "kickoff": "20:30",
+      "utcOffset": "UTC-5",
+      "homeTeam": "1K",
+      "awayTeam": "3D/E/I/J/L",
+      "venue": "Kansas City"
+    },
+    {
+      "id": "knockout-88",
+      "stage": "Round of 32",
+      "date": "2026-07-03",
+      "kickoff": "13:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "2D",
+      "awayTeam": "2G",
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "id": "knockout-89",
+      "stage": "Round of 16",
+      "date": "2026-07-04",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "W74",
+      "awayTeam": "W77",
+      "venue": "Philadelphia"
+    },
+    {
+      "id": "knockout-90",
+      "stage": "Round of 16",
+      "date": "2026-07-04",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "W73",
+      "awayTeam": "W75",
+      "venue": "Houston"
+    },
+    {
+      "id": "knockout-91",
+      "stage": "Round of 16",
+      "date": "2026-07-05",
+      "kickoff": "16:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "W76",
+      "awayTeam": "W78",
+      "venue": "New York/New Jersey (East Rutherford)"
+    },
+    {
+      "id": "knockout-92",
+      "stage": "Round of 16",
+      "date": "2026-07-05",
+      "kickoff": "18:00",
+      "utcOffset": "UTC-6",
+      "homeTeam": "W79",
+      "awayTeam": "W80",
+      "venue": "Mexico City"
+    },
+    {
+      "id": "knockout-93",
+      "stage": "Round of 16",
+      "date": "2026-07-06",
+      "kickoff": "14:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "W83",
+      "awayTeam": "W84",
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "id": "knockout-94",
+      "stage": "Round of 16",
+      "date": "2026-07-06",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "W81",
+      "awayTeam": "W82",
+      "venue": "Seattle"
+    },
+    {
+      "id": "knockout-95",
+      "stage": "Round of 16",
+      "date": "2026-07-07",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "W86",
+      "awayTeam": "W88",
+      "venue": "Atlanta"
+    },
+    {
+      "id": "knockout-96",
+      "stage": "Round of 16",
+      "date": "2026-07-07",
+      "kickoff": "13:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "W85",
+      "awayTeam": "W87",
+      "venue": "Vancouver"
+    },
+    {
+      "id": "knockout-97",
+      "stage": "Quarter-final",
+      "date": "2026-07-09",
+      "kickoff": "16:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "W89",
+      "awayTeam": "W90",
+      "venue": "Boston (Foxborough)"
+    },
+    {
+      "id": "knockout-98",
+      "stage": "Quarter-final",
+      "date": "2026-07-10",
+      "kickoff": "12:00",
+      "utcOffset": "UTC-7",
+      "homeTeam": "W93",
+      "awayTeam": "W94",
+      "venue": "Los Angeles (Inglewood)"
+    },
+    {
+      "id": "knockout-99",
+      "stage": "Quarter-final",
+      "date": "2026-07-11",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "W91",
+      "awayTeam": "W92",
+      "venue": "Miami (Miami Gardens)"
+    },
+    {
+      "id": "knockout-100",
+      "stage": "Quarter-final",
+      "date": "2026-07-11",
+      "kickoff": "20:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "W95",
+      "awayTeam": "W96",
+      "venue": "Kansas City"
+    },
+    {
+      "id": "knockout-101",
+      "stage": "Semi-final",
+      "date": "2026-07-14",
+      "kickoff": "14:00",
+      "utcOffset": "UTC-5",
+      "homeTeam": "W97",
+      "awayTeam": "W98",
+      "venue": "Dallas (Arlington)"
+    },
+    {
+      "id": "knockout-102",
+      "stage": "Semi-final",
+      "date": "2026-07-15",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "W99",
+      "awayTeam": "W100",
+      "venue": "Atlanta"
+    },
+    {
+      "id": "knockout-31",
+      "stage": "Match for third place",
+      "date": "2026-07-18",
+      "kickoff": "17:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "L101",
+      "awayTeam": "L102",
+      "venue": "Miami (Miami Gardens)"
+    },
+    {
+      "id": "knockout-32",
+      "stage": "Final",
+      "date": "2026-07-19",
+      "kickoff": "15:00",
+      "utcOffset": "UTC-4",
+      "homeTeam": "W101",
+      "awayTeam": "W102",
+      "venue": "New York/New Jersey (East Rutherford)"
     }
   ]
 }
