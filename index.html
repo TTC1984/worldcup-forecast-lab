@@ -24,7 +24,7 @@
             <span class="brand-mark">W</span>
             <div>
               <p>World Cup Forecast Lab</p>
-              <span>AI Analysis Prototype</span>
+              <span>Baseline Prediction MVP</span>
             </div>
           </div>
           <a class="ghost-link" href="#compliance">合法边界</a>
@@ -74,16 +74,16 @@
       <main>
         <section class="stats-band">
           <article>
-            <span class="metric-number" data-target="54.7">0</span>
-            <p>胜平负历史命中率目标</p>
+            <span id="summary-team-count" class="metric-number">0</span>
+            <p>纳入球队</p>
           </article>
           <article>
-            <span class="metric-number" data-target="31.4">0</span>
-            <p>Top3 比分覆盖率目标</p>
+            <span id="summary-fixture-count" class="metric-number">0</span>
+            <p>已生成比赛</p>
           </article>
           <article>
-            <span class="metric-number" data-target="0.182">0</span>
-            <p>Brier Score 目标</p>
+            <span id="summary-group-count" class="metric-number">0</span>
+            <p>演示小组</p>
           </article>
         </section>
 
@@ -93,8 +93,8 @@
               <p class="eyebrow">Prototype Panel</p>
               <h2>预测面板</h2>
             </div>
-            <p>
-              演示数据为静态样例，重点展示产品结构、信息层级与玩法映射方式。
+            <p id="data-status">
+              正在载入基线模型生成的世界杯预测数据...
             </p>
           </div>
 
@@ -109,6 +109,7 @@
                 <span id="fixture-stage" class="badge">Group Stage</span>
               </div>
               <p id="fixture-meta" class="fixture-meta"></p>
+              <p id="fixture-engine" class="fixture-engine"></p>
               <div class="scoreline">
                 <div>
                   <span class="score-label">最优玩法映射</span>
@@ -232,7 +233,7 @@
 
     <footer class="footer">
       <p>World Cup Forecast Lab • Static MVP for GitHub Pages</p>
-      <p>仅供技术演示与数据研究，不构成购彩建议。</p>
+      <p>仅供技术演示与数据研究，不构成购彩建议。当前版本使用本地 baseline 生成数据。</p>
     </footer>
 
     <script src="./script.js"></script>

@@ -138,6 +138,8 @@ body::after {
 .lead,
 .hero-points,
 .panel-label,
+.fixture-engine,
+#data-status,
 .card-kicker,
 .fixture-meta,
 .risk-list,
@@ -402,6 +404,13 @@ main {
 
 .fixture-meta {
   margin-top: 12px;
+  line-height: 1.7;
+}
+
+.fixture-engine,
+#data-status {
+  margin: 10px 0 0;
+  color: var(--muted);
   line-height: 1.7;
 }
 

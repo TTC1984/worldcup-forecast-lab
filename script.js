@@ -1,119 +1,9 @@
-const fixtures = [
-  {
-    id: "mexico-south-africa",
-    label: "Mexico vs South Africa",
-    shortMeta: "揭幕战",
-    stage: "Group Stage",
-    meta: "2026-06-11 13:00 UTC-6 · Mexico City · 样例原型数据",
-    bestPick: "主胜",
-    signal: "中高置信",
-    outcomes: [
-      { label: "主胜", value: 52 },
-      { label: "平", value: 27 },
-      { label: "客胜", value: 21 },
-    ],
-    scores: [
-      { score: "2 : 0", probability: "14.6%" },
-      { score: "1 : 0", probability: "13.2%" },
-      { score: "2 : 1", probability: "10.1%" },
-    ],
-    goals: [
-      { label: "2 球", note: "22.4%" },
-      { label: "3 球", note: "19.7%" },
-      { label: "大 2.5", note: "54.1%" },
-      { label: "双方进球", note: "47.6%" },
-    ],
-    halftime: [
-      { label: "胜 / 胜", note: "26.8%" },
-      { label: "平 / 胜", note: "21.4%" },
-      { label: "平 / 平", note: "16.2%" },
-      { label: "胜 / 平", note: "9.1%" },
-    ],
-    risks: [
-      "揭幕战样本噪声大，主场和开局保守性都可能拉高平局权重。",
-      "比分建议更适合展示 Top3，而不是只给单一精确比分。",
-      "如果外部赔率与模型差距过大，应单独弹出风险提醒。",
-    ],
-  },
-  {
-    id: "brazil-morocco",
-    label: "Brazil vs Morocco",
-    shortMeta: "强强对话",
-    stage: "Group Stage",
-    meta: "2026-06-14 20:00 UTC-5 · Miami · 样例原型数据",
-    bestPick: "主胜 + 大2.5",
-    signal: "中置信",
-    outcomes: [
-      { label: "主胜", value: 48 },
-      { label: "平", value: 28 },
-      { label: "客胜", value: 24 },
-    ],
-    scores: [
-      { score: "2 : 1", probability: "12.8%" },
-      { score: "1 : 1", probability: "11.7%" },
-      { score: "2 : 0", probability: "10.4%" },
-    ],
-    goals: [
-      { label: "2 球", note: "20.8%" },
-      { label: "3 球", note: "19.3%" },
-      { label: "大 2.5", note: "57.9%" },
-      { label: "双方进球", note: "51.8%" },
-    ],
-    halftime: [
-      { label: "平 / 胜", note: "23.2%" },
-      { label: "胜 / 胜", note: "22.3%" },
-      { label: "平 / 平", note: "15.6%" },
-      { label: "负 / 平", note: "7.4%" },
-    ],
-    risks: [
-      "双方高位逼抢会放大比赛节奏，早牌和点球对比分预测影响较大。",
-      "这类强队对话更建议强调区间概率，而不是夸大绝对优势。",
-      "若阵容临场轮换明显，模型需要在赛前 3 小时刷新一次。",
-    ],
-  },
-  {
-    id: "england-croatia",
-    label: "England vs Croatia",
-    shortMeta: "淘汰赛模板",
-    stage: "Knockout",
-    meta: "2026-07-03 18:00 UTC-4 · Atlanta · 样例原型数据",
-    bestPick: "平局倾向 + 小比分",
-    signal: "中置信",
-    outcomes: [
-      { label: "主胜", value: 39 },
-      { label: "平", value: 33 },
-      { label: "客胜", value: 28 },
-    ],
-    scores: [
-      { score: "1 : 1", probability: "15.1%" },
-      { score: "1 : 0", probability: "10.9%" },
-      { score: "0 : 0", probability: "10.4%" },
-    ],
-    goals: [
-      { label: "1 球", note: "18.4%" },
-      { label: "2 球", note: "24.7%" },
-      { label: "小 2.5", note: "58.6%" },
-      { label: "双方进球", note: "44.8%" },
-    ],
-    halftime: [
-      { label: "平 / 平", note: "24.6%" },
-      { label: "平 / 胜", note: "17.9%" },
-      { label: "胜 / 胜", note: "14.1%" },
-      { label: "平 / 负", note: "12.2%" },
-    ],
-    risks: [
-      "淘汰赛进入加时和点球会影响用户对‘比分’口径的理解，需要前端写清结算规则。",
-      "半全场玩法类别多，建议和胜平负拆开展示，不要混成一个总推荐。",
-      "这类低比分对局更依赖临场名单和防线健康度。",
-    ],
-  },
-];
-
 const elements = {
   switcher: document.getElementById("match-switcher"),
   title: document.getElementById("fixture-title"),
   stage: document.getElementById("fixture-stage"),
   meta: document.getElementById("fixture-meta"),
+  engine: document.getElementById("fixture-engine"),
   bestPick: document.getElementById("best-pick"),
   signal: document.getElementById("signal-strength"),
   outcomeBars: document.getElementById("outcome-bars"),
@@ -121,10 +11,49 @@ const elements = {
   goalsGrid: document.getElementById("goals-grid"),
   halftimeGrid: document.getElementById("halftime-grid"),
   riskList: document.getElementById("risk-list"),
+  dataStatus: document.getElementById("data-status"),
+  summaryTeamCount: document.getElementById("summary-team-count"),
+  summaryFixtureCount: document.getElementById("summary-fixture-count"),
+  summaryGroupCount: document.getElementById("summary-group-count"),
 };
 
+const state = {
+  model: null,
+  summary: null,
+  fixtures: [],
+};
+
+function animateCount(element, value) {
+  const target = Number(value);
+  let frame = 0;
+  const totalFrames = 36;
+  const timer = setInterval(() => {
+    frame += 1;
+    const current = Math.round((target * frame) / totalFrames);
+    element.textContent = String(current);
+
+    if (frame >= totalFrames) {
+      element.textContent = String(target);
+      clearInterval(timer);
+    }
+  }, 20);
+}
+
+function renderSummary() {
+  animateCount(elements.summaryTeamCount, state.summary.teamCount);
+  animateCount(elements.summaryFixtureCount, state.summary.fixtureCount);
+  animateCount(elements.summaryGroupCount, state.summary.groupCount);
+
+  const generatedAt = new Date(state.model.generatedAt).toLocaleString("zh-CN", {
+    hour12: false,
+  });
+
+  elements.dataStatus.textContent =
+    `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.scopeNote}`;
+}
+
 function renderSwitcher(activeId) {
-  elements.switcher.innerHTML = fixtures
+  elements.switcher.innerHTML = state.fixtures
     .map(
       (fixture) => `
         <button class="match-button ${fixture.id === activeId ? "is-active" : ""}" data-id="${fixture.id}">
@@ -191,11 +120,12 @@ function renderRisks(risks) {
 }
 
 function updateFixture(id) {
-  const fixture = fixtures.find((item) => item.id === id) || fixtures[0];
+  const fixture = state.fixtures.find((item) => item.id === id) || state.fixtures[0];
 
   elements.title.textContent = fixture.label;
   elements.stage.textContent = fixture.stage;
   elements.meta.textContent = fixture.meta;
+  elements.engine.textContent = `${fixture.modelDetail} · ${fixture.venue}`;
   elements.bestPick.textContent = fixture.bestPick;
   elements.signal.textContent = fixture.signal;
 
@@ -207,28 +137,27 @@ function updateFixture(id) {
   renderRisks(fixture.risks);
 }
 
-function animateMetrics() {
-  const metrics = document.querySelectorAll(".metric-number");
+async function loadForecast() {
+  try {
+    const response = await fetch("./data/generated/worldcup-forecast.json");
 
-  metrics.forEach((metric) => {
-    const target = Number(metric.dataset.target);
-    const decimals = metric.dataset.target.includes(".") ? metric.dataset.target.split(".")[1].length : 0;
-    let frame = 0;
-    const totalFrames = 40;
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-    const timer = setInterval(() => {
-      frame += 1;
-      const progress = frame / totalFrames;
-      const value = target * progress;
-      metric.textContent = value.toFixed(decimals) + (target >= 1 ? "%" : "");
+    const forecast = await response.json();
 
-      if (frame >= totalFrames) {
-        metric.textContent = target.toFixed(decimals) + (target >= 1 ? "%" : "");
-        clearInterval(timer);
-      }
-    }, 26);
-  });
+    state.model = forecast.model;
+    state.summary = forecast.summary;
+    state.fixtures = forecast.fixtures;
+
+    renderSummary();
+    updateFixture(state.fixtures[0].id);
+  } catch (error) {
+    elements.dataStatus.textContent =
+      "预测数据加载失败。请先运行 `npm run generate:predictions`，再通过静态服务打开页面。";
+    console.error(error);
+  }
 }
 
-updateFixture(fixtures[0].id);
-animateMetrics();
+loadForecast();

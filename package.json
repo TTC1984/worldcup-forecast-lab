@@ -1,0 +1,11 @@
+{
+  "name": "worldcup-forecast-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:predictions": "node scripts/generate-predictions.mjs",
+    "build:data": "npm run generate:predictions",
+    "check": "node scripts/generate-predictions.mjs && node --check script.js"
+  }
+}
