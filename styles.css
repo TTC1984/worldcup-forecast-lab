@@ -785,6 +785,77 @@ main {
   line-height: 1.7;
 }
 
+.draft-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.draft-metric-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.draft-metric-card span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.draft-metric-card strong {
+  display: block;
+  margin-top: 8px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.65rem;
+}
+
+.release-note-preview {
+  width: 100%;
+  margin-top: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.65;
+  resize: vertical;
+}
+
+.badge-clean {
+  background: rgba(15, 118, 110, 0.12);
+  color: #0f766e;
+}
+
+.badge-dirty {
+  background: rgba(214, 69, 33, 0.12);
+  color: #b94724;
+}
+
+.field.is-dirty span {
+  color: #b94724;
+}
+
+.field.is-dirty span::after {
+  content: "已改";
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(214, 69, 33, 0.12);
+  color: #b94724;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.field.is-dirty input,
+.field.is-dirty textarea,
+.field.is-dirty select {
+  border-color: rgba(214, 69, 33, 0.45);
+  background: rgba(255, 244, 239, 0.92);
+  box-shadow: 0 0 0 3px rgba(214, 69, 33, 0.08);
+}
+
 @media (max-width: 960px) {
   .hero-grid,
   .section-heading,
@@ -844,6 +915,10 @@ main {
   }
 
   .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .draft-metric-grid {
     grid-template-columns: 1fr;
   }
 

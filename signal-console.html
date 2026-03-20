@@ -46,7 +46,7 @@
 
             <ul class="hero-points">
               <li>支持球队级与场次级两层情报录入</li>
-              <li>即时展示覆盖率、校验状态和导出动作</li>
+              <li>即时展示覆盖率、校验状态、草稿差异和发布说明</li>
               <li>适合下一步替换成真实 API / CMS</li>
             </ul>
           </section>
@@ -57,7 +57,7 @@
             <div class="panel-stack">
               <article>
                 <span>维护方式</span>
-                <strong>浏览器编辑 + 导出 JSON</strong>
+                <strong>浏览器编辑 + 差异核对 + 导出发布包</strong>
               </article>
               <article>
                 <span>校验目标</span>
@@ -173,6 +173,75 @@
               <div class="notice-card">
                 <strong>校验摘要</strong>
                 <ul id="validation-list" class="risk-list compact-list"></ul>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Draft & Publish</p>
+              <h2>草稿对比与发布包</h2>
+            </div>
+            <p>这里会把当前草稿和已发布 seed feed 做对比，自动汇总变更数量、生成发布说明，并导出一个便于审核留档的发布包。</p>
+          </div>
+
+          <div class="console-grid">
+            <section class="card card-span-5">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Draft Summary</p>
+                  <h3>草稿状态</h3>
+                </div>
+                <span id="draft-status-badge" class="badge">未改动</span>
+              </div>
+
+              <div class="draft-metric-grid">
+                <article class="draft-metric-card">
+                  <span>字段变更</span>
+                  <strong id="draft-change-count">0</strong>
+                </article>
+                <article class="draft-metric-card">
+                  <span>Feed 变更</span>
+                  <strong id="draft-feed-change-count">0</strong>
+                </article>
+                <article class="draft-metric-card">
+                  <span>球队变更</span>
+                  <strong id="draft-team-change-count">0</strong>
+                </article>
+                <article class="draft-metric-card">
+                  <span>场次变更</span>
+                  <strong id="draft-fixture-change-count">0</strong>
+                </article>
+              </div>
+
+              <div class="notice-card">
+                <strong>已发布快照</strong>
+                <p id="draft-baseline-meta"></p>
+              </div>
+
+              <div class="notice-card">
+                <strong>变更摘要</strong>
+                <ul id="draft-summary-list" class="risk-list compact-list"></ul>
+              </div>
+            </section>
+
+            <section class="card card-span-7">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Release Notes</p>
+                  <h3>发布说明预览</h3>
+                </div>
+              </div>
+
+              <p class="fixture-meta">建议把这段说明和导出的 JSON 一起提交给运营或技术同事，便于审核、追踪和回滚。</p>
+              <textarea id="release-note-preview" class="release-note-preview" rows="14" readonly></textarea>
+
+              <div class="action-row">
+                <button id="copy-release-note" class="secondary-btn button-reset">复制发布说明</button>
+                <button id="download-release-note" class="ghost-link button-reset">下载说明</button>
+                <button id="download-publish-package" class="ghost-link button-reset">下载发布包</button>
               </div>
             </section>
           </div>

@@ -1,8 +1,8 @@
 {
   "model": {
     "name": "Baseline Elo-Poisson 2026 Snapshot",
-    "version": "v0.6.0",
-    "generatedAt": "2026-03-20T10:24:46.567Z",
+    "version": "v0.7.0",
+    "generatedAt": "2026-03-20T10:05:00.000Z",
     "notes": [
       "以球队强度、近期状态和主办国场地因素做 baseline 估计。",
       "小组赛赛程来自 openfootball 的 2026--usa 数据快照，并与 FIFA 已公开的赛程框架保持一致。",
@@ -1083,7 +1083,7 @@
         "coverageLabel": "场次级动态",
         "headline": "主办国热度偏强，但资格赛占位队未落位让临场波动显著高于平均值。",
         "lastUpdated": "2026-03-20T15:40:00+08:00",
-        "freshnessHours": 10,
+        "freshnessHours": 9,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -1220,7 +1220,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T10:30:00+08:00",
-        "freshnessHours": 9,
+        "freshnessHours": 8,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -1357,7 +1357,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T09:45:00+08:00",
-        "freshnessHours": 10,
+        "freshnessHours": 9,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -1631,7 +1631,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T09:45:00+08:00",
-        "freshnessHours": 9,
+        "freshnessHours": 8,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -1768,7 +1768,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T08:40:00+08:00",
-        "freshnessHours": 10,
+        "freshnessHours": 9,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -1905,7 +1905,7 @@
         "coverageLabel": "场次级动态",
         "headline": "强强对话下市场仍偏向巴西，但摩洛哥的防守完成度压低了过热风险。",
         "lastUpdated": "2026-03-20T16:05:00+08:00",
-        "freshnessHours": 8,
+        "freshnessHours": 7,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -2174,7 +2174,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T10:50:00+08:00",
-        "freshnessHours": 8,
+        "freshnessHours": 7,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -2578,7 +2578,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T10:50:00+08:00",
-        "freshnessHours": 8,
+        "freshnessHours": 7,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -2712,7 +2712,7 @@
         "coverageLabel": "场次级动态",
         "headline": "主队开局强度预期上修，但市场波动还未达到需要大幅重估的程度。",
         "lastUpdated": "2026-03-20T15:55:00+08:00",
-        "freshnessHours": 7,
+        "freshnessHours": 6,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -2981,7 +2981,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T11:40:00+08:00",
-        "freshnessHours": 7,
+        "freshnessHours": 6,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -3248,7 +3248,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T11:40:00+08:00",
-        "freshnessHours": 7,
+        "freshnessHours": 6,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -5926,7 +5926,7 @@
         "coverageLabel": "场次级动态",
         "headline": "西班牙的控球压制预期继续上修，市场对主队零封的乐观程度高于平均水平。",
         "lastUpdated": "2026-03-20T14:45:00+08:00",
-        "freshnessHours": 6,
+        "freshnessHours": 5,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -6195,7 +6195,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T12:50:00+08:00",
-        "freshnessHours": 6,
+        "freshnessHours": 5,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -6594,7 +6594,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T12:50:00+08:00",
-        "freshnessHours": 6,
+        "freshnessHours": 5,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -8339,7 +8339,7 @@
         "coverageLabel": "场次级动态",
         "headline": "葡萄牙方向被持续看好，但附加赛占位队未落位使市场容忍更高波动。",
         "lastUpdated": "2026-03-20T14:25:00+08:00",
-        "freshnessHours": 10,
+        "freshnessHours": 9,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -8743,7 +8743,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T08:45:00+08:00",
-        "freshnessHours": 10,
+        "freshnessHours": 9,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -9012,7 +9012,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T08:45:00+08:00",
-        "freshnessHours": 10,
+        "freshnessHours": 9,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -9146,7 +9146,7 @@
         "coverageLabel": "场次级动态",
         "headline": "英格兰是主流方向，但这场的市场分歧比豪门打中档球队更大，典型适合做概率化展示。",
         "lastUpdated": "2026-03-20T15:30:00+08:00",
-        "freshnessHours": 9,
+        "freshnessHours": 8,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -9550,7 +9550,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T09:50:00+08:00",
-        "freshnessHours": 9,
+        "freshnessHours": 8,
         "sourceLabels": [
           "seed feed",
           "manual desk",
@@ -9819,7 +9819,7 @@
         "coverageLabel": "球队级动态",
         "headline": "球队级动态显示 市场平稳，模型会据此微调进球期望与风险提示。",
         "lastUpdated": "2026-03-20T09:50:00+08:00",
-        "freshnessHours": 9,
+        "freshnessHours": 8,
         "sourceLabels": [
           "seed feed",
           "manual desk",

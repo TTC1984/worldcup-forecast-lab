@@ -56,6 +56,8 @@ const prematchTeamSignalMap = new Map(Object.entries(prematchSignalSource.teamSi
 const prematchFixtureSignalMap = new Map(
   (prematchSignalSource.fixtureSignals || []).map((signal) => [createPrematchSignalKey(signal), signal])
 );
+const buildReferenceTimestamp = resolveBuildReferenceTimestamp();
+const buildReferenceMs = Date.parse(buildReferenceTimestamp);
 
 const monthMap = {
   Jan: "01",
@@ -117,6 +119,23 @@ function createPrematchSignalKey({ date, homeTeam, awayTeam }) {
   return `${date}__${homeTeam}__${awayTeam}`;
 }
 
+function resolveBuildReferenceTimestamp() {
+  const timestamps = [
+    prematchSignalSource.feed?.generatedAt,
+    ...Object.values(prematchSignalSource.teamSignals || {}).map((signal) => signal.lastUpdated),
+    ...(prematchSignalSource.fixtureSignals || []).map((signal) => signal.lastUpdated),
+  ]
+    .filter(Boolean)
+    .map((value) => Date.parse(value))
+    .filter((value) => !Number.isNaN(value));
+
+  if (timestamps.length === 0) {
+    return "2026-03-20T00:00:00.000Z";
+  }
+
+  return new Date(Math.max(...timestamps)).toISOString();
+}
+
 function getHoursSince(timestamp) {
   const parsed = Date.parse(timestamp);
 
@@ -124,7 +143,7 @@ function getHoursSince(timestamp) {
     return prematchSignalSource.defaults.freshnessHours;
   }
 
-  return Math.max(1, Math.round((Date.now() - parsed) / 3600000));
+  return Math.max(1, Math.round((buildReferenceMs - parsed) / 3600000));
 }
 
 function coverageLabel(coverage) {
@@ -1478,8 +1497,8 @@ const prematchFixtureOverrideCount = predictions.filter((prediction) => predicti
 const output = {
   model: {
     name: "Baseline Elo-Poisson 2026 Snapshot",
-    version: "v0.6.0",
-    generatedAt: new Date().toISOString(),
+    version: "v0.7.0",
+    generatedAt: buildReferenceTimestamp,
     notes: tournamentConfig.tournament.assumptions,
     sources: tournamentConfig.sources,
   },
