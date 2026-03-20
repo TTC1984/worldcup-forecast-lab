@@ -8,6 +8,7 @@
 - 使用 2026 世界杯真实赛程快照，而不是演示性假分组
 - 支持胜平负、Top3 比分、总进球、半全场
 - 接入赛前动态情报层，展示首发确认度、伤停线索与市场摆动
+- 附带一个静态“情报控制台”，可直接编辑并导出 `prematch-signals.json`
 - 提供世界杯历史回测、风险提示和合法边界说明
 - 不提供在线购彩、代投、出票或跟单能力
 
@@ -29,8 +30,10 @@
 - `data/source/prematch-signals.json`：赛前动态情报 seed feed
 - `data/source/tournament.json`：赛事元数据与来源说明
 - `scripts/sync-2026-source.mjs`：同步 openfootball 最新快照
+- `scripts/validate-prematch-signals.mjs`：校验赛前情报 feed 结构与场次命中
 - `scripts/generate-predictions.mjs`：baseline 预测生成脚本
 - `data/generated/worldcup-forecast.json`：前端直接消费的预测结果
+- `signal-console.html` / `signal-console.js`：静态情报控制台
 
 ## Data Source
 
@@ -59,6 +62,12 @@ npm run sync:source
 npm run generate:predictions
 ```
 
+如需先校验情报 feed：
+
+```bash
+npm run check:signals
+```
+
 ## Local Preview
 
 推荐在目录下起一个静态服务：
@@ -69,6 +78,9 @@ python3 -m http.server 4173
 ```
 
 然后访问 `http://localhost:4173`
+
+- 前台预测页：`http://localhost:4173`
+- 情报控制台：`http://localhost:4173/signal-console.html`
 
 ## Deployment
 
@@ -84,3 +96,4 @@ python3 -m http.server 4173
 - 仍有 6 个资格赛占位队未最终落位
 - 历史回测仍使用统一静态球队强度向过去回放，不是按当届赛前 Elo 逐年重建
 - 赛前动态目前还是本地 seed feed，尚未接真实赔率、伤停流、首发接口与自动刷新数据库
+- 情报控制台当前是“编辑 + 导出 JSON”模式，还没有账号体系、审核流和直接回写仓库能力

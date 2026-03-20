@@ -92,6 +92,13 @@ body::after {
   gap: 16px;
 }
 
+.topbar-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -698,6 +705,86 @@ main {
   color: var(--muted);
 }
 
+.console-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.form-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--ink);
+  font: inherit;
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.field-span-2 {
+  grid-column: span 2;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.button-reset {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.notice-card {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.notice-card strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.notice-card p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 @media (max-width: 960px) {
   .hero-grid,
   .section-heading,
@@ -712,6 +799,7 @@ main {
   }
 
   .stats-band,
+  .console-grid,
   .tournament-grid,
   .backtest-grid,
   .backtest-summary-grid,
@@ -729,6 +817,7 @@ main {
 
   .card-span-7,
   .card-span-5,
+  .card-span-6,
   .card-span-12 {
     grid-column: span 12;
   }
@@ -754,6 +843,14 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .field-span-2 {
+    grid-column: auto;
+  }
+
   .filter-row {
     grid-template-columns: 1fr;
   }
@@ -767,5 +864,9 @@ main {
   .secondary-btn {
     width: 100%;
     text-align: center;
+  }
+
+  .action-row {
+    flex-direction: column;
   }
 }

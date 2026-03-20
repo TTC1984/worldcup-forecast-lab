@@ -7,6 +7,7 @@
     "sync:source": "node scripts/sync-2026-source.mjs",
     "generate:predictions": "node scripts/generate-predictions.mjs",
     "build:data": "npm run generate:predictions",
-    "check": "node scripts/generate-predictions.mjs && node --check script.js"
+    "check:signals": "node scripts/validate-prematch-signals.mjs",
+    "check": "node scripts/validate-prematch-signals.mjs && node scripts/generate-predictions.mjs && node --check script.js && node --check signal-console.js"
   }
 }

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signal Console • World Cup Forecast Lab</title>
+    <meta
+      name="description"
+      content="世界杯赛前情报控制台，用于维护 prematch signal seed feed，并导出可直接回写仓库的数据文件。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand-mark">S</span>
+            <div>
+              <p>Prematch Signal Console</p>
+              <span>Static Admin Prototype</span>
+            </div>
+          </div>
+          <a class="ghost-link" href="./">返回预测站</a>
+        </nav>
+
+        <div class="hero-grid">
+          <section class="hero-copy">
+            <p class="eyebrow">CONTROL PANEL • STATIC WORKFLOW</p>
+            <h1>赛前情报控制台</h1>
+            <p class="lead">
+              面向静态站点的可维护后台原型。你可以在浏览器中编辑球队级和场次级情报、即时校验结构、下载新的
+              `prematch-signals.json`，再回写到仓库中触发新一轮预测构建。
+            </p>
+
+            <div class="cta-row">
+              <a class="primary-btn" href="#console">开始维护</a>
+              <a class="secondary-btn" href="./">查看前台</a>
+            </div>
+
+            <ul class="hero-points">
+              <li>支持球队级与场次级两层情报录入</li>
+              <li>即时展示覆盖率、校验状态和导出动作</li>
+              <li>适合下一步替换成真实 API / CMS</li>
+            </ul>
+          </section>
+
+          <aside class="hero-panel">
+            <div class="panel-label">交付建议</div>
+            <h2>当前后台定位</h2>
+            <div class="panel-stack">
+              <article>
+                <span>维护方式</span>
+                <strong>浏览器编辑 + 导出 JSON</strong>
+              </article>
+              <article>
+                <span>校验目标</span>
+                <strong>结构正确 + 场次命中 + 数值范围</strong>
+              </article>
+              <article>
+                <span>下一步升级</span>
+                <strong>接入账号体系 / 审核流 / 自动刷新</strong>
+              </article>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main id="console">
+        <section class="stats-band">
+          <article>
+            <span id="console-team-signal-count" class="metric-number">0</span>
+            <p>球队信号</p>
+          </article>
+          <article>
+            <span id="console-fixture-signal-count" class="metric-number">0</span>
+            <p>场次覆盖</p>
+          </article>
+          <article>
+            <span id="console-coverage-count" class="metric-number">0</span>
+            <p>总情报覆盖</p>
+          </article>
+          <article>
+            <span id="console-validation-count" class="metric-number">0</span>
+            <p>校验问题</p>
+          </article>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Feed Setup</p>
+              <h2>基础设置与导出</h2>
+            </div>
+            <p id="console-status">正在载入 prematch signal feed...</p>
+          </div>
+
+          <div class="console-grid">
+            <section class="card card-span-7">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Feed Metadata</p>
+                  <h3>Feed 配置</h3>
+                </div>
+              </div>
+
+              <div class="form-grid form-grid-2">
+                <label class="field">
+                  <span>Feed 名称</span>
+                  <input id="feed-name" type="text" />
+                </label>
+                <label class="field">
+                  <span>模式</span>
+                  <input id="feed-mode" type="text" />
+                </label>
+                <label class="field">
+                  <span>生成时间</span>
+                  <input id="feed-generated-at" type="text" />
+                </label>
+                <label class="field">
+                  <span>默认首发确认</span>
+                  <input id="default-lineup-confidence" type="number" step="1" />
+                </label>
+                <label class="field">
+                  <span>默认新鲜度小时</span>
+                  <input id="default-freshness-hours" type="number" step="1" />
+                </label>
+                <label class="field">
+                  <span>默认波动等级值</span>
+                  <input id="default-market-volatility" type="number" step="0.1" />
+                </label>
+                <label class="field field-span-2">
+                  <span>默认来源标签</span>
+                  <input id="default-source-labels" type="text" placeholder="用逗号分隔" />
+                </label>
+                <label class="field field-span-2">
+                  <span>描述</span>
+                  <textarea id="feed-description" rows="4"></textarea>
+                </label>
+              </div>
+            </section>
+
+            <section class="card card-span-5">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Validate & Export</p>
+                  <h3>校验与导出</h3>
+                </div>
+              </div>
+
+              <div class="action-row">
+                <button id="download-feed" class="primary-btn button-reset">下载 JSON</button>
+                <button id="copy-feed" class="secondary-btn button-reset">复制 JSON</button>
+                <button id="reset-feed" class="ghost-link button-reset">恢复载入值</button>
+              </div>
+
+              <label class="field">
+                <span>导入本地 JSON</span>
+                <input id="import-feed" type="file" accept="application/json" />
+              </label>
+
+              <div class="notice-card">
+                <strong>当前工作流</strong>
+                <p>导出后回写到仓库的 <code>data/source/prematch-signals.json</code>，再执行 <code>npm run generate:predictions</code>。</p>
+              </div>
+
+              <div class="notice-card">
+                <strong>校验摘要</strong>
+                <ul id="validation-list" class="risk-list compact-list"></ul>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Signal Editors</p>
+              <h2>球队与场次情报维护</h2>
+            </div>
+            <p>球队级信号会自动覆盖该队相关比赛；场次级覆盖优先级更高，适合处理临场赔率异动、首发确认和专项口径。</p>
+          </div>
+
+          <div class="console-grid">
+            <section class="card card-span-6">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Team Signals</p>
+                  <h3>球队级信号</h3>
+                </div>
+              </div>
+
+              <div class="form-grid form-grid-2">
+                <label class="field field-span-2">
+                  <span>球队</span>
+                  <select id="team-select"></select>
+                </label>
+                <label class="field">
+                  <span>更新时间</span>
+                  <input id="team-last-updated" type="text" />
+                </label>
+                <label class="field">
+                  <span>首发确认度</span>
+                  <input id="team-lineup-confidence" type="number" step="1" />
+                </label>
+                <label class="field">
+                  <span>进攻修正</span>
+                  <input id="team-attack-delta" type="number" step="0.01" />
+                </label>
+                <label class="field">
+                  <span>防守修正</span>
+                  <input id="team-defense-delta" type="number" step="0.01" />
+                </label>
+                <label class="field field-span-2">
+                  <span>市场情绪</span>
+                  <input id="team-market-sentiment" type="number" step="0.01" />
+                </label>
+                <label class="field field-span-2">
+                  <span>情报提示</span>
+                  <textarea id="team-alerts" rows="5" placeholder="每行一条"></textarea>
+                </label>
+                <label class="field field-span-2">
+                  <span>来源标签</span>
+                  <input id="team-source-labels" type="text" placeholder="用逗号分隔" />
+                </label>
+              </div>
+
+              <div class="action-row">
+                <button id="clear-team-signal" class="ghost-link button-reset">清空当前球队信号</button>
+              </div>
+            </section>
+
+            <section class="card card-span-6">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Fixture Overrides</p>
+                  <h3>场次级覆盖</h3>
+                </div>
+              </div>
+
+              <div class="form-grid form-grid-2">
+                <label class="field">
+                  <span>分组</span>
+                  <select id="fixture-group-filter"></select>
+                </label>
+                <label class="field">
+                  <span>场次</span>
+                  <select id="fixture-select"></select>
+                </label>
+                <label class="field field-span-2">
+                  <span>Headline</span>
+                  <textarea id="fixture-headline" rows="4"></textarea>
+                </label>
+                <label class="field">
+                  <span>更新时间</span>
+                  <input id="fixture-last-updated" type="text" />
+                </label>
+                <label class="field">
+                  <span>主队首发确认</span>
+                  <input id="fixture-home-lineup-confidence" type="number" step="1" />
+                </label>
+                <label class="field">
+                  <span>客队首发确认</span>
+                  <input id="fixture-away-lineup-confidence" type="number" step="1" />
+                </label>
+                <label class="field">
+                  <span>主队 xG 修正</span>
+                  <input id="fixture-home-lambda-delta" type="number" step="0.01" />
+                </label>
+                <label class="field">
+                  <span>客队 xG 修正</span>
+                  <input id="fixture-away-lambda-delta" type="number" step="0.01" />
+                </label>
+                <label class="field">
+                  <span>市场偏移</span>
+                  <input id="fixture-market-home-shift" type="number" step="0.1" />
+                </label>
+                <label class="field">
+                  <span>波动值</span>
+                  <input id="fixture-market-volatility" type="number" step="0.1" />
+                </label>
+                <label class="field field-span-2">
+                  <span>情报提示</span>
+                  <textarea id="fixture-alerts" rows="5" placeholder="每行一条"></textarea>
+                </label>
+                <label class="field field-span-2">
+                  <span>来源标签</span>
+                  <input id="fixture-source-labels" type="text" placeholder="用逗号分隔" />
+                </label>
+              </div>
+
+              <div class="action-row">
+                <button id="clear-fixture-signal" class="ghost-link button-reset">清空当前场次覆盖</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Preview</p>
+              <h2>当前覆盖预览</h2>
+            </div>
+            <p>这里展示所选场次在当前 seed feed 下会得到的有效情报摘要，方便录入人员确认覆盖层级与信号是否合理。</p>
+          </div>
+
+          <div class="console-grid">
+            <section class="card card-span-7">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Effective Signal</p>
+                  <h3 id="preview-title">Mexico vs South Africa</h3>
+                </div>
+                <span id="preview-coverage" class="badge">场次级动态</span>
+              </div>
+              <p id="preview-headline" class="fixture-engine"></p>
+              <p id="preview-meta" class="fixture-meta"></p>
+              <div id="preview-tag-grid" class="tag-grid"></div>
+            </section>
+
+            <section class="card card-span-5">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Alerts</p>
+                  <h3>情报线索</h3>
+                </div>
+              </div>
+              <ul id="preview-alerts" class="risk-list"></ul>
+              <div id="preview-sources" class="source-chip-list"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>Prematch Signal Console • Static admin prototype for GitHub Pages</p>
+      <p>本页仅用于维护研究型赛前情报 feed，不提供下注、售彩或自动交易能力。</p>
+    </footer>
+
+    <script src="./signal-console.js"></script>
+  </body>
+</html>
