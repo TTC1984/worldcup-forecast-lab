@@ -36,6 +36,7 @@
 - `data/generated/worldcup-forecast.json`：前端直接消费的预测结果
 - `signal-console.html` / `signal-console.js`：静态情报控制台
 - `delivery-board.html` / `delivery-board.js`：客户交付看板
+- `docs/worldcup-client-delivery-report-2026-03-20.md`：第一阶段客户交付报告
 
 ## Data Source
 
