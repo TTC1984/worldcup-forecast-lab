@@ -785,6 +785,93 @@ main {
   line-height: 1.7;
 }
 
+.readiness-grid,
+.acceptance-grid,
+.handoff-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.readiness-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.acceptance-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.handoff-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.readiness-card,
+.acceptance-card,
+.handoff-card {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.readiness-detail,
+.handoff-card h3 {
+  display: block;
+  margin-top: 8px;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.readiness-detail {
+  font-size: 1.2rem;
+}
+
+.readiness-note,
+.handoff-card p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.check-list {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--ink);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.status-pass {
+  background: rgba(15, 118, 110, 0.12);
+  color: #0f766e;
+}
+
+.status-watch {
+  background: rgba(214, 69, 33, 0.12);
+  color: #b94724;
+}
+
+.handoff-card .badge {
+  display: inline-flex;
+  margin-bottom: 12px;
+}
+
 .draft-metric-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -875,7 +962,10 @@ main {
   .backtest-grid,
   .backtest-summary-grid,
   .metric-grid,
-  .compliance-grid {
+  .compliance-grid,
+  .readiness-grid,
+  .acceptance-grid,
+  .handoff-grid {
     grid-template-columns: 1fr;
   }
 
@@ -920,6 +1010,10 @@ main {
 
   .draft-metric-grid {
     grid-template-columns: 1fr;
+  }
+
+  .check-item {
+    flex-direction: column;
   }
 
   .field-span-2 {

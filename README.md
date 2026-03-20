@@ -9,6 +9,7 @@
 - 支持胜平负、Top3 比分、总进球、半全场
 - 接入赛前动态情报层，展示首发确认度、伤停线索与市场摆动
 - 附带一个静态“情报控制台”，支持草稿对比、发布说明和导出 `prematch-signals.json`
+- 附带一个“交付看板”，汇总版本、验收项、已知限制与交付路径
 - 提供世界杯历史回测、风险提示和合法边界说明
 - 不提供在线购彩、代投、出票或跟单能力
 
@@ -34,6 +35,7 @@
 - `scripts/generate-predictions.mjs`：baseline 预测生成脚本
 - `data/generated/worldcup-forecast.json`：前端直接消费的预测结果
 - `signal-console.html` / `signal-console.js`：静态情报控制台
+- `delivery-board.html` / `delivery-board.js`：客户交付看板
 
 ## Data Source
 
@@ -87,6 +89,7 @@ python3 -m http.server 4173
 
 - 前台预测页：`http://localhost:4173`
 - 情报控制台：`http://localhost:4173/signal-console.html`
+- 交付看板：`http://localhost:4173/delivery-board.html`
 
 ## Deployment
 

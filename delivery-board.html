@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delivery Board • World Cup Forecast Lab</title>
+    <meta
+      name="description"
+      content="世界杯预测项目交付看板，汇总版本、验收项、风险与交付路径。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand-mark">D</span>
+            <div>
+              <p>World Cup Delivery Board</p>
+              <span>Client Handoff Snapshot</span>
+            </div>
+          </div>
+          <div class="topbar-links">
+            <a class="ghost-link" href="./">预测站</a>
+            <a class="ghost-link" href="./signal-console.html">情报控制台</a>
+          </div>
+        </nav>
+
+        <div class="hero-grid">
+          <section class="hero-copy">
+            <p class="eyebrow">DELIVERY SNAPSHOT • CLIENT READY</p>
+            <h1>世界杯预测项目交付看板</h1>
+            <p class="lead">
+              把模型、数据、回测、赛前情报与合规边界汇总到一页里，方便客户、运营和技术一起对齐当前版本能交付什么、还差什么。
+            </p>
+
+            <div class="cta-row">
+              <a class="primary-btn" href="#readiness">查看就绪度</a>
+              <button id="copy-delivery-summary" class="secondary-btn button-reset">复制交付摘要</button>
+              <button id="download-delivery-summary" class="secondary-btn button-reset">下载摘要</button>
+            </div>
+
+            <ul class="hero-points">
+              <li>统一展示版本、验收项、已知限制和交付路径</li>
+              <li>适合售前汇报、客户验收和内部项目同步</li>
+              <li>不涉及互联网售彩、代投、合买和出票流程</li>
+            </ul>
+          </section>
+
+          <aside class="hero-panel">
+            <div class="panel-label">当前版本</div>
+            <h2 id="delivery-version">正在载入...</h2>
+            <div class="panel-stack">
+              <article>
+                <span>数据时间</span>
+                <strong id="delivery-generated-at">载入中</strong>
+              </article>
+              <article>
+                <span>情报 feed</span>
+                <strong id="delivery-feed-meta">载入中</strong>
+              </article>
+              <article>
+                <span>当前结论</span>
+                <strong id="delivery-hero-summary">正在评估交付就绪度</strong>
+              </article>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main>
+        <section class="stats-band">
+          <article>
+            <span id="delivery-readiness-score" class="metric-number">0%</span>
+            <p>整体就绪度</p>
+          </article>
+          <article>
+            <span id="delivery-fixture-count" class="metric-number">0</span>
+            <p>预测场次</p>
+          </article>
+          <article>
+            <span id="delivery-coverage-count" class="metric-number">0</span>
+            <p>情报覆盖</p>
+          </article>
+          <article>
+            <span id="delivery-gap-count" class="metric-number">0</span>
+            <p>待增强项</p>
+          </article>
+        </section>
+
+        <section class="section" id="readiness">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Readiness Matrix</p>
+              <h2>交付就绪度</h2>
+            </div>
+            <p id="delivery-status">正在汇总当前版本的交付状态...</p>
+          </div>
+
+          <div id="readiness-grid" class="readiness-grid"></div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Acceptance Checklist</p>
+              <h2>验收清单</h2>
+            </div>
+            <p>每一项都直接对应客户会问的问题：页面有没有、数据是不是真的、结果是否可解释、流程是否可运营、边界是否清晰。</p>
+          </div>
+
+          <div id="acceptance-grid" class="acceptance-grid"></div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Known Gaps</p>
+              <h2>当前限制与下一步</h2>
+            </div>
+            <p>这部分不回避问题，而是把 MVP 还没完成的部分说清楚，方便客户理解阶段目标和后续排期。</p>
+          </div>
+
+          <div class="console-grid">
+            <section class="card card-span-7">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Current Gaps</p>
+                  <h3>已知限制</h3>
+                </div>
+              </div>
+              <ul id="delivery-gap-list" class="risk-list"></ul>
+            </section>
+
+            <section class="card card-span-5">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Next Sprint</p>
+                  <h3>建议下一步</h3>
+                </div>
+              </div>
+              <ul id="delivery-next-steps" class="risk-list"></ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Handoff Path</p>
+              <h2>交付入口</h2>
+            </div>
+            <p>客户看前台、运营看情报、技术看数据，三条入口现在已经能串起来。</p>
+          </div>
+
+          <div class="handoff-grid">
+            <article class="handoff-card">
+              <span class="badge">01</span>
+              <h3>预测站</h3>
+              <p>用于客户演示世界杯单场预测、赛事全景、回测指标与合规定位。</p>
+              <a class="ghost-link" href="./">打开前台</a>
+            </article>
+
+            <article class="handoff-card">
+              <span class="badge">02</span>
+              <h3>情报控制台</h3>
+              <p>用于录入球队级与场次级动态、生成差异摘要并导出发布包。</p>
+              <a class="ghost-link" href="./signal-console.html">打开控制台</a>
+            </article>
+
+            <article class="handoff-card">
+              <span class="badge">03</span>
+              <h3>生成数据</h3>
+              <p>用于技术侧复核版本、接口结果和建模口径，也是前台消费的单一数据源。</p>
+              <a class="ghost-link" href="./data/generated/worldcup-forecast.json">查看 JSON</a>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>World Cup Delivery Board • Static client handoff page</p>
+      <p>本页用于交付沟通与验收汇总，不构成投注建议，也不提供互联网售彩能力。</p>
+    </footer>
+
+    <script src="./delivery-board.js"></script>
+  </body>
+</html>

@@ -8,6 +8,6 @@
     "generate:predictions": "node scripts/generate-predictions.mjs",
     "build:data": "npm run generate:predictions",
     "check:signals": "node scripts/validate-prematch-signals.mjs",
-    "check": "node scripts/validate-prematch-signals.mjs && node scripts/generate-predictions.mjs && node --check script.js && node --check signal-console.js"
+    "check": "node scripts/validate-prematch-signals.mjs && node scripts/generate-predictions.mjs && node --check script.js && node --check signal-console.js && node --check delivery-board.js"
   }
 }
