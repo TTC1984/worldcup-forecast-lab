@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>World Cup Forecast Lab</title>
+    <title>世界杯赛前参考页</title>
     <meta
       name="description"
-      content="世界杯预测分析原型站，展示胜平负、比分、总进球与半全场等玩法的概率化输出。"
+      content="世界杯赛前参考页，一眼看懂这场更看好谁、最可能比分、进球多少和赛前消息。"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,63 +14,68 @@
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23145A46'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-size='28' font-family='Arial, sans-serif' fill='%23F7F3EA'%3EW%3C/text%3E%3C/svg%3E"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="page-shell">
-      <header class="hero">
+      <header class="hero fan-hero">
         <nav class="topbar">
           <div class="brand">
             <span class="brand-mark">W</span>
             <div>
-              <p>World Cup Forecast Lab</p>
-              <span>Baseline Prediction MVP</span>
+              <p>世界杯赛前参考</p>
+              <span>一页看懂世界杯赛前参考</span>
             </div>
           </div>
           <div class="topbar-links">
-            <a class="ghost-link" href="./delivery-board.html">交付看板</a>
-            <a class="ghost-link" href="./signal-console.html">情报控制台</a>
-            <a class="ghost-link" href="#compliance">合法边界</a>
+            <a class="ghost-link" href="#pick">先看这场</a>
+            <a class="ghost-link" href="#tournament">整届走势</a>
+            <a class="ghost-link" href="#history">过去表现</a>
+            <a class="ghost-link" href="#updates">数据更新</a>
+            <a class="ghost-link" href="#tips">使用提醒</a>
           </div>
         </nav>
 
         <div class="hero-grid">
           <section class="hero-copy">
-            <p class="eyebrow">2026 WORLD CUP • PROBABILITY FIRST</p>
-            <h1>世界杯预测分析系统原型</h1>
+            <p class="eyebrow">2026 世界杯 · 一页看懂</p>
+            <h1>这场更看好谁，一页看懂</h1>
             <p class="lead">
-              面向中国体彩合规边界设计的研究型产品原型。系统输出概率分布与回测指标，不提供在线购彩、代投或出票能力。
+              这页把世界杯比赛里最常看的几件事放在一起：更看好谁、最可能的比分、进球多不多、赛前消息有没有变化。
+              不讲太多术语，只说对普通人有用的话。
             </p>
 
             <div class="cta-row">
-              <a class="primary-btn" href="#predictor">查看预测面板</a>
-              <a class="secondary-btn" href="./delivery-board.html">查看交付</a>
-              <a class="secondary-btn" href="./signal-console.html">维护情报</a>
-              <a class="secondary-btn" href="https://github.com/TTC1984" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="primary-btn" href="#pick">开始看比赛</a>
+              <a class="secondary-btn" href="#updates">看看数据怎么更新</a>
             </div>
 
             <ul class="hero-points">
-              <li>支持胜平负、Top3 比分、总进球、半全场</li>
-              <li>优先展示概率与不确定性，而不是“必中推荐”</li>
-              <li>适合做世界杯专题页、数据报告和模型展示</li>
+              <li>先看这场更偏向哪边，再看风险大不大</li>
+              <li>比分只给最可能的几个，不装作能猜得很死</li>
+              <li>开赛前消息会影响判断，越接近开赛越重要</li>
             </ul>
           </section>
 
-          <aside class="hero-panel">
-            <div class="panel-label">实时策略卡</div>
-            <h2>推荐展示逻辑</h2>
+          <aside class="hero-panel hero-panel-quick">
+            <div class="panel-label">当前比赛速看</div>
+            <h2 id="hero-match-title">正在载入比赛...</h2>
             <div class="panel-stack">
               <article>
-                <span>核心输出</span>
-                <strong>概率分布 + 玩法映射</strong>
+                <span>现在更看好</span>
+                <strong id="hero-main-pick">载入中</strong>
               </article>
               <article>
-                <span>建议 KPI</span>
-                <strong>1X2 命中率 + Brier + 回测收益</strong>
+                <span>这场风险</span>
+                <strong id="hero-risk-level">载入中</strong>
               </article>
               <article>
-                <span>发布口径</span>
-                <strong>只做分析，不做网售彩</strong>
+                <span>最近消息</span>
+                <strong id="hero-update-note">载入中</strong>
               </article>
             </div>
           </aside>
@@ -85,62 +90,92 @@
           </article>
           <article>
             <span id="summary-fixture-count" class="metric-number">0</span>
-            <p>小组赛预测</p>
+            <p>预测比赛</p>
           </article>
           <article>
-            <span id="summary-group-count" class="metric-number">0</span>
-            <p>世界杯小组</p>
+            <span id="summary-coverage-count" class="metric-number">0</span>
+            <p>赛前消息覆盖</p>
           </article>
           <article>
-            <span id="summary-simulation-count" class="metric-number">0</span>
-            <p>Monte Carlo 样本</p>
+            <span id="summary-backtest-count" class="metric-number">0</span>
+            <p>历史样本</p>
           </article>
         </section>
 
-        <section class="section" id="predictor">
+        <section class="section quick-guide">
+          <div class="quick-guide-grid">
+            <article class="guide-card">
+              <span>01</span>
+              <strong>先选比赛</strong>
+              <p>先按分组选一场你关心的比赛，再看这场大方向。</p>
+            </article>
+            <article class="guide-card">
+              <span>02</span>
+              <strong>先看方向</strong>
+              <p>重点先看更偏向谁、常见比分和进球多不多。</p>
+            </article>
+            <article class="guide-card">
+              <span>03</span>
+              <strong>再看风险</strong>
+              <p>最后看赛前消息和这场的不确定因素，不要只盯一个结果。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="pick">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Prototype Panel</p>
-              <h2>预测面板</h2>
+              <p class="eyebrow">先看单场</p>
+              <h2>先看这场</h2>
             </div>
-            <p id="data-status">
-              正在载入基线模型生成的世界杯预测数据...
-            </p>
+            <p id="data-status">正在载入比赛参考数据...</p>
           </div>
 
           <div class="filter-row">
-            <label for="group-filter">查看分组</label>
+            <label for="group-filter">先选分组</label>
             <select id="group-filter"></select>
           </div>
+
           <div class="match-switcher" id="match-switcher"></div>
-          <div class="predictor-grid">
-            <section class="card card-main">
+
+          <div class="fan-grid">
+            <section class="card fan-main-card">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Selected Fixture</p>
-                  <h3 id="fixture-title">Mexico vs South Africa</h3>
+                  <p class="card-kicker">这场怎么看</p>
+                  <h3 id="fixture-title">墨西哥 对 南非</h3>
                 </div>
-                <span id="fixture-stage" class="badge">Group Stage</span>
+                <span id="fixture-stage" class="badge">小组赛</span>
               </div>
               <p id="fixture-meta" class="fixture-meta"></p>
-              <p id="fixture-engine" class="fixture-engine"></p>
-              <div class="scoreline">
-                <div>
-                  <span class="score-label">最优玩法映射</span>
+              <p id="fixture-advice" class="fixture-lead"></p>
+
+              <div class="quick-pick-grid">
+                <article class="quick-pick-card">
+                  <span>更偏向</span>
                   <strong id="best-pick">主胜</strong>
-                </div>
-                <div>
-                  <span class="score-label">模型信号</span>
-                  <strong id="signal-strength">中高置信</strong>
-                </div>
+                </article>
+                <article class="quick-pick-card">
+                  <span>把握感</span>
+                  <strong id="confidence-text">方向较清楚</strong>
+                </article>
+                <article class="quick-pick-card">
+                  <span>风险提醒</span>
+                  <strong id="risk-text">临场留意变化</strong>
+                </article>
               </div>
+
+              <details class="detail-card">
+                <summary>展开看更专业的数据</summary>
+                <p id="fixture-engine" class="detail-note"></p>
+              </details>
             </section>
 
             <section class="card">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">1X2</p>
-                  <h3>胜平负概率</h3>
+                  <p class="card-kicker">三种结果</p>
+                  <h3>主胜、平、客胜</h3>
                 </div>
               </div>
               <div id="outcome-bars" class="bar-list"></div>
@@ -149,8 +184,8 @@
             <section class="card">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Exact Score</p>
-                  <h3>Top3 比分</h3>
+                  <p class="card-kicker">最可能比分</p>
+                  <h3>先看这 3 个</h3>
                 </div>
               </div>
               <div id="score-grid" class="score-grid"></div>
@@ -159,8 +194,8 @@
             <section class="card">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Goals</p>
-                  <h3>总进球分布</h3>
+                  <p class="card-kicker">进球多少</p>
+                  <h3>这场会不会很热闹</h3>
                 </div>
               </div>
               <div id="goals-grid" class="tag-grid"></div>
@@ -169,8 +204,8 @@
             <section class="card">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">HT/FT</p>
-                  <h3>半全场建议</h3>
+                  <p class="card-kicker">半场和全场</p>
+                  <h3>一起看更直观</h3>
                 </div>
               </div>
               <div id="halftime-grid" class="tag-grid"></div>
@@ -179,66 +214,55 @@
             <section class="card">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Prematch Pulse</p>
-                  <h3>赛前动态脉冲</h3>
+                  <p class="card-kicker">赛前消息</p>
+                  <h3>这场最近有什么变化</h3>
                 </div>
               </div>
               <p id="prematch-headline" class="fixture-engine"></p>
               <p id="prematch-meta" class="fixture-meta"></p>
               <div id="prematch-pulse-grid" class="tag-grid"></div>
+              <div id="prematch-source-list" class="source-chip-list"></div>
             </section>
 
             <section class="card">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Team News</p>
-                  <h3>伤停 / 首发 / 市场</h3>
+                  <p class="card-kicker">这场要注意</p>
+                  <h3>别忽略这些点</h3>
                 </div>
               </div>
               <ul class="risk-list" id="prematch-alert-list"></ul>
-              <div class="source-chip-list" id="prematch-source-list"></div>
-            </section>
-
-            <section class="card">
-              <div class="card-head">
-                <div>
-                  <p class="card-kicker">Risk Notes</p>
-                  <h3>输出解释</h3>
-                </div>
-              </div>
-              <ul class="risk-list" id="risk-list"></ul>
+              <ul class="risk-list compact-list" id="risk-list"></ul>
             </section>
           </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="tournament">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Tournament Outlook</p>
-              <h2>晋级与冠军概率</h2>
+              <p class="eyebrow">再看整届</p>
+              <h2>整届世界杯怎么看</h2>
             </div>
-            <p>围绕当前分组同步展示出线率，并给出全局冠军热门与模拟口径，方便客户看懂“赛事全景”而不是单场推荐。</p>
+            <p>如果你不只看单场，这里可以快速看某个小组谁更容易出线，整届比赛谁更像热门。</p>
           </div>
 
           <div class="tournament-grid">
             <section class="card card-span-7">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Group Projection</p>
-                  <h3 id="group-projection-title">Group A 出线概率</h3>
+                  <p class="card-kicker">本组选手</p>
+                  <h3 id="group-projection-title">A 组出线机会</h3>
                 </div>
-                <span class="badge">32 强晋级视角</span>
+                <span class="badge">按当前分组</span>
               </div>
               <div class="projection-table-wrap">
                 <table class="projection-table">
                   <thead>
                     <tr>
                       <th>球队</th>
-                      <th>均分</th>
-                      <th>前二</th>
-                      <th>最佳第三</th>
-                      <th>晋级</th>
-                      <th>夺冠</th>
+                      <th>出线机会</th>
+                      <th>小组第一</th>
+                      <th>夺冠希望</th>
                     </tr>
                   </thead>
                   <tbody id="group-projection-body"></tbody>
@@ -249,10 +273,10 @@
             <section class="card card-span-5">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Title Odds</p>
-                  <h3>冠军热门</h3>
+                  <p class="card-kicker">全局热门</p>
+                  <h3>整届最被看好的球队</h3>
                 </div>
-                <span class="badge">Top 8</span>
+                <span class="badge">前 8 热门</span>
               </div>
               <div id="title-contenders" class="contender-list"></div>
             </section>
@@ -260,8 +284,8 @@
             <section class="card card-span-12">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Simulation Notes</p>
-                  <h3>模拟口径说明</h3>
+                  <p class="card-kicker">这部分怎么看</p>
+                  <h3>简单说明</h3>
                 </div>
               </div>
               <ul class="risk-list" id="simulation-notes"></ul>
@@ -269,40 +293,35 @@
           </div>
         </section>
 
-        <section class="section" id="backtest">
+        <section class="section" id="history">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Historical Backtest</p>
-              <h2>回测与指标</h2>
+              <p class="eyebrow">回看过去</p>
+              <h2>过去表现怎么样</h2>
             </div>
-            <p id="backtest-status">正在载入世界杯历史回测指标...</p>
+            <p id="backtest-status">正在载入历史表现...</p>
           </div>
 
           <div class="backtest-summary-grid">
             <article class="metric-card">
-              <span>样本场次</span>
+              <span>历史样本</span>
               <strong id="backtest-match-count">0</strong>
-              <p>使用三届世界杯小组赛历史样本做首版回放。</p>
+              <p>先拿过去三届世界杯小组赛做对照，看看方向大体准不准。</p>
             </article>
             <article class="metric-card">
-              <span>1X2 命中率</span>
+              <span>三种结果看准率</span>
               <strong id="backtest-outcome-accuracy">0%</strong>
-              <p>按三分类最高概率输出与真实赛果对比。</p>
+              <p>看主胜、平、客胜这 3 种结果，哪个最接近真实赛果。</p>
             </article>
             <article class="metric-card">
-              <span>Top3 比分覆盖</span>
+              <span>常见比分覆盖率</span>
               <strong id="backtest-top3-coverage">0%</strong>
-              <p>真实比分落在模型 Top3 比分候选中的比例。</p>
+              <p>真实比分有没有落在最可能的几个比分里。</p>
             </article>
             <article class="metric-card">
-              <span>平均 Brier</span>
-              <strong id="backtest-brier">0.000</strong>
-              <p>三分类概率误差，越低越好。</p>
-            </article>
-            <article class="metric-card">
-              <span>平均 Log Loss</span>
-              <strong id="backtest-logloss">0.000</strong>
-              <p>真实赛果对应概率的对数损失，越低越好。</p>
+              <span>平均把握感</span>
+              <strong id="backtest-confidence">0%</strong>
+              <p>不是越高越好，而是要和真实命中接近，不要虚高。</p>
             </article>
           </div>
 
@@ -310,8 +329,8 @@
             <section class="card card-span-7">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Season Breakdown</p>
-                  <h3>分届表现</h3>
+                  <p class="card-kicker">分届表现</p>
+                  <h3>三届世界杯大概表现</h3>
                 </div>
               </div>
               <div class="projection-table-wrap">
@@ -320,10 +339,8 @@
                     <tr>
                       <th>届次</th>
                       <th>样本</th>
-                      <th>1X2</th>
-                      <th>Top3</th>
-                      <th>Brier</th>
-                      <th>Log Loss</th>
+                      <th>三种结果</th>
+                      <th>比分覆盖</th>
                     </tr>
                   </thead>
                   <tbody id="backtest-season-body"></tbody>
@@ -334,89 +351,138 @@
             <section class="card card-span-5">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Calibration</p>
-                  <h3>置信度校准</h3>
+                  <p class="card-kicker">这组数字怎么理解</p>
+                  <h3>普通人看法</h3>
                 </div>
               </div>
-              <div class="projection-table-wrap">
-                <table class="projection-table">
-                  <thead>
-                    <tr>
-                      <th>置信区间</th>
-                      <th>样本</th>
-                      <th>平均置信</th>
-                      <th>实际命中</th>
-                    </tr>
-                  </thead>
-                  <tbody id="backtest-calibration-body"></tbody>
-                </table>
-              </div>
-              <ul class="risk-list compact-list" id="backtest-notes"></ul>
+              <ul class="risk-list" id="backtest-notes"></ul>
             </section>
 
             <section class="card card-span-12">
               <div class="card-head">
                 <div>
-                  <p class="card-kicker">Hardest Upsets</p>
-                  <h3>历史冷门样本</h3>
+                  <p class="card-kicker">典型冷门</p>
+                  <h3>过去也会遇到这些翻车场次</h3>
                 </div>
               </div>
               <div class="surprise-grid" id="backtest-surprise-list"></div>
             </section>
           </div>
+
+          <details class="detail-card detail-card-wide">
+            <summary>展开看更专业的历史指标</summary>
+            <div class="console-grid">
+              <section class="card card-span-6">
+                <div class="card-head">
+                  <div>
+                    <p class="card-kicker">专业指标</p>
+                    <h3>概率误差</h3>
+                  </div>
+                </div>
+                <div class="quick-pick-grid">
+                  <article class="quick-pick-card">
+                    <span>Brier</span>
+                    <strong id="backtest-brier">0.000</strong>
+                  </article>
+                  <article class="quick-pick-card">
+                    <span>Log Loss</span>
+                    <strong id="backtest-logloss">0.000</strong>
+                  </article>
+                </div>
+              </section>
+
+              <section class="card card-span-6">
+                <div class="card-head">
+                  <div>
+                    <p class="card-kicker">把握感对照</p>
+                    <h3>置信和真实命中</h3>
+                  </div>
+                </div>
+                <div class="projection-table-wrap">
+                  <table class="projection-table">
+                    <thead>
+                      <tr>
+                        <th>区间</th>
+                        <th>样本</th>
+                        <th>平均把握</th>
+                        <th>真实命中</th>
+                      </tr>
+                    </thead>
+                    <tbody id="backtest-calibration-body"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </details>
         </section>
 
-        <section class="section">
+        <section class="section" id="updates">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Metric Design</p>
-              <h2>应该怎么谈准确率</h2>
+              <p class="eyebrow">数据说明</p>
+              <h2>数据怎么来的</h2>
             </div>
+            <p>这部分把“消息从哪里来、现在更新到哪一步、还有哪些地方还在完善”一次说清楚。</p>
+          </div>
+
+          <div class="fan-info-grid">
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">最新更新</p>
+                  <h3 id="update-feed-title">正在读取更新信息...</h3>
+                </div>
+              </div>
+              <p id="update-feed-meta" class="fixture-meta"></p>
+              <ul class="risk-list" id="update-feed-list"></ul>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">一般多久会变</p>
+                  <h3>接近开赛时最值得再刷一遍</h3>
+                </div>
+              </div>
+              <ul class="risk-list" id="update-refresh-list"></ul>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">目前还差什么</p>
+                  <h3>这页还在继续完善</h3>
+                </div>
+              </div>
+              <ul class="risk-list" id="update-gap-list"></ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="section" id="tips">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">使用提醒</p>
+              <h2>这页该怎么用</h2>
+            </div>
+            <p>这页更适合当赛前参考，不适合当“包中答案”。看方向、看风险、看临场变化，比只盯一个比分更实用。</p>
           </div>
 
           <div class="metric-grid">
             <article class="metric-card">
-              <span>胜平负</span>
-              <strong>50% - 55%</strong>
-              <p>长期稳定超过随机基线，并用回测收益与校准曲线辅助验证。</p>
+              <span>先看方向</span>
+              <strong>别只盯一个比分</strong>
+              <p>比分本来就难猜死，先看主胜、平、客胜的大方向更稳妥。</p>
             </article>
             <article class="metric-card">
-              <span>精确比分</span>
-              <strong>看 Top3 覆盖率</strong>
-              <p>单点比分命中率天然较低，不适合夸大承诺。</p>
+              <span>再看风险</span>
+              <strong>开赛前再刷一次</strong>
+              <p>首发、伤停和赔率变化，往往在临近开赛时最关键。</p>
             </article>
             <article class="metric-card">
-              <span>总进球 / 半全场</span>
-              <strong>独立考核</strong>
-              <p>玩法难度不同，应拆开评估，不要合成一个“大准确率”。</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="section compliance" id="compliance">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Compliance</p>
-              <h2>合法边界内的产品定位</h2>
-            </div>
-          </div>
-
-          <div class="compliance-grid">
-            <article class="compliance-card ok">
-              <h3>可以做</h3>
-              <ul>
-                <li>世界杯赛前分析、球队状态、模型概率输出</li>
-                <li>玩法映射、历史回测、指标可视化</li>
-                <li>附近体彩店查询、合法渠道识别、理性购彩提醒</li>
-              </ul>
-            </article>
-            <article class="compliance-card stop">
-              <h3>不要做</h3>
-              <ul>
-                <li>互联网售彩、代买、合买、出票、自动跟投</li>
-                <li>“内幕”“必中”“高回报”式营销</li>
-                <li>向未成年人推广或弱化风险提示</li>
-              </ul>
+              <span>理性参考</span>
+              <strong>这不是承诺单</strong>
+              <p>这里只提供研究型参考，不提供网售彩、代投、合买或“必中推荐”。</p>
             </article>
           </div>
         </section>
@@ -424,8 +490,8 @@
     </div>
 
     <footer class="footer">
-      <p>World Cup Forecast Lab • Static MVP for GitHub Pages</p>
-      <p>仅供技术演示与数据研究，不构成购彩建议。当前版本使用本地 baseline、历史回测与赛前情报 seed feed 生成数据。</p>
+      <p>世界杯赛前参考 • 一页式世界杯赛前参考</p>
+      <p>仅供赛前信息参考，不构成承诺式推荐。理性看待比赛结果，临场变化请及时刷新。</p>
     </footer>
 
     <script src="./script.js"></script>
