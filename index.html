@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Cup Forecast Lab</title>
+    <meta
+      name="description"
+      content="世界杯预测分析原型站，展示胜平负、比分、总进球与半全场等玩法的概率化输出。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand-mark">W</span>
+            <div>
+              <p>World Cup Forecast Lab</p>
+              <span>AI Analysis Prototype</span>
+            </div>
+          </div>
+          <a class="ghost-link" href="#compliance">合法边界</a>
+        </nav>
+
+        <div class="hero-grid">
+          <section class="hero-copy">
+            <p class="eyebrow">2026 WORLD CUP • PROBABILITY FIRST</p>
+            <h1>世界杯预测分析系统原型</h1>
+            <p class="lead">
+              面向中国体彩合规边界设计的研究型产品原型。系统输出概率分布与回测指标，不提供在线购彩、代投或出票能力。
+            </p>
+
+            <div class="cta-row">
+              <a class="primary-btn" href="#predictor">查看预测面板</a>
+              <a class="secondary-btn" href="https://github.com/TTC1984" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+
+            <ul class="hero-points">
+              <li>支持胜平负、Top3 比分、总进球、半全场</li>
+              <li>优先展示概率与不确定性，而不是“必中推荐”</li>
+              <li>适合做世界杯专题页、数据报告和模型展示</li>
+            </ul>
+          </section>
+
+          <aside class="hero-panel">
+            <div class="panel-label">实时策略卡</div>
+            <h2>推荐展示逻辑</h2>
+            <div class="panel-stack">
+              <article>
+                <span>核心输出</span>
+                <strong>概率分布 + 玩法映射</strong>
+              </article>
+              <article>
+                <span>建议 KPI</span>
+                <strong>1X2 命中率 + Brier + 回测收益</strong>
+              </article>
+              <article>
+                <span>发布口径</span>
+                <strong>只做分析，不做网售彩</strong>
+              </article>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main>
+        <section class="stats-band">
+          <article>
+            <span class="metric-number" data-target="54.7">0</span>
+            <p>胜平负历史命中率目标</p>
+          </article>
+          <article>
+            <span class="metric-number" data-target="31.4">0</span>
+            <p>Top3 比分覆盖率目标</p>
+          </article>
+          <article>
+            <span class="metric-number" data-target="0.182">0</span>
+            <p>Brier Score 目标</p>
+          </article>
+        </section>
+
+        <section class="section" id="predictor">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Prototype Panel</p>
+              <h2>预测面板</h2>
+            </div>
+            <p>
+              演示数据为静态样例，重点展示产品结构、信息层级与玩法映射方式。
+            </p>
+          </div>
+
+          <div class="match-switcher" id="match-switcher"></div>
+          <div class="predictor-grid">
+            <section class="card card-main">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Selected Fixture</p>
+                  <h3 id="fixture-title">Mexico vs South Africa</h3>
+                </div>
+                <span id="fixture-stage" class="badge">Group Stage</span>
+              </div>
+              <p id="fixture-meta" class="fixture-meta"></p>
+              <div class="scoreline">
+                <div>
+                  <span class="score-label">最优玩法映射</span>
+                  <strong id="best-pick">主胜</strong>
+                </div>
+                <div>
+                  <span class="score-label">模型信号</span>
+                  <strong id="signal-strength">中高置信</strong>
+                </div>
+              </div>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">1X2</p>
+                  <h3>胜平负概率</h3>
+                </div>
+              </div>
+              <div id="outcome-bars" class="bar-list"></div>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Exact Score</p>
+                  <h3>Top3 比分</h3>
+                </div>
+              </div>
+              <div id="score-grid" class="score-grid"></div>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Goals</p>
+                  <h3>总进球分布</h3>
+                </div>
+              </div>
+              <div id="goals-grid" class="tag-grid"></div>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">HT/FT</p>
+                  <h3>半全场建议</h3>
+                </div>
+              </div>
+              <div id="halftime-grid" class="tag-grid"></div>
+            </section>
+
+            <section class="card">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Risk Notes</p>
+                  <h3>输出解释</h3>
+                </div>
+              </div>
+              <ul class="risk-list" id="risk-list"></ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Metric Design</p>
+              <h2>应该怎么谈准确率</h2>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <span>胜平负</span>
+              <strong>50% - 55%</strong>
+              <p>长期稳定超过随机基线，并用回测收益与校准曲线辅助验证。</p>
+            </article>
+            <article class="metric-card">
+              <span>精确比分</span>
+              <strong>看 Top3 覆盖率</strong>
+              <p>单点比分命中率天然较低，不适合夸大承诺。</p>
+            </article>
+            <article class="metric-card">
+              <span>总进球 / 半全场</span>
+              <strong>独立考核</strong>
+              <p>玩法难度不同，应拆开评估，不要合成一个“大准确率”。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section compliance" id="compliance">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Compliance</p>
+              <h2>合法边界内的产品定位</h2>
+            </div>
+          </div>
+
+          <div class="compliance-grid">
+            <article class="compliance-card ok">
+              <h3>可以做</h3>
+              <ul>
+                <li>世界杯赛前分析、球队状态、模型概率输出</li>
+                <li>玩法映射、历史回测、指标可视化</li>
+                <li>附近体彩店查询、合法渠道识别、理性购彩提醒</li>
+              </ul>
+            </article>
+            <article class="compliance-card stop">
+              <h3>不要做</h3>
+              <ul>
+                <li>互联网售彩、代买、合买、出票、自动跟投</li>
+                <li>“内幕”“必中”“高回报”式营销</li>
+                <li>向未成年人推广或弱化风险提示</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>World Cup Forecast Lab • Static MVP for GitHub Pages</p>
+      <p>仅供技术演示与数据研究，不构成购彩建议。</p>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
