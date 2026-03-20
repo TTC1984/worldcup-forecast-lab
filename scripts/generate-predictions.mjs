@@ -8,9 +8,27 @@ const sourceDir = resolve(rootDir, "data", "source");
 const outputDir = resolve(rootDir, "data", "generated");
 
 const teams = JSON.parse(readFileSync(resolve(sourceDir, "teams.json"), "utf8"));
+const historicalTeams = JSON.parse(readFileSync(resolve(sourceDir, "history-teams.json"), "utf8"));
 const tournamentConfig = JSON.parse(readFileSync(resolve(sourceDir, "tournament.json"), "utf8"));
 const groupStageSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup.txt"), "utf8");
 const finalsSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup_finals.txt"), "utf8");
+const historicalBacktestSources = [
+  {
+    season: "2014",
+    hostCountry: "Brazil",
+    text: readFileSync(resolve(sourceDir, "worldcup-2014-openfootball-cup.txt"), "utf8"),
+  },
+  {
+    season: "2018",
+    hostCountry: "Russia",
+    text: readFileSync(resolve(sourceDir, "worldcup-2018-openfootball-cup.txt"), "utf8"),
+  },
+  {
+    season: "2022",
+    hostCountry: "Qatar",
+    text: readFileSync(resolve(sourceDir, "worldcup-2022-openfootball-cup.txt"), "utf8"),
+  },
+];
 
 const confederationAttackBoost = {
   UEFA: 0.03,
@@ -32,7 +50,7 @@ const confederationDefenseBoost = {
   Intercontinental: -0.02,
 };
 
-const teamMap = new Map(teams.map((team) => [team.name, normalizeTeam(team)]));
+const teamMap = new Map([...teams, ...historicalTeams].map((team) => [team.name, normalizeTeam(team)]));
 
 const monthMap = {
   Jan: "01",
@@ -48,6 +66,16 @@ const monthMap = {
   June: "06",
   Jul: "07",
   July: "07",
+  Aug: "08",
+  August: "08",
+  Sep: "09",
+  September: "09",
+  Oct: "10",
+  October: "10",
+  Nov: "11",
+  November: "11",
+  Dec: "12",
+  December: "12",
 };
 
 function normalizeWhitespace(value) {
@@ -62,8 +90,8 @@ function percentage(probability) {
   return `${(probability * 100).toFixed(1)}%`;
 }
 
-function toDateString(monthName, day) {
-  return `2026-${monthMap[monthName]}-${String(day).padStart(2, "0")}`;
+function toDateString(monthName, day, year = "2026") {
+  return `${year}-${monthMap[monthName]}-${String(day).padStart(2, "0")}`;
 }
 
 function normalizeTeam(team) {
@@ -259,6 +287,11 @@ function parseGroupFixtures(text, groupDefinitions) {
       return;
     }
 
+    if (trimmed.startsWith("▪ ") && !trimmed.startsWith("▪ Group ")) {
+      currentGroup = null;
+      return;
+    }
+
     if (trimmed.startsWith("▪ Group ")) {
       currentGroup = groupDefinitions.get(trimmed.replace("▪ ", ""));
       return;
@@ -295,6 +328,80 @@ function parseGroupFixtures(text, groupDefinitions) {
         venueCountry: detectVenueCountry(normalizedVenue),
       });
     }
+  });
+
+  return fixtures;
+}
+
+function parseHistoricalGroupFixtures(text, season, hostCountry) {
+  const groupDefinitions = parseGroupDefinitions(text);
+  const lines = text.split("\n");
+  const fixtures = [];
+  let currentGroup = null;
+  let currentDate = null;
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      return;
+    }
+
+    if (trimmed.startsWith("▪ Group ")) {
+      currentGroup = groupDefinitions.get(trimmed.replace("▪ ", ""));
+      return;
+    }
+
+    const dateMatch = trimmed.match(/^[A-Za-z]{3}\s+([A-Za-z]{3,})\s+(\d{1,2})$/);
+
+    if (dateMatch) {
+      currentDate = toDateString(dateMatch[1], Number(dateMatch[2]), season);
+      return;
+    }
+
+    if (!currentGroup || !currentDate || !line.includes("@")) {
+      return;
+    }
+
+    const normalizedLine = normalizeWhitespace(line);
+    const lineWithoutVenue = normalizedLine.split(" @ ")[0];
+    const fixtureLine = lineWithoutVenue.replace(/^\d{1,2}:\d{2}(?:\s+UTC[+-]\d+)?\s+/, "").trim();
+    const scoreMatch = fixtureLine.match(/\b(\d+)-(\d+)\b/);
+
+    if (!scoreMatch) {
+      return;
+    }
+
+    const homeGoals = Number(scoreMatch[1]);
+    const awayGoals = Number(scoreMatch[2]);
+    const beforeScore = fixtureLine.slice(0, scoreMatch.index).trim();
+    const afterScore = fixtureLine
+      .slice(scoreMatch.index + scoreMatch[0].length)
+      .trim()
+      .replace(/^\([^)]*\)\s*/, "")
+      .trim();
+
+    const [homeTeam, awayTeam] = beforeScore.includes(" v ")
+      ? beforeScore.split(/\s+v\s+/)
+      : [beforeScore, afterScore];
+
+    fixtures.push({
+      id: `history-${season}-${currentGroup.id.toLowerCase()}-${fixtures.filter((item) => item.group === currentGroup.label).length + 1}-${homeTeam.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${awayTeam.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+      season,
+      stage: "Group Stage",
+      group: currentGroup.label,
+      groupId: currentGroup.id,
+      date: currentDate,
+      kickoff: "Historical",
+      utcOffset: "",
+      homeTeam: normalizeWhitespace(homeTeam),
+      awayTeam: normalizeWhitespace(awayTeam),
+      venue: hostCountry,
+      venueCountry: hostCountry,
+      hostNation: hostCountry,
+      actualHomeGoals: homeGoals,
+      actualAwayGoals: awayGoals,
+    });
   });
 
   return fixtures;
@@ -461,10 +568,16 @@ function buildMatchModel(fixture) {
   }
 
   const ratingDelta = (homeTeam.rating - awayTeam.rating) / 400;
+  const homeHasHostEdge =
+    (fixture.hostNation && homeTeam.country === fixture.hostNation) ||
+    (fixture.venueCountry === homeTeam.country && homeTeam.hostNation);
+  const awayHasHostEdge =
+    (fixture.hostNation && awayTeam.country === fixture.hostNation) ||
+    (fixture.venueCountry === awayTeam.country && awayTeam.hostNation);
   const hostAdvantage =
-    fixture.venueCountry === homeTeam.country && homeTeam.hostNation
+    homeHasHostEdge
       ? 0.16
-      : fixture.venueCountry === awayTeam.country && awayTeam.hostNation
+      : awayHasHostEdge
         ? -0.08
         : 0;
 
@@ -527,11 +640,20 @@ function buildMatchModel(fixture) {
   };
 }
 
+function getTopScoreEntries(matrix, count = 3) {
+  return [...matrix].sort((left, right) => right.probability - left.probability).slice(0, count);
+}
+
+function getMostLikelyOutcome(outcomeTotals) {
+  return Object.entries(outcomeTotals)
+    .sort((left, right) => right[1] - left[1])
+    .map(([key]) => key)[0];
+}
+
 function generateFixturePrediction(fixture) {
   const matchModel = buildMatchModel(fixture);
 
-  const topScores = [...matchModel.matrix]
-    .sort((left, right) => right.probability - left.probability)
+  const topScores = getTopScoreEntries(matchModel.matrix)
     .slice(0, 3)
     .map((entry) => ({
       score: `${entry.homeGoals} : ${entry.awayGoals}`,
@@ -1013,6 +1135,143 @@ function runTournamentSimulation(predictions, groupDefinitions, knockoutFixtures
   };
 }
 
+function createBacktestAccumulator() {
+  return {
+    matchCount: 0,
+    outcomeHitCount: 0,
+    top3HitCount: 0,
+    brierTotal: 0,
+    logLossTotal: 0,
+    confidenceTotal: 0,
+  };
+}
+
+function recordBacktestEvaluation(accumulator, evaluation) {
+  accumulator.matchCount += 1;
+  accumulator.outcomeHitCount += evaluation.outcomeHit ? 1 : 0;
+  accumulator.top3HitCount += evaluation.top3Hit ? 1 : 0;
+  accumulator.brierTotal += evaluation.brierScore;
+  accumulator.logLossTotal += evaluation.logLoss;
+  accumulator.confidenceTotal += evaluation.modelConfidence;
+}
+
+function finalizeBacktestAccumulator(accumulator) {
+  return {
+    matchCount: accumulator.matchCount,
+    outcomeAccuracy: Number(((accumulator.outcomeHitCount / accumulator.matchCount) * 100).toFixed(1)),
+    top3ScoreCoverage: Number(((accumulator.top3HitCount / accumulator.matchCount) * 100).toFixed(1)),
+    averageBrier: Number((accumulator.brierTotal / accumulator.matchCount).toFixed(3)),
+    averageLogLoss: Number((accumulator.logLossTotal / accumulator.matchCount).toFixed(3)),
+    averageConfidence: Number(((accumulator.confidenceTotal / accumulator.matchCount) * 100).toFixed(1)),
+  };
+}
+
+function createConfidenceBucket(label, min, max = null) {
+  return {
+    label,
+    min,
+    max,
+    matchCount: 0,
+    hitCount: 0,
+    confidenceTotal: 0,
+  };
+}
+
+function runHistoricalBacktest() {
+  const overall = createBacktestAccumulator();
+  const confidenceBuckets = [
+    createConfidenceBucket("< 40%", 0, 0.4),
+    createConfidenceBucket("40% - 49.9%", 0.4, 0.5),
+    createConfidenceBucket("50% - 59.9%", 0.5, 0.6),
+    createConfidenceBucket("60%+", 0.6, null),
+  ];
+  const surpriseMatches = [];
+
+  const seasonBreakdown = historicalBacktestSources.map(({ season, hostCountry, text }) => {
+    const fixtures = parseHistoricalGroupFixtures(text, season, hostCountry);
+    const seasonAccumulator = createBacktestAccumulator();
+
+    fixtures.forEach((fixture) => {
+      const matchModel = buildMatchModel(fixture);
+      const predictedOutcome = getMostLikelyOutcome(matchModel.outcomeTotals);
+      const actualOutcome = outcomeKey(fixture.actualHomeGoals, fixture.actualAwayGoals);
+      const topScores = getTopScoreEntries(matchModel.matrix);
+      const top3Hit = topScores.some(
+        (entry) => entry.homeGoals === fixture.actualHomeGoals && entry.awayGoals === fixture.actualAwayGoals
+      );
+      const modelConfidence = matchModel.outcomeTotals[predictedOutcome];
+      const actualOutcomeProbability = clamp(matchModel.outcomeTotals[actualOutcome], 0.001, 1);
+      const brierScore =
+        ["home", "draw", "away"].reduce(
+          (sum, key) => sum + Math.pow(matchModel.outcomeTotals[key] - (key === actualOutcome ? 1 : 0), 2),
+          0
+        ) / 3;
+      const evaluation = {
+        outcomeHit: predictedOutcome === actualOutcome,
+        top3Hit,
+        brierScore,
+        logLoss: -Math.log(actualOutcomeProbability),
+        modelConfidence,
+      };
+
+      recordBacktestEvaluation(overall, evaluation);
+      recordBacktestEvaluation(seasonAccumulator, evaluation);
+
+      const bucket = confidenceBuckets.find(
+        (item) => modelConfidence >= item.min && (item.max === null || modelConfidence < item.max)
+      );
+
+      if (bucket) {
+        bucket.matchCount += 1;
+        bucket.hitCount += evaluation.outcomeHit ? 1 : 0;
+        bucket.confidenceTotal += modelConfidence;
+      }
+
+      surpriseMatches.push({
+        season,
+        fixture: `${fixture.homeTeam} vs ${fixture.awayTeam}`,
+        actualScore: `${fixture.actualHomeGoals} : ${fixture.actualAwayGoals}`,
+        predictedOutcome: statusLabel(predictedOutcome),
+        actualOutcome: statusLabel(actualOutcome),
+        modelConfidence: Number((modelConfidence * 100).toFixed(1)),
+        actualOutcomeProbability: Number((actualOutcomeProbability * 100).toFixed(1)),
+        topScore: `${topScores[0].homeGoals} : ${topScores[0].awayGoals}`,
+      });
+    });
+
+    return {
+      season,
+      hostCountry,
+      ...finalizeBacktestAccumulator(seasonAccumulator),
+    };
+  });
+
+  return {
+    sampleLabel: "2014 / 2018 / 2022 世界杯小组赛",
+    matchCount: overall.matchCount,
+    metrics: finalizeBacktestAccumulator(overall),
+    seasonBreakdown,
+    confidenceBuckets: confidenceBuckets.map((bucket) => ({
+      label: bucket.label,
+      matchCount: bucket.matchCount,
+      averageConfidence: Number(
+        (bucket.matchCount === 0 ? 0 : (bucket.confidenceTotal / bucket.matchCount) * 100).toFixed(1)
+      ),
+      actualAccuracy: Number(
+        (bucket.matchCount === 0 ? 0 : (bucket.hitCount / bucket.matchCount) * 100).toFixed(1)
+      ),
+    })),
+    surpriseMatches: surpriseMatches
+      .sort((left, right) => left.actualOutcomeProbability - right.actualOutcomeProbability)
+      .slice(0, 6),
+    notes: [
+      "首版回测使用 2014、2018、2022 三届世界杯共 144 场小组赛样本，先验证 1X2 与比分覆盖是否具备展示价值。",
+      "当前回测仍使用统一的静态球队强度种子向历史回放，不是按当届赛前 Elo 逐年重建，因此更适合作为 MVP 校验而非最终业绩承诺。",
+      "Brier 为三分类均值误差，Log Loss 为实际赛果对应概率的对数损失，数值越低越好。",
+    ],
+  };
+}
+
 const groupDefinitions = parseGroupDefinitions(groupStageSource);
 const groupFixtures = parseGroupFixtures(groupStageSource, groupDefinitions).map((fixture) => ({
   ...fixture,
@@ -1023,11 +1282,12 @@ const knockoutFixtures = parseKnockoutFixtures(finalsSource);
 const generatedPredictions = groupFixtures.map(generateFixturePrediction);
 const predictions = generatedPredictions.map(stripInternalFixture);
 const simulation = runTournamentSimulation(generatedPredictions, groupDefinitions, knockoutFixtures);
+const backtest = runHistoricalBacktest();
 
 const output = {
   model: {
     name: "Baseline Elo-Poisson 2026 Snapshot",
-    version: "v0.4.0",
+    version: "v0.5.0",
     generatedAt: new Date().toISOString(),
     notes: tournamentConfig.tournament.assumptions,
     sources: tournamentConfig.sources,
@@ -1039,17 +1299,19 @@ const output = {
     groupCount: groupDefinitions.size,
     knockoutFixtureCount: knockoutFixtures.length,
     simulationCount: simulation.iterations,
+    backtestMatchCount: backtest.matchCount,
     scopeNote: tournamentConfig.tournament.scopeNote,
   },
   groups: [...groupDefinitions.values()],
   fixtures: predictions,
   knockoutFixtures,
   simulation,
+  backtest,
 };
 
 mkdirSync(outputDir, { recursive: true });
 writeFileSync(resolve(outputDir, "worldcup-forecast.json"), JSON.stringify(output, null, 2));
 
 console.log(
-  `Generated ${predictions.length} group-stage predictions, ${knockoutFixtures.length} knockout fixtures, and ${simulation.iterations} tournament simulations.`
+  `Generated ${predictions.length} group-stage predictions, ${knockoutFixtures.length} knockout fixtures, ${simulation.iterations} tournament simulations, and ${backtest.matchCount} historical backtest matches.`
 );

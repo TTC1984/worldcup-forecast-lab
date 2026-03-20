@@ -7,6 +7,18 @@ const rootDir = resolve(__dirname, "..");
 
 const files = [
   {
+    url: "https://raw.githubusercontent.com/openfootball/worldcup/master/2014--brazil/cup.txt",
+    target: resolve(rootDir, "data", "source", "worldcup-2014-openfootball-cup.txt"),
+  },
+  {
+    url: "https://raw.githubusercontent.com/openfootball/worldcup/master/2018--russia/cup.txt",
+    target: resolve(rootDir, "data", "source", "worldcup-2018-openfootball-cup.txt"),
+  },
+  {
+    url: "https://raw.githubusercontent.com/openfootball/worldcup/master/2022--qatar/cup.txt",
+    target: resolve(rootDir, "data", "source", "worldcup-2022-openfootball-cup.txt"),
+  },
+  {
     url: "https://raw.githubusercontent.com/openfootball/worldcup/master/2026--usa/cup.txt",
     target: resolve(rootDir, "data", "source", "worldcup-2026-openfootball-cup.txt"),
   },

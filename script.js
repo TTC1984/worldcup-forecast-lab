@@ -21,6 +21,16 @@ const elements = {
   groupProjectionBody: document.getElementById("group-projection-body"),
   titleContenders: document.getElementById("title-contenders"),
   simulationNotes: document.getElementById("simulation-notes"),
+  backtestStatus: document.getElementById("backtest-status"),
+  backtestMatchCount: document.getElementById("backtest-match-count"),
+  backtestOutcomeAccuracy: document.getElementById("backtest-outcome-accuracy"),
+  backtestTop3Coverage: document.getElementById("backtest-top3-coverage"),
+  backtestBrier: document.getElementById("backtest-brier"),
+  backtestLogLoss: document.getElementById("backtest-logloss"),
+  backtestSeasonBody: document.getElementById("backtest-season-body"),
+  backtestCalibrationBody: document.getElementById("backtest-calibration-body"),
+  backtestNotes: document.getElementById("backtest-notes"),
+  backtestSurpriseList: document.getElementById("backtest-surprise-list"),
 };
 
 const state = {
@@ -29,6 +39,7 @@ const state = {
   fixtures: [],
   groups: [],
   simulation: null,
+  backtest: null,
   activeGroup: null,
 };
 
@@ -59,7 +70,7 @@ function renderSummary() {
   });
 
   elements.dataStatus.textContent =
-    `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.simulationCount.toLocaleString("zh-CN")} 次模拟 · ${state.summary.scopeNote}`;
+    `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.simulationCount.toLocaleString("zh-CN")} 次模拟 · ${state.summary.backtestMatchCount.toLocaleString("zh-CN")} 场回测 · ${state.summary.scopeNote}`;
 }
 
 function getVisibleFixtures() {
@@ -220,6 +231,70 @@ function renderTournamentOutlook() {
   renderSimulationNotes();
 }
 
+function renderBacktest() {
+  const backtest = state.backtest;
+
+  if (!backtest) {
+    elements.backtestStatus.textContent = "历史回测暂不可用。";
+    return;
+  }
+
+  elements.backtestStatus.textContent =
+    `${backtest.sampleLabel} · ${backtest.matchCount.toLocaleString("zh-CN")} 场样本`;
+  elements.backtestMatchCount.textContent = String(backtest.matchCount);
+  elements.backtestOutcomeAccuracy.textContent = `${backtest.metrics.outcomeAccuracy}%`;
+  elements.backtestTop3Coverage.textContent = `${backtest.metrics.top3ScoreCoverage}%`;
+  elements.backtestBrier.textContent = String(backtest.metrics.averageBrier);
+  elements.backtestLogLoss.textContent = String(backtest.metrics.averageLogLoss);
+
+  elements.backtestSeasonBody.innerHTML = backtest.seasonBreakdown
+    .map(
+      (season) => `
+        <tr>
+          <td>
+            <div class="table-team">
+              <strong>${season.season}</strong>
+              <span>${season.hostCountry}</span>
+            </div>
+          </td>
+          <td>${season.matchCount}</td>
+          <td>${season.outcomeAccuracy}%</td>
+          <td>${season.top3ScoreCoverage}%</td>
+          <td>${season.averageBrier}</td>
+          <td>${season.averageLogLoss}</td>
+        </tr>
+      `
+    )
+    .join("");
+
+  elements.backtestCalibrationBody.innerHTML = backtest.confidenceBuckets
+    .map(
+      (bucket) => `
+        <tr>
+          <td>${bucket.label}</td>
+          <td>${bucket.matchCount}</td>
+          <td>${bucket.averageConfidence}%</td>
+          <td>${bucket.actualAccuracy}%</td>
+        </tr>
+      `
+    )
+    .join("");
+
+  elements.backtestNotes.innerHTML = backtest.notes.map((note) => `<li>${note}</li>`).join("");
+  elements.backtestSurpriseList.innerHTML = backtest.surpriseMatches
+    .map(
+      (match) => `
+        <article class="surprise-card">
+          <span>${match.season} · ${match.fixture}</span>
+          <strong>${match.actualScore}</strong>
+          <p>模型判断 ${match.predictedOutcome}，置信 ${match.modelConfidence}%</p>
+          <p>真实赛果概率仅 ${match.actualOutcomeProbability}%</p>
+        </article>
+      `
+    )
+    .join("");
+}
+
 function updateFixture(id) {
   const visibleFixtures = getVisibleFixtures();
   const fixture = visibleFixtures.find((item) => item.id === id) || visibleFixtures[0];
@@ -259,9 +334,11 @@ async function loadForecast() {
     state.fixtures = forecast.fixtures;
     state.groups = forecast.groups;
     state.simulation = forecast.simulation;
+    state.backtest = forecast.backtest;
     state.activeGroup = forecast.groups[0]?.label || null;
 
     renderSummary();
+    renderBacktest();
     renderGroupFilter();
     updateFixture(getVisibleFixtures()[0]?.id);
   } catch (error) {

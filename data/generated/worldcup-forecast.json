@@ -1,14 +1,20 @@
 {
   "model": {
     "name": "Baseline Elo-Poisson 2026 Snapshot",
-    "version": "v0.4.0",
-    "generatedAt": "2026-03-20T09:34:42.596Z",
+    "version": "v0.5.0",
+    "generatedAt": "2026-03-20T09:51:15.341Z",
     "notes": [
       "以球队强度、近期状态和主办国场地因素做 baseline 估计。",
       "小组赛赛程来自 openfootball 的 2026--usa 数据快照，并与 FIFA 已公开的赛程框架保持一致。",
-      "当前阶段不接真实赔率，只输出模型概率、玩法映射与风险提示。"
+      "当前阶段不接真实赔率，只输出模型概率、玩法映射、历史回测与风险提示。"
     ],
     "sources": [
+      {
+        "name": "openfootball/worldcup historical group-stage snapshots",
+        "type": "snapshot",
+        "path": "data/source/worldcup-{2014,2018,2022}-openfootball-cup.txt",
+        "upstream": "https://github.com/openfootball/worldcup"
+      },
       {
         "name": "openfootball/worldcup 2026--usa group stage snapshot",
         "type": "snapshot",
@@ -30,7 +36,8 @@
     "groupCount": 12,
     "knockoutFixtureCount": 32,
     "simulationCount": 4000,
-    "scopeNote": "当前版本已切换到 2026 世界杯真实赛程快照，覆盖 12 个小组共 72 场小组赛。淘汰赛对阵结构已导入，但正式晋级预测将在下一阶段接入。"
+    "backtestMatchCount": 144,
+    "scopeNote": "当前版本已切换到 2026 世界杯真实赛程快照，覆盖 12 个小组共 72 场小组赛，并加入首版世界杯历史回测指标与晋级概率模拟。"
   },
   "groups": [
     {
@@ -9379,6 +9386,143 @@
         "reachFinalProbability": 6.5,
         "championProbability": 3.23
       }
+    ]
+  },
+  "backtest": {
+    "sampleLabel": "2014 / 2018 / 2022 世界杯小组赛",
+    "matchCount": 144,
+    "metrics": {
+      "matchCount": 144,
+      "outcomeAccuracy": 53.5,
+      "top3ScoreCoverage": 31.3,
+      "averageBrier": 0.192,
+      "averageLogLoss": 0.974,
+      "averageConfidence": 51.2
+    },
+    "seasonBreakdown": [
+      {
+        "season": "2014",
+        "hostCountry": "Brazil",
+        "matchCount": 48,
+        "outcomeAccuracy": 56.3,
+        "top3ScoreCoverage": 25,
+        "averageBrier": 0.188,
+        "averageLogLoss": 0.95,
+        "averageConfidence": 51.8
+      },
+      {
+        "season": "2018",
+        "hostCountry": "Russia",
+        "matchCount": 48,
+        "outcomeAccuracy": 54.2,
+        "top3ScoreCoverage": 39.6,
+        "averageBrier": 0.188,
+        "averageLogLoss": 0.953,
+        "averageConfidence": 50.3
+      },
+      {
+        "season": "2022",
+        "hostCountry": "Qatar",
+        "matchCount": 48,
+        "outcomeAccuracy": 50,
+        "top3ScoreCoverage": 29.2,
+        "averageBrier": 0.199,
+        "averageLogLoss": 1.018,
+        "averageConfidence": 51.6
+      }
+    ],
+    "confidenceBuckets": [
+      {
+        "label": "< 40%",
+        "matchCount": 19,
+        "averageConfidence": 38.3,
+        "actualAccuracy": 26.3
+      },
+      {
+        "label": "40% - 49.9%",
+        "matchCount": 52,
+        "averageConfidence": 44.7,
+        "actualAccuracy": 44.2
+      },
+      {
+        "label": "50% - 59.9%",
+        "matchCount": 43,
+        "averageConfidence": 54.6,
+        "actualAccuracy": 67.4
+      },
+      {
+        "label": "60%+",
+        "matchCount": 30,
+        "averageConfidence": 66,
+        "actualAccuracy": 66.7
+      }
+    ],
+    "surpriseMatches": [
+      {
+        "season": "2022",
+        "fixture": "Argentina vs Saudi Arabia",
+        "actualScore": "1 : 2",
+        "predictedOutcome": "胜",
+        "actualOutcome": "负",
+        "modelConfidence": 73.6,
+        "actualOutcomeProbability": 8.1,
+        "topScore": "2 : 0"
+      },
+      {
+        "season": "2022",
+        "fixture": "Cameroon vs Brazil",
+        "actualScore": "1 : 0",
+        "predictedOutcome": "负",
+        "actualOutcome": "胜",
+        "modelConfidence": 66.2,
+        "actualOutcomeProbability": 10.7,
+        "topScore": "0 : 1"
+      },
+      {
+        "season": "2022",
+        "fixture": "Tunisia vs France",
+        "actualScore": "1 : 0",
+        "predictedOutcome": "负",
+        "actualOutcome": "胜",
+        "modelConfidence": 65.6,
+        "actualOutcomeProbability": 11.1,
+        "topScore": "0 : 1"
+      },
+      {
+        "season": "2018",
+        "fixture": "Germany vs Mexico",
+        "actualScore": "0 : 1",
+        "predictedOutcome": "胜",
+        "actualOutcome": "负",
+        "modelConfidence": 61.7,
+        "actualOutcomeProbability": 15.3,
+        "topScore": "1 : 0"
+      },
+      {
+        "season": "2014",
+        "fixture": "Italy vs Costa Rica",
+        "actualScore": "0 : 1",
+        "predictedOutcome": "胜",
+        "actualOutcome": "负",
+        "modelConfidence": 60.9,
+        "actualOutcomeProbability": 15.5,
+        "topScore": "1 : 0"
+      },
+      {
+        "season": "2014",
+        "fixture": "Uruguay vs Costa Rica",
+        "actualScore": "1 : 3",
+        "predictedOutcome": "胜",
+        "actualOutcome": "负",
+        "modelConfidence": 60.2,
+        "actualOutcomeProbability": 16.1,
+        "topScore": "1 : 0"
+      }
+    ],
+    "notes": [
+      "首版回测使用 2014、2018、2022 三届世界杯共 144 场小组赛样本，先验证 1X2 与比分覆盖是否具备展示价值。",
+      "当前回测仍使用统一的静态球队强度种子向历史回放，不是按当届赛前 Elo 逐年重建，因此更适合作为 MVP 校验而非最终业绩承诺。",
+      "Brier 为三分类均值误差，Log Loss 为实际赛果对应概率的对数损失，数值越低越好。"
     ]
   }
 }

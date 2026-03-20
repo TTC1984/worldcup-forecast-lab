@@ -1,0 +1,19 @@
+[
+  { "name": "Bosnia-Herzegovina", "country": "Bosnia and Herzegovina", "confederation": "UEFA", "rating": 1742, "form": 0.01, "hostNation": false },
+  { "name": "Cameroon", "country": "Cameroon", "confederation": "CAF", "rating": 1712, "form": 0, "hostNation": false },
+  { "name": "Chile", "country": "Chile", "confederation": "CONMEBOL", "rating": 1834, "form": 0.04, "hostNation": false },
+  { "name": "Costa Rica", "country": "Costa Rica", "confederation": "CONCACAF", "rating": 1748, "form": 0.01, "hostNation": false },
+  { "name": "Côte d'Ivoire", "country": "Ivory Coast", "confederation": "CAF", "rating": 1784, "form": 0.03, "hostNation": false },
+  { "name": "Denmark", "country": "Denmark", "confederation": "UEFA", "rating": 1830, "form": 0.04, "hostNation": false },
+  { "name": "Greece", "country": "Greece", "confederation": "UEFA", "rating": 1706, "form": -0.01, "hostNation": false },
+  { "name": "Honduras", "country": "Honduras", "confederation": "CONCACAF", "rating": 1648, "form": -0.03, "hostNation": false },
+  { "name": "Iceland", "country": "Iceland", "confederation": "UEFA", "rating": 1738, "form": 0.01, "hostNation": false },
+  { "name": "Italy", "country": "Italy", "confederation": "UEFA", "rating": 1870, "form": 0.03, "hostNation": false },
+  { "name": "Nigeria", "country": "Nigeria", "confederation": "CAF", "rating": 1750, "form": 0.02, "hostNation": false },
+  { "name": "Peru", "country": "Peru", "confederation": "CONMEBOL", "rating": 1764, "form": 0.01, "hostNation": false },
+  { "name": "Poland", "country": "Poland", "confederation": "UEFA", "rating": 1812, "form": 0.02, "hostNation": false },
+  { "name": "Russia", "country": "Russia", "confederation": "UEFA", "rating": 1768, "form": 0.02, "hostNation": false },
+  { "name": "Serbia", "country": "Serbia", "confederation": "UEFA", "rating": 1798, "form": 0.02, "hostNation": false },
+  { "name": "Sweden", "country": "Sweden", "confederation": "UEFA", "rating": 1806, "form": 0.02, "hostNation": false },
+  { "name": "Wales", "country": "Wales", "confederation": "UEFA", "rating": 1782, "form": 0.01, "hostNation": false }
+]

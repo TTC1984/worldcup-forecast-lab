@@ -240,6 +240,103 @@
           </div>
         </section>
 
+        <section class="section" id="backtest">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Historical Backtest</p>
+              <h2>回测与指标</h2>
+            </div>
+            <p id="backtest-status">正在载入世界杯历史回测指标...</p>
+          </div>
+
+          <div class="backtest-summary-grid">
+            <article class="metric-card">
+              <span>样本场次</span>
+              <strong id="backtest-match-count">0</strong>
+              <p>使用三届世界杯小组赛历史样本做首版回放。</p>
+            </article>
+            <article class="metric-card">
+              <span>1X2 命中率</span>
+              <strong id="backtest-outcome-accuracy">0%</strong>
+              <p>按三分类最高概率输出与真实赛果对比。</p>
+            </article>
+            <article class="metric-card">
+              <span>Top3 比分覆盖</span>
+              <strong id="backtest-top3-coverage">0%</strong>
+              <p>真实比分落在模型 Top3 比分候选中的比例。</p>
+            </article>
+            <article class="metric-card">
+              <span>平均 Brier</span>
+              <strong id="backtest-brier">0.000</strong>
+              <p>三分类概率误差，越低越好。</p>
+            </article>
+            <article class="metric-card">
+              <span>平均 Log Loss</span>
+              <strong id="backtest-logloss">0.000</strong>
+              <p>真实赛果对应概率的对数损失，越低越好。</p>
+            </article>
+          </div>
+
+          <div class="backtest-grid">
+            <section class="card card-span-7">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Season Breakdown</p>
+                  <h3>分届表现</h3>
+                </div>
+              </div>
+              <div class="projection-table-wrap">
+                <table class="projection-table">
+                  <thead>
+                    <tr>
+                      <th>届次</th>
+                      <th>样本</th>
+                      <th>1X2</th>
+                      <th>Top3</th>
+                      <th>Brier</th>
+                      <th>Log Loss</th>
+                    </tr>
+                  </thead>
+                  <tbody id="backtest-season-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="card card-span-5">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Calibration</p>
+                  <h3>置信度校准</h3>
+                </div>
+              </div>
+              <div class="projection-table-wrap">
+                <table class="projection-table">
+                  <thead>
+                    <tr>
+                      <th>置信区间</th>
+                      <th>样本</th>
+                      <th>平均置信</th>
+                      <th>实际命中</th>
+                    </tr>
+                  </thead>
+                  <tbody id="backtest-calibration-body"></tbody>
+                </table>
+              </div>
+              <ul class="risk-list compact-list" id="backtest-notes"></ul>
+            </section>
+
+            <section class="card card-span-12">
+              <div class="card-head">
+                <div>
+                  <p class="card-kicker">Hardest Upsets</p>
+                  <h3>历史冷门样本</h3>
+                </div>
+              </div>
+              <div class="surprise-grid" id="backtest-surprise-list"></div>
+            </section>
+          </div>
+        </section>
+
         <section class="section">
           <div class="section-heading">
             <div>

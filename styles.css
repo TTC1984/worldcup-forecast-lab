@@ -279,6 +279,8 @@ main {
 .stats-band,
 .predictor-grid,
 .tournament-grid,
+.backtest-grid,
+.backtest-summary-grid,
 .metric-grid,
 .compliance-grid,
 .tag-grid,
@@ -287,7 +289,8 @@ main {
 .match-switcher,
 .bar-list,
 .contender-list,
-.contender-metrics {
+.contender-metrics,
+.surprise-grid {
   display: grid;
   gap: 16px;
 }
@@ -397,6 +400,14 @@ main {
 
 .tournament-grid {
   grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.backtest-grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.backtest-summary-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .card {
@@ -593,6 +604,38 @@ main {
   font-family: "Space Grotesk", sans-serif;
 }
 
+.compact-list {
+  margin-top: 18px;
+}
+
+.surprise-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.surprise-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.surprise-card span,
+.surprise-card p {
+  color: var(--muted);
+}
+
+.surprise-card strong {
+  display: block;
+  margin-top: 8px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.3rem;
+}
+
+.surprise-card p {
+  margin: 8px 0 0;
+  line-height: 1.6;
+}
+
 .metric-grid,
 .compliance-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -651,6 +694,8 @@ main {
 
   .stats-band,
   .tournament-grid,
+  .backtest-grid,
+  .backtest-summary-grid,
   .metric-grid,
   .compliance-grid {
     grid-template-columns: 1fr;
@@ -685,7 +730,8 @@ main {
 
   .score-grid,
   .tag-grid,
-  .contender-metrics {
+  .contender-metrics,
+  .surprise-grid {
     grid-template-columns: 1fr;
   }
 
