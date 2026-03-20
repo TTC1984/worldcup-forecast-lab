@@ -10,6 +10,11 @@ const elements = {
   scoreGrid: document.getElementById("score-grid"),
   goalsGrid: document.getElementById("goals-grid"),
   halftimeGrid: document.getElementById("halftime-grid"),
+  prematchHeadline: document.getElementById("prematch-headline"),
+  prematchMeta: document.getElementById("prematch-meta"),
+  prematchPulseGrid: document.getElementById("prematch-pulse-grid"),
+  prematchAlertList: document.getElementById("prematch-alert-list"),
+  prematchSourceList: document.getElementById("prematch-source-list"),
   riskList: document.getElementById("risk-list"),
   dataStatus: document.getElementById("data-status"),
   summaryTeamCount: document.getElementById("summary-team-count"),
@@ -40,6 +45,7 @@ const state = {
   groups: [],
   simulation: null,
   backtest: null,
+  prematchFeed: null,
   activeGroup: null,
 };
 
@@ -70,7 +76,7 @@ function renderSummary() {
   });
 
   elements.dataStatus.textContent =
-    `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.simulationCount.toLocaleString("zh-CN")} 次模拟 · ${state.summary.backtestMatchCount.toLocaleString("zh-CN")} 场回测 · ${state.summary.scopeNote}`;
+    `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.simulationCount.toLocaleString("zh-CN")} 次模拟 · ${state.summary.backtestMatchCount.toLocaleString("zh-CN")} 场回测 · ${state.summary.prematchCoverageCount.toLocaleString("zh-CN")} 场情报覆盖 · ${state.summary.scopeNote}`;
 }
 
 function getVisibleFixtures() {
@@ -155,6 +161,30 @@ function renderScores(scores) {
 
 function renderRisks(risks) {
   elements.riskList.innerHTML = risks.map((risk) => `<li>${risk}</li>`).join("");
+}
+
+function renderPrematch(prematch) {
+  if (!prematch) {
+    elements.prematchHeadline.textContent = "暂无赛前动态情报。";
+    elements.prematchMeta.textContent = "";
+    elements.prematchPulseGrid.innerHTML = "";
+    elements.prematchAlertList.innerHTML = "";
+    elements.prematchSourceList.innerHTML = "";
+    return;
+  }
+
+  const updatedAt = new Date(prematch.lastUpdated).toLocaleString("zh-CN", {
+    hour12: false,
+  });
+
+  elements.prematchHeadline.textContent = prematch.headline;
+  elements.prematchMeta.textContent =
+    `${prematch.coverageLabel} · ${prematch.feedMode} feed · ${updatedAt} 更新 · 新鲜度 ${prematch.freshnessHours}h`;
+  renderTags(elements.prematchPulseGrid, prematch.pulseTags);
+  elements.prematchAlertList.innerHTML = prematch.alerts.map((alert) => `<li>${alert}</li>`).join("");
+  elements.prematchSourceList.innerHTML = prematch.sourceLabels
+    .map((label) => `<span class="source-chip">${label}</span>`)
+    .join("");
 }
 
 function renderGroupProjection() {
@@ -315,6 +345,7 @@ function updateFixture(id) {
   renderScores(fixture.scores);
   renderTags(elements.goalsGrid, fixture.goals);
   renderTags(elements.halftimeGrid, fixture.halftime);
+  renderPrematch(fixture.prematch);
   renderRisks(fixture.risks);
   renderTournamentOutlook();
 }
@@ -335,6 +366,7 @@ async function loadForecast() {
     state.groups = forecast.groups;
     state.simulation = forecast.simulation;
     state.backtest = forecast.backtest;
+    state.prematchFeed = forecast.prematchFeed;
     state.activeGroup = forecast.groups[0]?.label || null;
 
     renderSummary();

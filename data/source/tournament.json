@@ -2,11 +2,12 @@
   "tournament": {
     "name": "2026 World Cup Forecast",
     "season": "2026",
-    "scopeNote": "当前版本已切换到 2026 世界杯真实赛程快照，覆盖 12 个小组共 72 场小组赛，并加入首版世界杯历史回测指标与晋级概率模拟。",
+    "scopeNote": "当前版本已切换到 2026 世界杯真实赛程快照，覆盖 12 个小组共 72 场小组赛，并加入首版世界杯历史回测、晋级概率模拟与赛前动态情报层。",
     "assumptions": [
       "以球队强度、近期状态和主办国场地因素做 baseline 估计。",
       "小组赛赛程来自 openfootball 的 2026--usa 数据快照，并与 FIFA 已公开的赛程框架保持一致。",
-      "当前阶段不接真实赔率，只输出模型概率、玩法映射、历史回测与风险提示。"
+      "当前阶段先用本地 prematch seed feed 模拟赔率、伤停和首发确认度输入，后续可替换为真实数据供应商接口。",
+      "当前阶段不接真实售彩或下注链路，只输出模型概率、玩法映射、历史回测与风险提示。"
     ],
     "metricTargets": {
       "outcomeAccuracy": "50% - 55%",
@@ -20,6 +21,12 @@
       "type": "snapshot",
       "path": "data/source/worldcup-{2014,2018,2022}-openfootball-cup.txt",
       "upstream": "https://github.com/openfootball/worldcup"
+    },
+    {
+      "name": "local prematch signal seed feed",
+      "type": "seed",
+      "path": "data/source/prematch-signals.json",
+      "upstream": "local seed feed"
     },
     {
       "name": "openfootball/worldcup 2026--usa group stage snapshot",

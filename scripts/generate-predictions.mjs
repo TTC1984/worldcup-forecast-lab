@@ -9,6 +9,7 @@ const outputDir = resolve(rootDir, "data", "generated");
 
 const teams = JSON.parse(readFileSync(resolve(sourceDir, "teams.json"), "utf8"));
 const historicalTeams = JSON.parse(readFileSync(resolve(sourceDir, "history-teams.json"), "utf8"));
+const prematchSignalSource = JSON.parse(readFileSync(resolve(sourceDir, "prematch-signals.json"), "utf8"));
 const tournamentConfig = JSON.parse(readFileSync(resolve(sourceDir, "tournament.json"), "utf8"));
 const groupStageSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup.txt"), "utf8");
 const finalsSource = readFileSync(resolve(sourceDir, "worldcup-2026-openfootball-cup_finals.txt"), "utf8");
@@ -51,6 +52,10 @@ const confederationDefenseBoost = {
 };
 
 const teamMap = new Map([...teams, ...historicalTeams].map((team) => [team.name, normalizeTeam(team)]));
+const prematchTeamSignalMap = new Map(Object.entries(prematchSignalSource.teamSignals || {}));
+const prematchFixtureSignalMap = new Map(
+  (prematchSignalSource.fixtureSignals || []).map((signal) => [createPrematchSignalKey(signal), signal])
+);
 
 const monthMap = {
   Jan: "01",
@@ -86,12 +91,164 @@ function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+function signed(value, digits = 2) {
+  const amount = Number(value || 0);
+  return `${amount >= 0 ? "+" : ""}${amount.toFixed(digits)}`;
+}
+
 function percentage(probability) {
   return `${(probability * 100).toFixed(1)}%`;
 }
 
+function roundStagePercentage(value) {
+  const rounded = Number(value.toFixed(1));
+  return rounded === 0 && value > 0 ? 0.1 : rounded;
+}
+
+function unique(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
 function toDateString(monthName, day, year = "2026") {
   return `${year}-${monthMap[monthName]}-${String(day).padStart(2, "0")}`;
+}
+
+function createPrematchSignalKey({ date, homeTeam, awayTeam }) {
+  return `${date}__${homeTeam}__${awayTeam}`;
+}
+
+function getHoursSince(timestamp) {
+  const parsed = Date.parse(timestamp);
+
+  if (Number.isNaN(parsed)) {
+    return prematchSignalSource.defaults.freshnessHours;
+  }
+
+  return Math.max(1, Math.round((Date.now() - parsed) / 3600000));
+}
+
+function coverageLabel(coverage) {
+  if (coverage === "fixture") {
+    return "场次级动态";
+  }
+
+  if (coverage === "team") {
+    return "球队级动态";
+  }
+
+  return "基础种子";
+}
+
+function marketDirectionLabel(shift) {
+  if (shift >= 1.5) {
+    return "主队升温";
+  }
+
+  if (shift <= -1.5) {
+    return "客队升温";
+  }
+
+  return "市场平稳";
+}
+
+function marketVolatilityLabel(volatility) {
+  if (volatility >= 2.8) {
+    return "高";
+  }
+
+  if (volatility >= 1.8) {
+    return "中";
+  }
+
+  return "低";
+}
+
+function buildPrematchSignal(fixture) {
+  const defaults = prematchSignalSource.defaults || {};
+  const defaultLineupConfidence = defaults.lineupConfidence || 74;
+  const defaultFreshnessHours = defaults.freshnessHours || 18;
+  const defaultMarketVolatility = defaults.marketVolatility || 1.2;
+  const homeTeamSignal = prematchTeamSignalMap.get(fixture.homeTeam) || {};
+  const awayTeamSignal = prematchTeamSignalMap.get(fixture.awayTeam) || {};
+  const fixtureSignal = prematchFixtureSignalMap.get(createPrematchSignalKey(fixture)) || {};
+  const coverage = fixtureSignal.homeTeam ? "fixture" : Object.keys(homeTeamSignal).length || Object.keys(awayTeamSignal).length ? "team" : "default";
+  const homeLineupConfidence = clamp(
+    fixtureSignal.homeLineupConfidence ?? homeTeamSignal.lineupConfidence ?? defaultLineupConfidence,
+    40,
+    95
+  );
+  const awayLineupConfidence = clamp(
+    fixtureSignal.awayLineupConfidence ?? awayTeamSignal.lineupConfidence ?? defaultLineupConfidence,
+    40,
+    95
+  );
+  const homeAttackDelta = (homeTeamSignal.attackDelta || 0) + (fixtureSignal.homeAttackDelta || 0);
+  const homeDefenseDelta = homeTeamSignal.defenseDelta || 0;
+  const awayAttackDelta = (awayTeamSignal.attackDelta || 0) + (fixtureSignal.awayAttackDelta || 0);
+  const awayDefenseDelta = awayTeamSignal.defenseDelta || 0;
+  const homeLambdaDelta = clamp(homeAttackDelta - awayDefenseDelta + (fixtureSignal.homeLambdaDelta || 0), -0.28, 0.28);
+  const awayLambdaDelta = clamp(awayAttackDelta - homeDefenseDelta + (fixtureSignal.awayLambdaDelta || 0), -0.28, 0.28);
+  const marketHomeShift =
+    fixtureSignal.marketHomeShift ??
+    Number((((homeTeamSignal.marketSentiment || 0) - (awayTeamSignal.marketSentiment || 0)) * 4).toFixed(1));
+  const marketVolatility = clamp(
+    fixtureSignal.marketVolatility ?? Math.abs(marketHomeShift) * 0.45 + defaultMarketVolatility,
+    0.8,
+    4.2
+  );
+  const lastUpdated =
+    fixtureSignal.lastUpdated || homeTeamSignal.lastUpdated || awayTeamSignal.lastUpdated || prematchSignalSource.feed.generatedAt;
+  const freshnessCandidates = [fixtureSignal.lastUpdated, homeTeamSignal.lastUpdated, awayTeamSignal.lastUpdated]
+    .filter(Boolean)
+    .map((timestamp) => getHoursSince(timestamp));
+  const freshnessHours = freshnessCandidates.length > 0 ? Math.max(...freshnessCandidates) : defaultFreshnessHours;
+  const alerts = unique([
+    ...(fixtureSignal.alerts || []),
+    ...(homeTeamSignal.alerts || []).map((alert) => `${fixture.homeTeam}：${alert}`),
+    ...(awayTeamSignal.alerts || []).map((alert) => `${fixture.awayTeam}：${alert}`),
+  ]).slice(0, 4);
+  const sourceLabels = unique([
+    ...(defaults.sourceLabels || []),
+    ...(homeTeamSignal.sourceLabels || []),
+    ...(awayTeamSignal.sourceLabels || []),
+    ...(fixtureSignal.sourceLabels || []),
+  ]).slice(0, 4);
+  const marketDirection = marketDirectionLabel(marketHomeShift);
+  const headline =
+    fixtureSignal.headline ||
+    (coverage === "default"
+      ? "当前仅接入基础球队种子，尚未覆盖场次级临场信号。"
+      : `${coverageLabel(coverage)}显示 ${marketDirection}，模型会据此微调进球期望与风险提示。`);
+
+  return {
+    feedName: prematchSignalSource.feed.name,
+    feedMode: prematchSignalSource.feed.mode,
+    coverage,
+    coverageLabel: coverageLabel(coverage),
+    headline,
+    lastUpdated,
+    freshnessHours,
+    sourceLabels,
+    alerts:
+      alerts.length > 0
+        ? alerts
+        : ["当前没有额外临场伤停输入，仍建议在赛前 6 小时内刷新一次情报。"],
+    homeLineupConfidence: Number(homeLineupConfidence.toFixed(0)),
+    awayLineupConfidence: Number(awayLineupConfidence.toFixed(0)),
+    marketHomeShift: Number(marketHomeShift.toFixed(1)),
+    marketDirection,
+    marketVolatility: Number(marketVolatility.toFixed(1)),
+    marketVolatilityLabel: marketVolatilityLabel(marketVolatility),
+    homeLambdaDelta: Number(homeLambdaDelta.toFixed(2)),
+    awayLambdaDelta: Number(awayLambdaDelta.toFixed(2)),
+    adjustmentSummary: `${signed(homeLambdaDelta)} / ${signed(awayLambdaDelta)}`,
+    pulseTags: [
+      { label: `${fixture.homeTeam} 首发确认`, note: `${Number(homeLineupConfidence.toFixed(0))}%` },
+      { label: `${fixture.awayTeam} 首发确认`, note: `${Number(awayLineupConfidence.toFixed(0))}%` },
+      { label: "市场摆动", note: `${marketDirection} ${signed(marketHomeShift, 1)}pt` },
+      { label: "波动等级", note: marketVolatilityLabel(marketVolatility) },
+    ],
+  };
 }
 
 function normalizeTeam(team) {
@@ -483,6 +640,7 @@ function deriveRiskNotes({
   under25Probability,
   topScoreProbability,
   hostAdvantage,
+  prematchSignal,
 }) {
   const notes = [];
   const pushNote = (note) => {
@@ -513,9 +671,17 @@ function deriveRiskNotes({
     pushNote("主办国在本国城市作赛时已纳入轻微场地熟悉度加成。");
   }
 
+  if (prematchSignal && prematchSignal.awayLineupConfidence <= 62) {
+    pushNote("客队首发确认度偏低，赛前名单一旦明确，赔率和比分分布都可能二次重估。");
+  }
+
+  if (prematchSignal && prematchSignal.marketVolatility >= 2.8) {
+    pushNote("当前场次的市场摆动偏大，适合在开赛前继续刷新情报，不宜过早固化口径。");
+  }
+
   const fallbackNotes = [
-    "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
-    "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
+    "当前版本已接入本地赛前情报 seed feed，但仍需替换为真实赔率、伤停和首发数据源。",
+    "当前版本仍未纳入自动刷新机制，关键球员缺阵与赔率异动需要后续接正式供应商接口。",
     "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。",
   ];
 
@@ -586,7 +752,8 @@ function buildMatchModel(fixture) {
       ratingDelta * 0.64 +
       (homeTeam.attack - awayTeam.defense) * 0.7 +
       (homeTeam.form - awayTeam.form) * 0.24 +
-      hostAdvantage,
+      hostAdvantage +
+      (fixture.prematchSignal?.homeLambdaDelta || 0),
     0.3,
     3.5
   );
@@ -595,7 +762,8 @@ function buildMatchModel(fixture) {
       ratingDelta * 0.35 +
       (awayTeam.attack - homeTeam.defense) * 0.68 +
       (awayTeam.form - homeTeam.form) * 0.18 -
-      hostAdvantage * 0.35,
+      hostAdvantage * 0.35 +
+      (fixture.prematchSignal?.awayLambdaDelta || 0),
     0.25,
     3.1
   );
@@ -651,7 +819,11 @@ function getMostLikelyOutcome(outcomeTotals) {
 }
 
 function generateFixturePrediction(fixture) {
-  const matchModel = buildMatchModel(fixture);
+  const prematchSignal = buildPrematchSignal(fixture);
+  const matchModel = buildMatchModel({
+    ...fixture,
+    prematchSignal,
+  });
 
   const topScores = getTopScoreEntries(matchModel.matrix)
     .slice(0, 3)
@@ -690,7 +862,7 @@ function generateFixturePrediction(fixture) {
     meta: `${fixture.group} · ${fixture.date} ${fixture.kickoff} ${fixture.utcOffset} · ${fixture.venue}`,
     bestPick,
     signal: confidence,
-    modelDetail: `Baseline xG ${matchModel.homeLambda.toFixed(2)} : ${matchModel.awayLambda.toFixed(2)}`,
+    modelDetail: `Baseline xG ${matchModel.homeLambda.toFixed(2)} : ${matchModel.awayLambda.toFixed(2)} · 动态调整 ${prematchSignal.adjustmentSummary}`,
     outcomes: [
       { label: "主胜", value: Number((matchModel.outcomeTotals.home * 100).toFixed(1)) },
       { label: "平", value: Number((matchModel.outcomeTotals.draw * 100).toFixed(1)) },
@@ -706,6 +878,7 @@ function generateFixturePrediction(fixture) {
       { label: "双方进球", note: percentage(matchModel.bothTeamsToScore) },
     ],
     halftime: buildHalftimeFulltime(matchModel.homeLambda, matchModel.awayLambda),
+    prematch: prematchSignal,
     risks: deriveRiskNotes({
       fixture,
       homeWinProbability: matchModel.outcomeTotals.home,
@@ -715,6 +888,7 @@ function generateFixturePrediction(fixture) {
       under25Probability,
       topScoreProbability: Number(topScores[0].probability.replace("%", "")) / 100,
       hostAdvantage: matchModel.hostAdvantage > 0,
+      prematchSignal,
     }),
     _simulation: {
       cumulativeMatrix: matchModel.cumulativeMatrix,
@@ -1076,28 +1250,43 @@ function runTournamentSimulation(predictions, groupDefinitions, knockoutFixtures
     });
   }
 
-  const teamStageProbabilities = [...teamStats.values()].map((stat) => ({
-    team: stat.team,
-    group: stat.group,
-    groupId: stat.groupId,
-    averagePoints: Number((stat.totalPoints / iterations).toFixed(2)),
-    averageGoalDifference: Number((stat.totalGoalDifference / iterations).toFixed(2)),
-    positionProbabilities: {
-      first: Number(((stat.positionCounts[0] / iterations) * 100).toFixed(1)),
-      second: Number(((stat.positionCounts[1] / iterations) * 100).toFixed(1)),
-      third: Number(((stat.positionCounts[2] / iterations) * 100).toFixed(1)),
-      fourth: Number(((stat.positionCounts[3] / iterations) * 100).toFixed(1)),
-    },
-    topTwoProbability: Number(((stat.topTwoCount / iterations) * 100).toFixed(1)),
-    qualifyProbability: Number(((stat.qualifyCount / iterations) * 100).toFixed(1)),
-    bestThirdQualificationProbability: Number(((stat.bestThirdCount / iterations) * 100).toFixed(1)),
-    reachRoundOf32Probability: Number(((stat.reachRoundOf32Count / iterations) * 100).toFixed(1)),
-    reachRoundOf16Probability: Number(((stat.reachRoundOf16Count / iterations) * 100).toFixed(1)),
-    reachQuarterFinalProbability: Number(((stat.reachQuarterFinalCount / iterations) * 100).toFixed(1)),
-    reachSemiFinalProbability: Number(((stat.reachSemiFinalCount / iterations) * 100).toFixed(1)),
-    reachFinalProbability: Number(((stat.reachFinalCount / iterations) * 100).toFixed(1)),
-    championProbability: Number(((stat.championCount / iterations) * 100).toFixed(2)),
-  }));
+  const teamStageProbabilities = [...teamStats.values()].map((stat) => {
+    const rawReachRoundOf32 = (stat.reachRoundOf32Count / iterations) * 100;
+    const rawReachRoundOf16 = (stat.reachRoundOf16Count / iterations) * 100;
+    const rawReachQuarterFinal = (stat.reachQuarterFinalCount / iterations) * 100;
+    const rawReachSemiFinal = (stat.reachSemiFinalCount / iterations) * 100;
+    const rawReachFinal = (stat.reachFinalCount / iterations) * 100;
+    const rawChampion = (stat.championCount / iterations) * 100;
+    const championProbability = Number(rawChampion.toFixed(2));
+    const reachFinalProbability = Math.max(roundStagePercentage(rawReachFinal), championProbability);
+    const reachSemiFinalProbability = Math.max(roundStagePercentage(rawReachSemiFinal), reachFinalProbability);
+    const reachQuarterFinalProbability = Math.max(roundStagePercentage(rawReachQuarterFinal), reachSemiFinalProbability);
+    const reachRoundOf16Probability = Math.max(roundStagePercentage(rawReachRoundOf16), reachQuarterFinalProbability);
+    const reachRoundOf32Probability = Math.max(roundStagePercentage(rawReachRoundOf32), reachRoundOf16Probability);
+
+    return {
+      team: stat.team,
+      group: stat.group,
+      groupId: stat.groupId,
+      averagePoints: Number((stat.totalPoints / iterations).toFixed(2)),
+      averageGoalDifference: Number((stat.totalGoalDifference / iterations).toFixed(2)),
+      positionProbabilities: {
+        first: Number(((stat.positionCounts[0] / iterations) * 100).toFixed(1)),
+        second: Number(((stat.positionCounts[1] / iterations) * 100).toFixed(1)),
+        third: Number(((stat.positionCounts[2] / iterations) * 100).toFixed(1)),
+        fourth: Number(((stat.positionCounts[3] / iterations) * 100).toFixed(1)),
+      },
+      topTwoProbability: Number(((stat.topTwoCount / iterations) * 100).toFixed(1)),
+      qualifyProbability: Number(((stat.qualifyCount / iterations) * 100).toFixed(1)),
+      bestThirdQualificationProbability: Number(((stat.bestThirdCount / iterations) * 100).toFixed(1)),
+      reachRoundOf32Probability,
+      reachRoundOf16Probability,
+      reachQuarterFinalProbability,
+      reachSemiFinalProbability,
+      reachFinalProbability,
+      championProbability,
+    };
+  });
 
   const groupProjections = groupList.map((group) => ({
     id: group.id,
@@ -1283,11 +1472,13 @@ const generatedPredictions = groupFixtures.map(generateFixturePrediction);
 const predictions = generatedPredictions.map(stripInternalFixture);
 const simulation = runTournamentSimulation(generatedPredictions, groupDefinitions, knockoutFixtures);
 const backtest = runHistoricalBacktest();
+const prematchCoverageCount = predictions.filter((prediction) => prediction.prematch.coverage !== "default").length;
+const prematchFixtureOverrideCount = predictions.filter((prediction) => prediction.prematch.coverage === "fixture").length;
 
 const output = {
   model: {
     name: "Baseline Elo-Poisson 2026 Snapshot",
-    version: "v0.5.0",
+    version: "v0.6.0",
     generatedAt: new Date().toISOString(),
     notes: tournamentConfig.tournament.assumptions,
     sources: tournamentConfig.sources,
@@ -1300,6 +1491,8 @@ const output = {
     knockoutFixtureCount: knockoutFixtures.length,
     simulationCount: simulation.iterations,
     backtestMatchCount: backtest.matchCount,
+    prematchCoverageCount,
+    prematchFixtureOverrideCount,
     scopeNote: tournamentConfig.tournament.scopeNote,
   },
   groups: [...groupDefinitions.values()],
@@ -1307,11 +1500,17 @@ const output = {
   knockoutFixtures,
   simulation,
   backtest,
+  prematchFeed: {
+    ...prematchSignalSource.feed,
+    teamSignalCount: prematchTeamSignalMap.size,
+    fixtureSignalCount: (prematchSignalSource.fixtureSignals || []).length,
+    coverageCount: prematchCoverageCount,
+  },
 };
 
 mkdirSync(outputDir, { recursive: true });
 writeFileSync(resolve(outputDir, "worldcup-forecast.json"), JSON.stringify(output, null, 2));
 
 console.log(
-  `Generated ${predictions.length} group-stage predictions, ${knockoutFixtures.length} knockout fixtures, ${simulation.iterations} tournament simulations, and ${backtest.matchCount} historical backtest matches.`
+  `Generated ${predictions.length} group-stage predictions, ${knockoutFixtures.length} knockout fixtures, ${simulation.iterations} tournament simulations, ${backtest.matchCount} historical backtest matches, and ${prematchCoverageCount} prematch signal overlays.`
 );

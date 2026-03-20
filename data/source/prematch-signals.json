@@ -1,0 +1,405 @@
+{
+  "feed": {
+    "name": "Prematch Signal Seed Feed",
+    "mode": "seeded",
+    "generatedAt": "2026-03-20T18:05:00+08:00",
+    "description": "本地赛前情报种子流，用于演示赔率、伤停、首发确认度等动态信号的接入结构。后续可替换为真实 API / CMS / 数据供应商。"
+  },
+  "defaults": {
+    "lineupConfidence": 74,
+    "freshnessHours": 18,
+    "marketVolatility": 1.2,
+    "sourceLabels": ["seed feed", "manual desk"]
+  },
+  "teamSignals": {
+    "Mexico": {
+      "lastUpdated": "2026-03-20T12:30:00+08:00",
+      "lineupConfidence": 84,
+      "attackDelta": 0.05,
+      "defenseDelta": 0.03,
+      "marketSentiment": 0.4,
+      "alerts": ["主办国揭幕战准备节奏稳定", "边路推进组合默契度偏高"],
+      "sourceLabels": ["training brief", "local media"]
+    },
+    "South Africa": {
+      "lastUpdated": "2026-03-20T09:20:00+08:00",
+      "lineupConfidence": 69,
+      "attackDelta": -0.03,
+      "defenseDelta": -0.05,
+      "marketSentiment": -0.25,
+      "alerts": ["中卫轮换方案仍在测试", "客战高压强度下控球出球稳定性一般"],
+      "sourceLabels": ["camp notes"]
+    },
+    "South Korea": {
+      "lastUpdated": "2026-03-20T11:10:00+08:00",
+      "lineupConfidence": 80,
+      "attackDelta": 0.03,
+      "defenseDelta": 0.01,
+      "marketSentiment": 0.1,
+      "alerts": ["前场转换速度保持高位", "首发框架较清晰"],
+      "sourceLabels": ["team briefing"]
+    },
+    "UEFA Path D winner": {
+      "lastUpdated": "2026-03-20T08:30:00+08:00",
+      "lineupConfidence": 52,
+      "attackDelta": -0.01,
+      "defenseDelta": -0.02,
+      "marketSentiment": -0.05,
+      "alerts": ["资格赛占位队尚未落位", "人员结构和首发稳定性都偏低"],
+      "sourceLabels": ["qualification tracker"]
+    },
+    "Canada": {
+      "lastUpdated": "2026-03-20T12:00:00+08:00",
+      "lineupConfidence": 82,
+      "attackDelta": 0.04,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.24,
+      "alerts": ["主办国场地熟悉度优势明显", "中前场压迫强度可持续"],
+      "sourceLabels": ["training brief", "market watch"]
+    },
+    "UEFA Path A winner": {
+      "lastUpdated": "2026-03-20T08:40:00+08:00",
+      "lineupConfidence": 55,
+      "attackDelta": 0.01,
+      "defenseDelta": -0.01,
+      "marketSentiment": 0.02,
+      "alerts": ["资格赛占位队尚未落位", "临场名单不确定性仍高"],
+      "sourceLabels": ["qualification tracker"]
+    },
+    "Qatar": {
+      "lastUpdated": "2026-03-20T10:30:00+08:00",
+      "lineupConfidence": 78,
+      "attackDelta": 0.01,
+      "defenseDelta": -0.01,
+      "marketSentiment": -0.08,
+      "alerts": ["比赛节奏偏保守", "后场压迫下的二点保护仍需观察"],
+      "sourceLabels": ["team briefing"]
+    },
+    "Switzerland": {
+      "lastUpdated": "2026-03-20T09:45:00+08:00",
+      "lineupConfidence": 81,
+      "attackDelta": 0.02,
+      "defenseDelta": 0.03,
+      "marketSentiment": 0.18,
+      "alerts": ["中后场框架稳定", "定位球质量保持在较好区间"],
+      "sourceLabels": ["camp notes", "market watch"]
+    },
+    "Brazil": {
+      "lastUpdated": "2026-03-20T13:15:00+08:00",
+      "lineupConfidence": 86,
+      "attackDelta": 0.07,
+      "defenseDelta": 0.03,
+      "marketSentiment": 0.42,
+      "alerts": ["前场压制力持续走高", "边锋群状态偏热"],
+      "sourceLabels": ["training brief", "market watch"]
+    },
+    "Morocco": {
+      "lastUpdated": "2026-03-20T10:50:00+08:00",
+      "lineupConfidence": 79,
+      "attackDelta": 0.02,
+      "defenseDelta": 0.04,
+      "marketSentiment": 0.14,
+      "alerts": ["防守组织完成度高", "强强对话下反击效率值得保留"],
+      "sourceLabels": ["team briefing"]
+    },
+    "USA": {
+      "lastUpdated": "2026-03-20T11:40:00+08:00",
+      "lineupConfidence": 83,
+      "attackDelta": 0.05,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.28,
+      "alerts": ["主场开局阶段节奏通常偏快", "锋线轮换深度较充足"],
+      "sourceLabels": ["training brief", "local media"]
+    },
+    "Germany": {
+      "lastUpdated": "2026-03-20T12:15:00+08:00",
+      "lineupConfidence": 85,
+      "attackDelta": 0.05,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.35,
+      "alerts": ["高位压迫和反抢反馈积极", "边后卫前插频率偏高"],
+      "sourceLabels": ["camp notes", "market watch"]
+    },
+    "Netherlands": {
+      "lastUpdated": "2026-03-20T09:55:00+08:00",
+      "lineupConfidence": 82,
+      "attackDelta": 0.03,
+      "defenseDelta": 0.03,
+      "marketSentiment": 0.2,
+      "alerts": ["双翼宽度利用率较高", "中卫组协防稳定"],
+      "sourceLabels": ["team briefing"]
+    },
+    "Japan": {
+      "lastUpdated": "2026-03-20T09:35:00+08:00",
+      "lineupConfidence": 80,
+      "attackDelta": 0.03,
+      "defenseDelta": 0.01,
+      "marketSentiment": 0.16,
+      "alerts": ["高转换效率继续维持", "首发稳定度优于平均水平"],
+      "sourceLabels": ["team briefing", "market watch"]
+    },
+    "Belgium": {
+      "lastUpdated": "2026-03-20T12:05:00+08:00",
+      "lineupConfidence": 78,
+      "attackDelta": 0.02,
+      "defenseDelta": 0,
+      "marketSentiment": 0.14,
+      "alerts": ["经验线依然有优势", "高位回防速度需要继续观察"],
+      "sourceLabels": ["camp notes"]
+    },
+    "Spain": {
+      "lastUpdated": "2026-03-20T12:50:00+08:00",
+      "lineupConfidence": 84,
+      "attackDelta": 0.05,
+      "defenseDelta": 0.03,
+      "marketSentiment": 0.36,
+      "alerts": ["控球压制和前场回收质量都较稳", "边中结合威胁提升"],
+      "sourceLabels": ["training brief", "market watch"]
+    },
+    "France": {
+      "lastUpdated": "2026-03-20T13:05:00+08:00",
+      "lineupConfidence": 82,
+      "attackDelta": 0.05,
+      "defenseDelta": 0.01,
+      "marketSentiment": 0.3,
+      "alerts": ["前场个人能力溢价仍在", "中场保护强度有波动"],
+      "sourceLabels": ["team briefing", "market watch"]
+    },
+    "Senegal": {
+      "lastUpdated": "2026-03-20T10:10:00+08:00",
+      "lineupConfidence": 76,
+      "attackDelta": 0.01,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.06,
+      "alerts": ["对抗质量较高", "边路速度点适合打反击场景"],
+      "sourceLabels": ["camp notes"]
+    },
+    "Argentina": {
+      "lastUpdated": "2026-03-20T13:20:00+08:00",
+      "lineupConfidence": 85,
+      "attackDelta": 0.06,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.37,
+      "alerts": ["中前场配合熟练度高", "阵地战渗透依然是主要优势"],
+      "sourceLabels": ["training brief", "market watch"]
+    },
+    "Portugal": {
+      "lastUpdated": "2026-03-20T11:30:00+08:00",
+      "lineupConfidence": 83,
+      "attackDelta": 0.04,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.22,
+      "alerts": ["前场终结点较多", "肋部渗透效率稳定"],
+      "sourceLabels": ["team briefing", "market watch"]
+    },
+    "England": {
+      "lastUpdated": "2026-03-20T12:35:00+08:00",
+      "lineupConfidence": 84,
+      "attackDelta": 0.05,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.31,
+      "alerts": ["定位球与转换进攻维持高质量", "边后卫出球阶段衔接稳定"],
+      "sourceLabels": ["training brief", "market watch"]
+    },
+    "Croatia": {
+      "lastUpdated": "2026-03-20T09:50:00+08:00",
+      "lineupConfidence": 79,
+      "attackDelta": 0.01,
+      "defenseDelta": 0.02,
+      "marketSentiment": 0.08,
+      "alerts": ["中场持球和节奏控制仍然可靠", "对高节奏球队时后场转身速度需注意"],
+      "sourceLabels": ["camp notes"]
+    },
+    "IC Path 1 winner": {
+      "lastUpdated": "2026-03-20T08:45:00+08:00",
+      "lineupConfidence": 51,
+      "attackDelta": -0.02,
+      "defenseDelta": -0.03,
+      "marketSentiment": -0.12,
+      "alerts": ["洲际附加赛占位队尚未落位", "临场名单与战术风格都存在较大不确定性"],
+      "sourceLabels": ["qualification tracker"]
+    }
+  },
+  "fixtureSignals": [
+    {
+      "date": "2026-06-11",
+      "homeTeam": "Mexico",
+      "awayTeam": "South Africa",
+      "lastUpdated": "2026-03-20T16:20:00+08:00",
+      "headline": "揭幕战情绪和市场共振偏向主队，主胜预期与主队进球上沿都被抬高。",
+      "homeLambdaDelta": 0.07,
+      "awayLambdaDelta": -0.05,
+      "marketHomeShift": 3.4,
+      "marketVolatility": 2.8,
+      "homeLineupConfidence": 86,
+      "awayLineupConfidence": 68,
+      "alerts": ["揭幕战会放大主场情绪溢价", "客队后场应对高压的容错空间偏小"],
+      "sourceLabels": ["opening market", "training brief"]
+    },
+    {
+      "date": "2026-06-12",
+      "homeTeam": "Canada",
+      "awayTeam": "UEFA Path A winner",
+      "lastUpdated": "2026-03-20T15:40:00+08:00",
+      "headline": "主办国热度偏强，但资格赛占位队未落位让临场波动显著高于平均值。",
+      "homeLambdaDelta": 0.04,
+      "awayLambdaDelta": -0.04,
+      "marketHomeShift": 2.6,
+      "marketVolatility": 3.1,
+      "homeLineupConfidence": 83,
+      "awayLineupConfidence": 54,
+      "alerts": ["资格赛落位前不适合给占位队过强承诺", "市场对主队的支持主要来自确定性而非纯实力差"],
+      "sourceLabels": ["qualification tracker", "market watch"]
+    },
+    {
+      "date": "2026-06-13",
+      "homeTeam": "Brazil",
+      "awayTeam": "Morocco",
+      "lastUpdated": "2026-03-20T16:05:00+08:00",
+      "headline": "强强对话下市场仍偏向巴西，但摩洛哥的防守完成度压低了过热风险。",
+      "homeLambdaDelta": 0.03,
+      "awayLambdaDelta": 0.01,
+      "marketHomeShift": 1.4,
+      "marketVolatility": 2.5,
+      "homeLineupConfidence": 86,
+      "awayLineupConfidence": 80,
+      "alerts": ["更像高质量强强对话，不适合把主胜讲成轻松局", "总进球上沿受摩洛哥防守约束"],
+      "sourceLabels": ["market watch", "team briefing"]
+    },
+    {
+      "date": "2026-06-12",
+      "homeTeam": "USA",
+      "awayTeam": "Paraguay",
+      "lastUpdated": "2026-03-20T15:55:00+08:00",
+      "headline": "主队开局强度预期上修，但市场波动还未达到需要大幅重估的程度。",
+      "homeLambdaDelta": 0.05,
+      "awayLambdaDelta": -0.02,
+      "marketHomeShift": 2.1,
+      "marketVolatility": 2.2,
+      "homeLineupConfidence": 84,
+      "awayLineupConfidence": 75,
+      "alerts": ["主队前场压迫可能把比赛节奏拉高", "客队若主动收缩，平局概率不会消失"],
+      "sourceLabels": ["opening market", "local media"]
+    },
+    {
+      "date": "2026-06-14",
+      "homeTeam": "Germany",
+      "awayTeam": "Curaçao",
+      "lastUpdated": "2026-03-20T14:50:00+08:00",
+      "headline": "市场将德国视为强压制开局，主胜和大球都出现明显升温。",
+      "homeLambdaDelta": 0.08,
+      "awayLambdaDelta": -0.06,
+      "marketHomeShift": 4.1,
+      "marketVolatility": 2.9,
+      "homeLineupConfidence": 86,
+      "awayLineupConfidence": 70,
+      "alerts": ["这是当前样本里主队倾斜最明显的场次之一", "若临场轮换扩大，精确比分离散度会抬升"],
+      "sourceLabels": ["market watch", "training brief"]
+    },
+    {
+      "date": "2026-06-14",
+      "homeTeam": "Netherlands",
+      "awayTeam": "Japan",
+      "lastUpdated": "2026-03-20T14:35:00+08:00",
+      "headline": "荷兰仍是市场主流方向，但日本的高转换效率让客胜尾部不能忽略。",
+      "homeLambdaDelta": 0.01,
+      "awayLambdaDelta": 0.02,
+      "marketHomeShift": 0.8,
+      "marketVolatility": 2.6,
+      "homeLineupConfidence": 82,
+      "awayLineupConfidence": 81,
+      "alerts": ["更适合展示概率分布，不适合单边口播", "若日本抢开局成功，比赛可能迅速偏离基线"],
+      "sourceLabels": ["market watch", "team briefing"]
+    },
+    {
+      "date": "2026-06-15",
+      "homeTeam": "Belgium",
+      "awayTeam": "Egypt",
+      "lastUpdated": "2026-03-20T14:10:00+08:00",
+      "headline": "主胜仍是主流，但市场没有把比利时压到极端区间，说明客队防守韧性仍被保留。",
+      "homeLambdaDelta": 0.03,
+      "awayLambdaDelta": -0.01,
+      "marketHomeShift": 1.9,
+      "marketVolatility": 2.1,
+      "homeLineupConfidence": 78,
+      "awayLineupConfidence": 76,
+      "alerts": ["客队摆低位时，大胜空间可能小于纯实力差", "更适合结合让球和总进球一起讲"],
+      "sourceLabels": ["market watch"]
+    },
+    {
+      "date": "2026-06-15",
+      "homeTeam": "Spain",
+      "awayTeam": "Cape Verde",
+      "lastUpdated": "2026-03-20T14:45:00+08:00",
+      "headline": "西班牙的控球压制预期继续上修，市场对主队零封的乐观程度高于平均水平。",
+      "homeLambdaDelta": 0.07,
+      "awayLambdaDelta": -0.05,
+      "marketHomeShift": 3.2,
+      "marketVolatility": 2.7,
+      "homeLineupConfidence": 85,
+      "awayLineupConfidence": 73,
+      "alerts": ["主队零封场景升温明显", "若客队早段守住，后续比分波动会放大"],
+      "sourceLabels": ["market watch", "training brief"]
+    },
+    {
+      "date": "2026-06-16",
+      "homeTeam": "France",
+      "awayTeam": "Senegal",
+      "lastUpdated": "2026-03-20T15:10:00+08:00",
+      "headline": "法国仍是更强一侧，但这场的市场谨慎度高于传统豪门打非洲球队的均值。",
+      "homeLambdaDelta": 0.01,
+      "awayLambdaDelta": 0.02,
+      "marketHomeShift": 0.6,
+      "marketVolatility": 2.8,
+      "homeLineupConfidence": 82,
+      "awayLineupConfidence": 77,
+      "alerts": ["对抗强度和反击效率会压缩主队容错", "平局尾部值得继续保留"],
+      "sourceLabels": ["market watch", "camp notes"]
+    },
+    {
+      "date": "2026-06-16",
+      "homeTeam": "Argentina",
+      "awayTeam": "Algeria",
+      "lastUpdated": "2026-03-20T15:00:00+08:00",
+      "headline": "市场对阿根廷开门红的预期依旧很高，但没有走到夸张区间，说明轮换与节奏控制被计入了估值。",
+      "homeLambdaDelta": 0.06,
+      "awayLambdaDelta": -0.04,
+      "marketHomeShift": 3.0,
+      "marketVolatility": 2.4,
+      "homeLineupConfidence": 85,
+      "awayLineupConfidence": 75,
+      "alerts": ["主胜依旧是主逻辑，但小比分获胜也有不低权重", "若前场轮换扩大，总进球会更分散"],
+      "sourceLabels": ["market watch", "training brief"]
+    },
+    {
+      "date": "2026-06-17",
+      "homeTeam": "Portugal",
+      "awayTeam": "IC Path 1 winner",
+      "lastUpdated": "2026-03-20T14:25:00+08:00",
+      "headline": "葡萄牙方向被持续看好，但附加赛占位队未落位使市场容忍更高波动。",
+      "homeLambdaDelta": 0.05,
+      "awayLambdaDelta": -0.05,
+      "marketHomeShift": 2.7,
+      "marketVolatility": 3.0,
+      "homeLineupConfidence": 83,
+      "awayLineupConfidence": 50,
+      "alerts": ["资格赛落位前，客队强度上下限都很宽", "这类比赛要突出更新频率，而不是固定推荐"],
+      "sourceLabels": ["qualification tracker", "market watch"]
+    },
+    {
+      "date": "2026-06-17",
+      "homeTeam": "England",
+      "awayTeam": "Croatia",
+      "lastUpdated": "2026-03-20T15:30:00+08:00",
+      "headline": "英格兰是主流方向，但这场的市场分歧比豪门打中档球队更大，典型适合做概率化展示。",
+      "homeLambdaDelta": 0.02,
+      "awayLambdaDelta": 0.01,
+      "marketHomeShift": 1.1,
+      "marketVolatility": 2.7,
+      "homeLineupConfidence": 84,
+      "awayLineupConfidence": 79,
+      "alerts": ["强强对话下平局与单球差场景都需要保留", "更适合作为模型解释样板场次"],
+      "sourceLabels": ["market watch", "team briefing"]
+    }
+  ]
+}
