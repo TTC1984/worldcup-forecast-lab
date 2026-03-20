@@ -15,7 +15,12 @@ const elements = {
   summaryTeamCount: document.getElementById("summary-team-count"),
   summaryFixtureCount: document.getElementById("summary-fixture-count"),
   summaryGroupCount: document.getElementById("summary-group-count"),
+  summarySimulationCount: document.getElementById("summary-simulation-count"),
   groupFilter: document.getElementById("group-filter"),
+  groupProjectionTitle: document.getElementById("group-projection-title"),
+  groupProjectionBody: document.getElementById("group-projection-body"),
+  titleContenders: document.getElementById("title-contenders"),
+  simulationNotes: document.getElementById("simulation-notes"),
 };
 
 const state = {
@@ -23,6 +28,7 @@ const state = {
   summary: null,
   fixtures: [],
   groups: [],
+  simulation: null,
   activeGroup: null,
 };
 
@@ -46,13 +52,14 @@ function renderSummary() {
   animateCount(elements.summaryTeamCount, state.summary.teamCount);
   animateCount(elements.summaryFixtureCount, state.summary.fixtureCount);
   animateCount(elements.summaryGroupCount, state.summary.groupCount);
+  animateCount(elements.summarySimulationCount, state.summary.simulationCount);
 
   const generatedAt = new Date(state.model.generatedAt).toLocaleString("zh-CN", {
     hour12: false,
   });
 
   elements.dataStatus.textContent =
-    `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.scopeNote}`;
+    `${state.model.name} ${state.model.version} · ${generatedAt} 生成 · ${state.summary.simulationCount.toLocaleString("zh-CN")} 次模拟 · ${state.summary.scopeNote}`;
 }
 
 function getVisibleFixtures() {
@@ -139,6 +146,80 @@ function renderRisks(risks) {
   elements.riskList.innerHTML = risks.map((risk) => `<li>${risk}</li>`).join("");
 }
 
+function renderGroupProjection() {
+  const groupProjection = state.simulation?.groupProjections.find((group) => group.label === state.activeGroup);
+
+  if (!groupProjection) {
+    elements.groupProjectionTitle.textContent = "分组模拟暂不可用";
+    elements.groupProjectionBody.innerHTML = "";
+    return;
+  }
+
+  elements.groupProjectionTitle.textContent = `${groupProjection.label} 出线概率`;
+  elements.groupProjectionBody.innerHTML = groupProjection.teams
+    .map(
+      (team, index) => `
+        <tr>
+          <td>
+            <div class="table-team">
+              <strong>${index + 1}. ${team.team}</strong>
+              <span>小组第一 ${team.positionProbabilities.first}%</span>
+            </div>
+          </td>
+          <td>${team.averagePoints}</td>
+          <td>${team.topTwoProbability}%</td>
+          <td>${team.bestThirdQualificationProbability}%</td>
+          <td>${team.qualifyProbability}%</td>
+          <td>${team.championProbability}%</td>
+        </tr>
+      `
+    )
+    .join("");
+}
+
+function renderTitleContenders() {
+  const contenders = state.simulation?.titleContenders.slice(0, 8) || [];
+
+  elements.titleContenders.innerHTML = contenders
+    .map(
+      (team, index) => `
+        <article class="contender-card">
+          <div class="contender-head">
+            <span>No. ${index + 1}</span>
+            <strong>${team.team}</strong>
+            <p>${team.group}</p>
+          </div>
+          <div class="contender-metrics">
+            <div>
+              <span>夺冠</span>
+              <strong>${team.championProbability}%</strong>
+            </div>
+            <div>
+              <span>决赛</span>
+              <strong>${team.reachFinalProbability}%</strong>
+            </div>
+            <div>
+              <span>四强</span>
+              <strong>${team.reachSemiFinalProbability}%</strong>
+            </div>
+          </div>
+        </article>
+      `
+    )
+    .join("");
+}
+
+function renderSimulationNotes() {
+  const notes = state.simulation?.notes || [];
+  elements.simulationNotes.innerHTML = notes.map((note) => `<li>${note}</li>`).join("");
+}
+
+function renderTournamentOutlook() {
+  renderGroupProjection();
+  renderTitleContenders();
+  renderSimulationNotes();
+}
+
 function updateFixture(id) {
   const visibleFixtures = getVisibleFixtures();
   const fixture = visibleFixtures.find((item) => item.id === id) || visibleFixtures[0];
@@ -160,6 +241,7 @@ function updateFixture(id) {
   renderTags(elements.goalsGrid, fixture.goals);
   renderTags(elements.halftimeGrid, fixture.halftime);
   renderRisks(fixture.risks);
+  renderTournamentOutlook();
 }
 
 async function loadForecast() {
@@ -176,6 +258,7 @@ async function loadForecast() {
     state.summary = forecast.summary;
     state.fixtures = forecast.fixtures;
     state.groups = forecast.groups;
+    state.simulation = forecast.simulation;
     state.activeGroup = forecast.groups[0]?.label || null;
 
     renderSummary();

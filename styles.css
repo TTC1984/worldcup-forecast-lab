@@ -278,19 +278,22 @@ main {
 
 .stats-band,
 .predictor-grid,
+.tournament-grid,
 .metric-grid,
 .compliance-grid,
 .tag-grid,
 .score-grid,
 .filter-row,
 .match-switcher,
-.bar-list {
+.bar-list,
+.contender-list,
+.contender-metrics {
   display: grid;
   gap: 16px;
 }
 
 .stats-band {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: -56px;
 }
 
@@ -392,6 +395,10 @@ main {
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
+.tournament-grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
 .card {
   padding: 20px;
   background: var(--paper);
@@ -412,6 +419,18 @@ main {
 
 .predictor-grid > .card:nth-child(n + 4) {
   grid-column: span 4;
+}
+
+.card-span-7 {
+  grid-column: span 7;
+}
+
+.card-span-5 {
+  grid-column: span 5;
+}
+
+.card-span-12 {
+  grid-column: span 12;
 }
 
 .badge {
@@ -502,6 +521,78 @@ main {
   line-height: 1.7;
 }
 
+.projection-table-wrap {
+  overflow-x: auto;
+}
+
+.projection-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.projection-table th,
+.projection-table td {
+  padding: 14px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.projection-table th {
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.projection-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table-team strong,
+.contender-head strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.table-team span,
+.contender-head span,
+.contender-head p,
+.contender-metrics span {
+  color: var(--muted);
+}
+
+.table-team span {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.9rem;
+}
+
+.contender-list {
+  grid-template-columns: 1fr;
+}
+
+.contender-card {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.contender-head p {
+  margin: 6px 0 0;
+}
+
+.contender-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.contender-metrics strong {
+  display: block;
+  margin-top: 6px;
+  font-family: "Space Grotesk", sans-serif;
+}
+
 .metric-grid,
 .compliance-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -559,6 +650,7 @@ main {
   }
 
   .stats-band,
+  .tournament-grid,
   .metric-grid,
   .compliance-grid {
     grid-template-columns: 1fr;
@@ -568,6 +660,12 @@ main {
   .predictor-grid > .card:nth-child(2),
   .predictor-grid > .card:nth-child(3),
   .predictor-grid > .card:nth-child(n + 4) {
+    grid-column: span 12;
+  }
+
+  .card-span-7,
+  .card-span-5,
+  .card-span-12 {
     grid-column: span 12;
   }
 }
@@ -586,7 +684,8 @@ main {
   }
 
   .score-grid,
-  .tag-grid {
+  .tag-grid,
+  .contender-metrics {
     grid-template-columns: 1fr;
   }
 

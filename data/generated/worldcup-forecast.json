@@ -1,8 +1,8 @@
 {
   "model": {
     "name": "Baseline Elo-Poisson 2026 Snapshot",
-    "version": "v0.2.0",
-    "generatedAt": "2026-03-20T09:14:59.766Z",
+    "version": "v0.4.0",
+    "generatedAt": "2026-03-20T09:34:42.596Z",
     "notes": [
       "以球队强度、近期状态和主办国场地因素做 baseline 估计。",
       "小组赛赛程来自 openfootball 的 2026--usa 数据快照，并与 FIFA 已公开的赛程框架保持一致。",
@@ -29,6 +29,7 @@
     "fixtureCount": 72,
     "groupCount": 12,
     "knockoutFixtureCount": 32,
+    "simulationCount": 4000,
     "scopeNote": "当前版本已切换到 2026 世界杯真实赛程快照，覆盖 12 个小组共 72 场小组赛。淘汰赛对阵结构已导入，但正式晋级预测将在下一阶段接入。"
   },
   "groups": [
@@ -1575,7 +1576,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -1753,7 +1754,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -2376,7 +2377,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -2643,7 +2644,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -3978,7 +3979,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -4156,7 +4157,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -5046,7 +5047,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -5135,7 +5136,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -5758,7 +5759,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -6292,7 +6293,7 @@
       "risks": [
         "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
         "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-        "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。"
+        "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。"
       ]
     },
     {
@@ -6566,6 +6567,7 @@
   "knockoutFixtures": [
     {
       "id": "knockout-73",
+      "matchNumber": 73,
       "stage": "Round of 32",
       "date": "2026-06-28",
       "kickoff": "12:00",
@@ -6576,6 +6578,7 @@
     },
     {
       "id": "knockout-74",
+      "matchNumber": 74,
       "stage": "Round of 32",
       "date": "2026-06-29",
       "kickoff": "16:30",
@@ -6586,6 +6589,7 @@
     },
     {
       "id": "knockout-75",
+      "matchNumber": 75,
       "stage": "Round of 32",
       "date": "2026-06-29",
       "kickoff": "19:00",
@@ -6596,6 +6600,7 @@
     },
     {
       "id": "knockout-76",
+      "matchNumber": 76,
       "stage": "Round of 32",
       "date": "2026-06-29",
       "kickoff": "12:00",
@@ -6606,6 +6611,7 @@
     },
     {
       "id": "knockout-77",
+      "matchNumber": 77,
       "stage": "Round of 32",
       "date": "2026-06-30",
       "kickoff": "17:00",
@@ -6616,6 +6622,7 @@
     },
     {
       "id": "knockout-78",
+      "matchNumber": 78,
       "stage": "Round of 32",
       "date": "2026-06-30",
       "kickoff": "12:00",
@@ -6626,6 +6633,7 @@
     },
     {
       "id": "knockout-79",
+      "matchNumber": 79,
       "stage": "Round of 32",
       "date": "2026-06-30",
       "kickoff": "19:00",
@@ -6636,6 +6644,7 @@
     },
     {
       "id": "knockout-80",
+      "matchNumber": 80,
       "stage": "Round of 32",
       "date": "2026-07-01",
       "kickoff": "12:00",
@@ -6646,6 +6655,7 @@
     },
     {
       "id": "knockout-81",
+      "matchNumber": 81,
       "stage": "Round of 32",
       "date": "2026-07-01",
       "kickoff": "17:00",
@@ -6656,6 +6666,7 @@
     },
     {
       "id": "knockout-82",
+      "matchNumber": 82,
       "stage": "Round of 32",
       "date": "2026-07-01",
       "kickoff": "13:00",
@@ -6666,6 +6677,7 @@
     },
     {
       "id": "knockout-83",
+      "matchNumber": 83,
       "stage": "Round of 32",
       "date": "2026-07-02",
       "kickoff": "19:00",
@@ -6676,6 +6688,7 @@
     },
     {
       "id": "knockout-84",
+      "matchNumber": 84,
       "stage": "Round of 32",
       "date": "2026-07-02",
       "kickoff": "12:00",
@@ -6686,6 +6699,7 @@
     },
     {
       "id": "knockout-85",
+      "matchNumber": 85,
       "stage": "Round of 32",
       "date": "2026-07-02",
       "kickoff": "20:00",
@@ -6696,6 +6710,7 @@
     },
     {
       "id": "knockout-86",
+      "matchNumber": 86,
       "stage": "Round of 32",
       "date": "2026-07-03",
       "kickoff": "18:00",
@@ -6706,6 +6721,7 @@
     },
     {
       "id": "knockout-87",
+      "matchNumber": 87,
       "stage": "Round of 32",
       "date": "2026-07-03",
       "kickoff": "20:30",
@@ -6716,6 +6732,7 @@
     },
     {
       "id": "knockout-88",
+      "matchNumber": 88,
       "stage": "Round of 32",
       "date": "2026-07-03",
       "kickoff": "13:00",
@@ -6726,6 +6743,7 @@
     },
     {
       "id": "knockout-89",
+      "matchNumber": 89,
       "stage": "Round of 16",
       "date": "2026-07-04",
       "kickoff": "17:00",
@@ -6736,6 +6754,7 @@
     },
     {
       "id": "knockout-90",
+      "matchNumber": 90,
       "stage": "Round of 16",
       "date": "2026-07-04",
       "kickoff": "12:00",
@@ -6746,6 +6765,7 @@
     },
     {
       "id": "knockout-91",
+      "matchNumber": 91,
       "stage": "Round of 16",
       "date": "2026-07-05",
       "kickoff": "16:00",
@@ -6756,6 +6776,7 @@
     },
     {
       "id": "knockout-92",
+      "matchNumber": 92,
       "stage": "Round of 16",
       "date": "2026-07-05",
       "kickoff": "18:00",
@@ -6766,6 +6787,7 @@
     },
     {
       "id": "knockout-93",
+      "matchNumber": 93,
       "stage": "Round of 16",
       "date": "2026-07-06",
       "kickoff": "14:00",
@@ -6776,6 +6798,7 @@
     },
     {
       "id": "knockout-94",
+      "matchNumber": 94,
       "stage": "Round of 16",
       "date": "2026-07-06",
       "kickoff": "17:00",
@@ -6786,6 +6809,7 @@
     },
     {
       "id": "knockout-95",
+      "matchNumber": 95,
       "stage": "Round of 16",
       "date": "2026-07-07",
       "kickoff": "12:00",
@@ -6796,6 +6820,7 @@
     },
     {
       "id": "knockout-96",
+      "matchNumber": 96,
       "stage": "Round of 16",
       "date": "2026-07-07",
       "kickoff": "13:00",
@@ -6806,6 +6831,7 @@
     },
     {
       "id": "knockout-97",
+      "matchNumber": 97,
       "stage": "Quarter-final",
       "date": "2026-07-09",
       "kickoff": "16:00",
@@ -6816,6 +6842,7 @@
     },
     {
       "id": "knockout-98",
+      "matchNumber": 98,
       "stage": "Quarter-final",
       "date": "2026-07-10",
       "kickoff": "12:00",
@@ -6826,6 +6853,7 @@
     },
     {
       "id": "knockout-99",
+      "matchNumber": 99,
       "stage": "Quarter-final",
       "date": "2026-07-11",
       "kickoff": "17:00",
@@ -6836,6 +6864,7 @@
     },
     {
       "id": "knockout-100",
+      "matchNumber": 100,
       "stage": "Quarter-final",
       "date": "2026-07-11",
       "kickoff": "20:00",
@@ -6846,6 +6875,7 @@
     },
     {
       "id": "knockout-101",
+      "matchNumber": 101,
       "stage": "Semi-final",
       "date": "2026-07-14",
       "kickoff": "14:00",
@@ -6856,6 +6886,7 @@
     },
     {
       "id": "knockout-102",
+      "matchNumber": 102,
       "stage": "Semi-final",
       "date": "2026-07-15",
       "kickoff": "15:00",
@@ -6866,6 +6897,7 @@
     },
     {
       "id": "knockout-31",
+      "matchNumber": null,
       "stage": "Match for third place",
       "date": "2026-07-18",
       "kickoff": "17:00",
@@ -6876,6 +6908,7 @@
     },
     {
       "id": "knockout-32",
+      "matchNumber": null,
       "stage": "Final",
       "date": "2026-07-19",
       "kickoff": "15:00",
@@ -6884,5 +6917,2468 @@
       "awayTeam": "W102",
       "venue": "New York/New Jersey (East Rutherford)"
     }
-  ]
+  ],
+  "simulation": {
+    "iterations": 4000,
+    "seed": 20260320,
+    "notes": [
+      "小组赛按每场比分分布进行 Monte Carlo 采样，累计积分、净胜球与进球数后排序。",
+      "最佳第三名晋级位采用基于允许分组集合的约束匹配近似分配，当前版本尚未编码 FIFA 正式分配矩阵。",
+      "淘汰赛若常规时间打平，按非平局胜率比例近似决定加时/点球晋级方。"
+    ],
+    "groupProjections": [
+      {
+        "id": "A",
+        "label": "Group A",
+        "teams": [
+          {
+            "team": "UEFA Path D winner",
+            "group": "Group A",
+            "groupId": "A",
+            "averagePoints": 5.13,
+            "averageGoalDifference": 1.49,
+            "positionProbabilities": {
+              "first": 39.8,
+              "second": 28.9,
+              "third": 20.9,
+              "fourth": 10.4
+            },
+            "topTwoProbability": 68.7,
+            "qualifyProbability": 84.6,
+            "bestThirdQualificationProbability": 16,
+            "reachRoundOf32Probability": 84.6,
+            "reachRoundOf16Probability": 46.4,
+            "reachQuarterFinalProbability": 21.1,
+            "reachSemiFinalProbability": 6.9,
+            "reachFinalProbability": 3,
+            "championProbability": 0.9
+          },
+          {
+            "team": "Mexico",
+            "group": "Group A",
+            "groupId": "A",
+            "averagePoints": 4.64,
+            "averageGoalDifference": 0.77,
+            "positionProbabilities": {
+              "first": 30,
+              "second": 30,
+              "third": 25.2,
+              "fourth": 14.8
+            },
+            "topTwoProbability": 60,
+            "qualifyProbability": 78.4,
+            "bestThirdQualificationProbability": 18.4,
+            "reachRoundOf32Probability": 78.4,
+            "reachRoundOf16Probability": 36.4,
+            "reachQuarterFinalProbability": 13.2,
+            "reachSemiFinalProbability": 3.2,
+            "reachFinalProbability": 0.9,
+            "championProbability": 0.2
+          },
+          {
+            "team": "South Korea",
+            "group": "Group A",
+            "groupId": "A",
+            "averagePoints": 4.26,
+            "averageGoalDifference": 0.19,
+            "positionProbabilities": {
+              "first": 24.9,
+              "second": 27.6,
+              "third": 27.7,
+              "fourth": 19.8
+            },
+            "topTwoProbability": 52.5,
+            "qualifyProbability": 71.6,
+            "bestThirdQualificationProbability": 19.1,
+            "reachRoundOf32Probability": 71.6,
+            "reachRoundOf16Probability": 34.6,
+            "reachQuarterFinalProbability": 12.9,
+            "reachSemiFinalProbability": 3.9,
+            "reachFinalProbability": 1.4,
+            "championProbability": 0.6
+          },
+          {
+            "team": "South Africa",
+            "group": "Group A",
+            "groupId": "A",
+            "averagePoints": 2.41,
+            "averageGoalDifference": -2.45,
+            "positionProbabilities": {
+              "first": 5.4,
+              "second": 13.5,
+              "third": 26.2,
+              "fourth": 54.9
+            },
+            "topTwoProbability": 18.9,
+            "qualifyProbability": 35,
+            "bestThirdQualificationProbability": 16.2,
+            "reachRoundOf32Probability": 35,
+            "reachRoundOf16Probability": 8.8,
+            "reachQuarterFinalProbability": 1.8,
+            "reachSemiFinalProbability": 0.3,
+            "reachFinalProbability": 0,
+            "championProbability": 0
+          }
+        ]
+      },
+      {
+        "id": "B",
+        "label": "Group B",
+        "teams": [
+          {
+            "team": "Switzerland",
+            "group": "Group B",
+            "groupId": "B",
+            "averagePoints": 5,
+            "averageGoalDifference": 1.25,
+            "positionProbabilities": {
+              "first": 37.1,
+              "second": 28.6,
+              "third": 22.3,
+              "fourth": 11.9
+            },
+            "topTwoProbability": 65.8,
+            "qualifyProbability": 82.7,
+            "bestThirdQualificationProbability": 16.9,
+            "reachRoundOf32Probability": 82.7,
+            "reachRoundOf16Probability": 46.6,
+            "reachQuarterFinalProbability": 22.5,
+            "reachSemiFinalProbability": 8,
+            "reachFinalProbability": 3,
+            "championProbability": 1.38
+          },
+          {
+            "team": "UEFA Path A winner",
+            "group": "Group B",
+            "groupId": "B",
+            "averagePoints": 4.71,
+            "averageGoalDifference": 0.88,
+            "positionProbabilities": {
+              "first": 32.6,
+              "second": 29.1,
+              "third": 24.3,
+              "fourth": 14.1
+            },
+            "topTwoProbability": 61.7,
+            "qualifyProbability": 79,
+            "bestThirdQualificationProbability": 17.3,
+            "reachRoundOf32Probability": 79,
+            "reachRoundOf16Probability": 44.5,
+            "reachQuarterFinalProbability": 21.5,
+            "reachSemiFinalProbability": 7.5,
+            "reachFinalProbability": 3.3,
+            "championProbability": 1.05
+          },
+          {
+            "team": "Canada",
+            "group": "Group B",
+            "groupId": "B",
+            "averagePoints": 4.39,
+            "averageGoalDifference": 0.44,
+            "positionProbabilities": {
+              "first": 25.3,
+              "second": 28.9,
+              "third": 29.2,
+              "fourth": 16.7
+            },
+            "topTwoProbability": 54.1,
+            "qualifyProbability": 75.6,
+            "bestThirdQualificationProbability": 21.4,
+            "reachRoundOf32Probability": 75.6,
+            "reachRoundOf16Probability": 34,
+            "reachQuarterFinalProbability": 13.1,
+            "reachSemiFinalProbability": 3.4,
+            "reachFinalProbability": 1.1,
+            "championProbability": 0.38
+          },
+          {
+            "team": "Qatar",
+            "group": "Group B",
+            "groupId": "B",
+            "averagePoints": 2.31,
+            "averageGoalDifference": -2.57,
+            "positionProbabilities": {
+              "first": 5,
+              "second": 13.4,
+              "third": 24.2,
+              "fourth": 57.4
+            },
+            "topTwoProbability": 18.4,
+            "qualifyProbability": 32.8,
+            "bestThirdQualificationProbability": 14.3,
+            "reachRoundOf32Probability": 32.8,
+            "reachRoundOf16Probability": 8.3,
+            "reachQuarterFinalProbability": 1.8,
+            "reachSemiFinalProbability": 0.3,
+            "reachFinalProbability": 0,
+            "championProbability": 0
+          }
+        ]
+      },
+      {
+        "id": "C",
+        "label": "Group C",
+        "teams": [
+          {
+            "team": "Brazil",
+            "group": "Group C",
+            "groupId": "C",
+            "averagePoints": 5.84,
+            "averageGoalDifference": 2.58,
+            "positionProbabilities": {
+              "first": 49.6,
+              "second": 29.4,
+              "third": 17.6,
+              "fourth": 3.3
+            },
+            "topTwoProbability": 79.1,
+            "qualifyProbability": 92.9,
+            "bestThirdQualificationProbability": 13.8,
+            "reachRoundOf32Probability": 92.9,
+            "reachRoundOf16Probability": 61.6,
+            "reachQuarterFinalProbability": 40.8,
+            "reachSemiFinalProbability": 25.8,
+            "reachFinalProbability": 16.4,
+            "championProbability": 9.28
+          },
+          {
+            "team": "Morocco",
+            "group": "Group C",
+            "groupId": "C",
+            "averagePoints": 4.97,
+            "averageGoalDifference": 1.31,
+            "positionProbabilities": {
+              "first": 28.4,
+              "second": 34.6,
+              "third": 30.3,
+              "fourth": 6.7
+            },
+            "topTwoProbability": 63,
+            "qualifyProbability": 86.7,
+            "bestThirdQualificationProbability": 23.6,
+            "reachRoundOf32Probability": 86.7,
+            "reachRoundOf16Probability": 46.9,
+            "reachQuarterFinalProbability": 28.2,
+            "reachSemiFinalProbability": 14.8,
+            "reachFinalProbability": 8.3,
+            "championProbability": 4.15
+          },
+          {
+            "team": "Scotland",
+            "group": "Group C",
+            "groupId": "C",
+            "averagePoints": 4.4,
+            "averageGoalDifference": 0.42,
+            "positionProbabilities": {
+              "first": 20.4,
+              "second": 31.5,
+              "third": 35.5,
+              "fourth": 12.7
+            },
+            "topTwoProbability": 51.9,
+            "qualifyProbability": 76.1,
+            "bestThirdQualificationProbability": 24.2,
+            "reachRoundOf32Probability": 76.1,
+            "reachRoundOf16Probability": 33,
+            "reachQuarterFinalProbability": 15.3,
+            "reachSemiFinalProbability": 6.2,
+            "reachFinalProbability": 2.5,
+            "championProbability": 1.13
+          },
+          {
+            "team": "Haiti",
+            "group": "Group C",
+            "groupId": "C",
+            "averagePoints": 1.39,
+            "averageGoalDifference": -4.3,
+            "positionProbabilities": {
+              "first": 1.5,
+              "second": 4.5,
+              "third": 16.6,
+              "fourth": 77.4
+            },
+            "topTwoProbability": 6,
+            "qualifyProbability": 14.2,
+            "bestThirdQualificationProbability": 8.2,
+            "reachRoundOf32Probability": 14.2,
+            "reachRoundOf16Probability": 2.1,
+            "reachQuarterFinalProbability": 0.4,
+            "reachSemiFinalProbability": 0,
+            "reachFinalProbability": 0,
+            "championProbability": 0
+          }
+        ]
+      },
+      {
+        "id": "D",
+        "label": "Group D",
+        "teams": [
+          {
+            "team": "USA",
+            "group": "Group D",
+            "groupId": "D",
+            "averagePoints": 4.95,
+            "averageGoalDifference": 1.22,
+            "positionProbabilities": {
+              "first": 39.7,
+              "second": 25.7,
+              "third": 20.3,
+              "fourth": 14.3
+            },
+            "topTwoProbability": 65.3,
+            "qualifyProbability": 80.9,
+            "bestThirdQualificationProbability": 15.5,
+            "reachRoundOf32Probability": 80.9,
+            "reachRoundOf16Probability": 48.1,
+            "reachQuarterFinalProbability": 23.4,
+            "reachSemiFinalProbability": 10.2,
+            "reachFinalProbability": 3.8,
+            "championProbability": 1.52
+          },
+          {
+            "team": "UEFA Path C winner",
+            "group": "Group D",
+            "groupId": "D",
+            "averagePoints": 4.21,
+            "averageGoalDifference": 0.23,
+            "positionProbabilities": {
+              "first": 26.2,
+              "second": 27.5,
+              "third": 24.9,
+              "fourth": 21.4
+            },
+            "topTwoProbability": 53.6,
+            "qualifyProbability": 71.7,
+            "bestThirdQualificationProbability": 18.1,
+            "reachRoundOf32Probability": 71.7,
+            "reachRoundOf16Probability": 34.3,
+            "reachQuarterFinalProbability": 12.7,
+            "reachSemiFinalProbability": 4.2,
+            "reachFinalProbability": 1.4,
+            "championProbability": 0.38
+          },
+          {
+            "team": "Paraguay",
+            "group": "Group D",
+            "groupId": "D",
+            "averagePoints": 3.71,
+            "averageGoalDifference": -0.56,
+            "positionProbabilities": {
+              "first": 18.9,
+              "second": 23.8,
+              "third": 26.7,
+              "fourth": 30.7
+            },
+            "topTwoProbability": 42.7,
+            "qualifyProbability": 61,
+            "bestThirdQualificationProbability": 18.3,
+            "reachRoundOf32Probability": 61,
+            "reachRoundOf16Probability": 27.8,
+            "reachQuarterFinalProbability": 10.3,
+            "reachSemiFinalProbability": 3.5,
+            "reachFinalProbability": 1.3,
+            "championProbability": 0.47
+          },
+          {
+            "team": "Australia",
+            "group": "Group D",
+            "groupId": "D",
+            "averagePoints": 3.46,
+            "averageGoalDifference": -0.88,
+            "positionProbabilities": {
+              "first": 15.2,
+              "second": 23.1,
+              "third": 28.1,
+              "fourth": 33.6
+            },
+            "topTwoProbability": 38.3,
+            "qualifyProbability": 57.5,
+            "bestThirdQualificationProbability": 19.1,
+            "reachRoundOf32Probability": 57.5,
+            "reachRoundOf16Probability": 25.1,
+            "reachQuarterFinalProbability": 8.6,
+            "reachSemiFinalProbability": 3.1,
+            "reachFinalProbability": 0.9,
+            "championProbability": 0.27
+          }
+        ]
+      },
+      {
+        "id": "E",
+        "label": "Group E",
+        "teams": [
+          {
+            "team": "Germany",
+            "group": "Group E",
+            "groupId": "E",
+            "averagePoints": 6.04,
+            "averageGoalDifference": 2.87,
+            "positionProbabilities": {
+              "first": 54.8,
+              "second": 27,
+              "third": 14.3,
+              "fourth": 4
+            },
+            "topTwoProbability": 81.8,
+            "qualifyProbability": 93,
+            "bestThirdQualificationProbability": 11.3,
+            "reachRoundOf32Probability": 93,
+            "reachRoundOf16Probability": 67.1,
+            "reachQuarterFinalProbability": 41,
+            "reachSemiFinalProbability": 26.8,
+            "reachFinalProbability": 16,
+            "championProbability": 9.4
+          },
+          {
+            "team": "Ecuador",
+            "group": "Group E",
+            "groupId": "E",
+            "averagePoints": 4.67,
+            "averageGoalDifference": 0.87,
+            "positionProbabilities": {
+              "first": 25.8,
+              "second": 34.9,
+              "third": 28.6,
+              "fourth": 10.8
+            },
+            "topTwoProbability": 60.7,
+            "qualifyProbability": 81.4,
+            "bestThirdQualificationProbability": 20.8,
+            "reachRoundOf32Probability": 81.4,
+            "reachRoundOf16Probability": 43.4,
+            "reachQuarterFinalProbability": 19.2,
+            "reachSemiFinalProbability": 9,
+            "reachFinalProbability": 4,
+            "championProbability": 1.7
+          },
+          {
+            "team": "Ivory Coast",
+            "group": "Group E",
+            "groupId": "E",
+            "averagePoints": 4.09,
+            "averageGoalDifference": -0.03,
+            "positionProbabilities": {
+              "first": 17.5,
+              "second": 30.3,
+              "third": 34.8,
+              "fourth": 17.3
+            },
+            "topTwoProbability": 47.9,
+            "qualifyProbability": 71.2,
+            "bestThirdQualificationProbability": 23.4,
+            "reachRoundOf32Probability": 71.2,
+            "reachRoundOf16Probability": 33.5,
+            "reachQuarterFinalProbability": 13,
+            "reachSemiFinalProbability": 5.6,
+            "reachFinalProbability": 2.2,
+            "championProbability": 0.7
+          },
+          {
+            "team": "Curaçao",
+            "group": "Group E",
+            "groupId": "E",
+            "averagePoints": 1.75,
+            "averageGoalDifference": -3.7,
+            "positionProbabilities": {
+              "first": 1.9,
+              "second": 7.8,
+              "third": 22.3,
+              "fourth": 68
+            },
+            "topTwoProbability": 9.8,
+            "qualifyProbability": 21.1,
+            "bestThirdQualificationProbability": 11.3,
+            "reachRoundOf32Probability": 21.1,
+            "reachRoundOf16Probability": 4,
+            "reachQuarterFinalProbability": 0.7,
+            "reachSemiFinalProbability": 0.1,
+            "reachFinalProbability": 0,
+            "championProbability": 0
+          }
+        ]
+      },
+      {
+        "id": "F",
+        "label": "Group F",
+        "teams": [
+          {
+            "team": "Netherlands",
+            "group": "Group F",
+            "groupId": "F",
+            "averagePoints": 5.79,
+            "averageGoalDifference": 2.31,
+            "positionProbabilities": {
+              "first": 52.3,
+              "second": 27.3,
+              "third": 14.5,
+              "fourth": 5.9
+            },
+            "topTwoProbability": 79.6,
+            "qualifyProbability": 91.3,
+            "bestThirdQualificationProbability": 11.7,
+            "reachRoundOf32Probability": 91.3,
+            "reachRoundOf16Probability": 51.5,
+            "reachQuarterFinalProbability": 34.1,
+            "reachSemiFinalProbability": 18.7,
+            "reachFinalProbability": 10.9,
+            "championProbability": 5.75
+          },
+          {
+            "team": "Japan",
+            "group": "Group F",
+            "groupId": "F",
+            "averagePoints": 4.32,
+            "averageGoalDifference": 0.28,
+            "positionProbabilities": {
+              "first": 22.6,
+              "second": 31.8,
+              "third": 28.4,
+              "fourth": 17.2
+            },
+            "topTwoProbability": 54.4,
+            "qualifyProbability": 74,
+            "bestThirdQualificationProbability": 19.6,
+            "reachRoundOf32Probability": 74,
+            "reachRoundOf16Probability": 31.2,
+            "reachQuarterFinalProbability": 15.2,
+            "reachSemiFinalProbability": 6.4,
+            "reachFinalProbability": 2.9,
+            "championProbability": 1.43
+          },
+          {
+            "team": "UEFA Path B winner",
+            "group": "Group F",
+            "groupId": "F",
+            "averagePoints": 4.05,
+            "averageGoalDifference": -0.08,
+            "positionProbabilities": {
+              "first": 19.8,
+              "second": 28.2,
+              "third": 31.2,
+              "fourth": 20.8
+            },
+            "topTwoProbability": 48,
+            "qualifyProbability": 69.7,
+            "bestThirdQualificationProbability": 21.7,
+            "reachRoundOf32Probability": 69.7,
+            "reachRoundOf16Probability": 26.2,
+            "reachQuarterFinalProbability": 13,
+            "reachSemiFinalProbability": 5.5,
+            "reachFinalProbability": 2.5,
+            "championProbability": 1
+          },
+          {
+            "team": "Tunisia",
+            "group": "Group F",
+            "groupId": "F",
+            "averagePoints": 2.3,
+            "averageGoalDifference": -2.51,
+            "positionProbabilities": {
+              "first": 5.3,
+              "second": 12.7,
+              "third": 25.9,
+              "fourth": 56.1
+            },
+            "topTwoProbability": 18,
+            "qualifyProbability": 33,
+            "bestThirdQualificationProbability": 15,
+            "reachRoundOf32Probability": 33,
+            "reachRoundOf16Probability": 6.7,
+            "reachQuarterFinalProbability": 1.8,
+            "reachSemiFinalProbability": 0.4,
+            "reachFinalProbability": 0.1,
+            "championProbability": 0.03
+          }
+        ]
+      },
+      {
+        "id": "G",
+        "label": "Group G",
+        "teams": [
+          {
+            "team": "Belgium",
+            "group": "Group G",
+            "groupId": "G",
+            "averagePoints": 6.03,
+            "averageGoalDifference": 2.66,
+            "positionProbabilities": {
+              "first": 56.5,
+              "second": 27,
+              "third": 11.8,
+              "fourth": 4.7
+            },
+            "topTwoProbability": 83.5,
+            "qualifyProbability": 93,
+            "bestThirdQualificationProbability": 9.5,
+            "reachRoundOf32Probability": 93,
+            "reachRoundOf16Probability": 64.2,
+            "reachQuarterFinalProbability": 34.8,
+            "reachSemiFinalProbability": 17.8,
+            "reachFinalProbability": 8.6,
+            "championProbability": 4.23
+          },
+          {
+            "team": "Iran",
+            "group": "Group G",
+            "groupId": "G",
+            "averagePoints": 4.4,
+            "averageGoalDifference": 0.43,
+            "positionProbabilities": {
+              "first": 24.1,
+              "second": 33.1,
+              "third": 27.1,
+              "fourth": 15.7
+            },
+            "topTwoProbability": 57.2,
+            "qualifyProbability": 75.7,
+            "bestThirdQualificationProbability": 18.6,
+            "reachRoundOf32Probability": 75.7,
+            "reachRoundOf16Probability": 36.5,
+            "reachQuarterFinalProbability": 13.7,
+            "reachSemiFinalProbability": 5.3,
+            "reachFinalProbability": 1.8,
+            "championProbability": 0.55
+          },
+          {
+            "team": "Egypt",
+            "group": "Group G",
+            "groupId": "G",
+            "averagePoints": 3.64,
+            "averageGoalDifference": -0.69,
+            "positionProbabilities": {
+              "first": 14.2,
+              "second": 26.1,
+              "third": 34.2,
+              "fourth": 25.6
+            },
+            "topTwoProbability": 40.3,
+            "qualifyProbability": 62.4,
+            "bestThirdQualificationProbability": 22.1,
+            "reachRoundOf32Probability": 62.4,
+            "reachRoundOf16Probability": 22.9,
+            "reachQuarterFinalProbability": 6.5,
+            "reachSemiFinalProbability": 2.1,
+            "reachFinalProbability": 0.4,
+            "championProbability": 0.18
+          },
+          {
+            "team": "New Zealand",
+            "group": "Group G",
+            "groupId": "G",
+            "averagePoints": 2.4,
+            "averageGoalDifference": -2.4,
+            "positionProbabilities": {
+              "first": 5.1,
+              "second": 13.9,
+              "third": 26.9,
+              "fourth": 54
+            },
+            "topTwoProbability": 19.1,
+            "qualifyProbability": 35.2,
+            "bestThirdQualificationProbability": 16.2,
+            "reachRoundOf32Probability": 35.2,
+            "reachRoundOf16Probability": 8,
+            "reachQuarterFinalProbability": 0.9,
+            "reachSemiFinalProbability": 0.2,
+            "reachFinalProbability": 0,
+            "championProbability": 0
+          }
+        ]
+      },
+      {
+        "id": "H",
+        "label": "Group H",
+        "teams": [
+          {
+            "team": "Spain",
+            "group": "Group H",
+            "groupId": "H",
+            "averagePoints": 6.05,
+            "averageGoalDifference": 2.88,
+            "positionProbabilities": {
+              "first": 51.6,
+              "second": 34,
+              "third": 10.8,
+              "fourth": 3.5
+            },
+            "topTwoProbability": 85.7,
+            "qualifyProbability": 94.2,
+            "bestThirdQualificationProbability": 8.6,
+            "reachRoundOf32Probability": 94.2,
+            "reachRoundOf16Probability": 57.2,
+            "reachQuarterFinalProbability": 36.2,
+            "reachSemiFinalProbability": 24.2,
+            "reachFinalProbability": 12.8,
+            "championProbability": 7.17
+          },
+          {
+            "team": "Uruguay",
+            "group": "Group H",
+            "groupId": "H",
+            "averagePoints": 5.44,
+            "averageGoalDifference": 1.87,
+            "positionProbabilities": {
+              "first": 38.8,
+              "second": 37.8,
+              "third": 16.8,
+              "fourth": 6.7
+            },
+            "topTwoProbability": 76.6,
+            "qualifyProbability": 88.5,
+            "bestThirdQualificationProbability": 11.9,
+            "reachRoundOf32Probability": 88.5,
+            "reachRoundOf16Probability": 43.8,
+            "reachQuarterFinalProbability": 25,
+            "reachSemiFinalProbability": 14.7,
+            "reachFinalProbability": 6.5,
+            "championProbability": 3.23
+          },
+          {
+            "team": "Cape Verde",
+            "group": "Group H",
+            "groupId": "H",
+            "averagePoints": 2.79,
+            "averageGoalDifference": -2.06,
+            "positionProbabilities": {
+              "first": 5.8,
+              "second": 16.2,
+              "third": 40.5,
+              "fourth": 37.6
+            },
+            "topTwoProbability": 21.9,
+            "qualifyProbability": 44.5,
+            "bestThirdQualificationProbability": 22.5,
+            "reachRoundOf32Probability": 44.5,
+            "reachRoundOf16Probability": 10.3,
+            "reachQuarterFinalProbability": 3.1,
+            "reachSemiFinalProbability": 0.9,
+            "reachFinalProbability": 0.3,
+            "championProbability": 0.05
+          },
+          {
+            "team": "Saudi Arabia",
+            "group": "Group H",
+            "groupId": "H",
+            "averagePoints": 2.28,
+            "averageGoalDifference": -2.69,
+            "positionProbabilities": {
+              "first": 3.8,
+              "second": 12,
+              "third": 32,
+              "fourth": 52.2
+            },
+            "topTwoProbability": 15.8,
+            "qualifyProbability": 33.1,
+            "bestThirdQualificationProbability": 17.3,
+            "reachRoundOf32Probability": 33.1,
+            "reachRoundOf16Probability": 6.8,
+            "reachQuarterFinalProbability": 1.9,
+            "reachSemiFinalProbability": 0.4,
+            "reachFinalProbability": 0.1,
+            "championProbability": 0.03
+          }
+        ]
+      },
+      {
+        "id": "I",
+        "label": "Group I",
+        "teams": [
+          {
+            "team": "France",
+            "group": "Group I",
+            "groupId": "I",
+            "averagePoints": 5.67,
+            "averageGoalDifference": 2.23,
+            "positionProbabilities": {
+              "first": 49.6,
+              "second": 27.2,
+              "third": 16.6,
+              "fourth": 6.6
+            },
+            "topTwoProbability": 76.8,
+            "qualifyProbability": 90,
+            "bestThirdQualificationProbability": 13.2,
+            "reachRoundOf32Probability": 90,
+            "reachRoundOf16Probability": 63.3,
+            "reachQuarterFinalProbability": 36,
+            "reachSemiFinalProbability": 23.8,
+            "reachFinalProbability": 14.9,
+            "championProbability": 8.75
+          },
+          {
+            "team": "Norway",
+            "group": "Group I",
+            "groupId": "I",
+            "averagePoints": 4.59,
+            "averageGoalDifference": 0.72,
+            "positionProbabilities": {
+              "first": 27.4,
+              "second": 33,
+              "third": 24.6,
+              "fourth": 15
+            },
+            "topTwoProbability": 60.4,
+            "qualifyProbability": 77.8,
+            "bestThirdQualificationProbability": 17.3,
+            "reachRoundOf32Probability": 77.8,
+            "reachRoundOf16Probability": 42.2,
+            "reachQuarterFinalProbability": 19.8,
+            "reachSemiFinalProbability": 9.5,
+            "reachFinalProbability": 5.1,
+            "championProbability": 2.43
+          },
+          {
+            "team": "Senegal",
+            "group": "Group I",
+            "groupId": "I",
+            "averagePoints": 3.92,
+            "averageGoalDifference": -0.3,
+            "positionProbabilities": {
+              "first": 18.4,
+              "second": 26.9,
+              "third": 33.4,
+              "fourth": 21.4
+            },
+            "topTwoProbability": 45.2,
+            "qualifyProbability": 67.9,
+            "bestThirdQualificationProbability": 22.7,
+            "reachRoundOf32Probability": 67.9,
+            "reachRoundOf16Probability": 32.9,
+            "reachQuarterFinalProbability": 13.9,
+            "reachSemiFinalProbability": 5.8,
+            "reachFinalProbability": 2.3,
+            "championProbability": 0.88
+          },
+          {
+            "team": "IC Path 2 winner",
+            "group": "Group I",
+            "groupId": "I",
+            "averagePoints": 2.27,
+            "averageGoalDifference": -2.65,
+            "positionProbabilities": {
+              "first": 4.7,
+              "second": 12.9,
+              "third": 25.5,
+              "fourth": 57
+            },
+            "topTwoProbability": 17.6,
+            "qualifyProbability": 33,
+            "bestThirdQualificationProbability": 15.4,
+            "reachRoundOf32Probability": 33,
+            "reachRoundOf16Probability": 9.3,
+            "reachQuarterFinalProbability": 2.2,
+            "reachSemiFinalProbability": 0.6,
+            "reachFinalProbability": 0,
+            "championProbability": 0
+          }
+        ]
+      },
+      {
+        "id": "J",
+        "label": "Group J",
+        "teams": [
+          {
+            "team": "Argentina",
+            "group": "Group J",
+            "groupId": "J",
+            "averagePoints": 6.26,
+            "averageGoalDifference": 3.04,
+            "positionProbabilities": {
+              "first": 57.7,
+              "second": 28.2,
+              "third": 10.7,
+              "fourth": 3.3
+            },
+            "topTwoProbability": 86,
+            "qualifyProbability": 94.5,
+            "bestThirdQualificationProbability": 8.5,
+            "reachRoundOf32Probability": 94.5,
+            "reachRoundOf16Probability": 60.3,
+            "reachQuarterFinalProbability": 42.4,
+            "reachSemiFinalProbability": 29.5,
+            "reachFinalProbability": 16.4,
+            "championProbability": 8.82
+          },
+          {
+            "team": "Austria",
+            "group": "Group J",
+            "groupId": "J",
+            "averagePoints": 5.1,
+            "averageGoalDifference": 1.45,
+            "positionProbabilities": {
+              "first": 30.6,
+              "second": 40.1,
+              "third": 21.2,
+              "fourth": 8.1
+            },
+            "topTwoProbability": 70.8,
+            "qualifyProbability": 86.7,
+            "bestThirdQualificationProbability": 16,
+            "reachRoundOf32Probability": 86.7,
+            "reachRoundOf16Probability": 44.5,
+            "reachQuarterFinalProbability": 27.2,
+            "reachSemiFinalProbability": 16,
+            "reachFinalProbability": 7.2,
+            "championProbability": 3.5
+          },
+          {
+            "team": "Algeria",
+            "group": "Group J",
+            "groupId": "J",
+            "averagePoints": 3.37,
+            "averageGoalDifference": -1.14,
+            "positionProbabilities": {
+              "first": 9.6,
+              "second": 23.6,
+              "third": 41.1,
+              "fourth": 25.7
+            },
+            "topTwoProbability": 33.1,
+            "qualifyProbability": 58.5,
+            "bestThirdQualificationProbability": 25.4,
+            "reachRoundOf32Probability": 58.5,
+            "reachRoundOf16Probability": 17.3,
+            "reachQuarterFinalProbability": 5.6,
+            "reachSemiFinalProbability": 2,
+            "reachFinalProbability": 0.6,
+            "championProbability": 0.13
+          },
+          {
+            "team": "Jordan",
+            "group": "Group J",
+            "groupId": "J",
+            "averagePoints": 1.85,
+            "averageGoalDifference": -3.36,
+            "positionProbabilities": {
+              "first": 2.1,
+              "second": 8.1,
+              "third": 27,
+              "fourth": 62.9
+            },
+            "topTwoProbability": 10.2,
+            "qualifyProbability": 23.3,
+            "bestThirdQualificationProbability": 13.2,
+            "reachRoundOf32Probability": 23.3,
+            "reachRoundOf16Probability": 3.6,
+            "reachQuarterFinalProbability": 0.5,
+            "reachSemiFinalProbability": 0.1,
+            "reachFinalProbability": 0,
+            "championProbability": 0
+          }
+        ]
+      },
+      {
+        "id": "K",
+        "label": "Group K",
+        "teams": [
+          {
+            "team": "Portugal",
+            "group": "Group K",
+            "groupId": "K",
+            "averagePoints": 5.57,
+            "averageGoalDifference": 2.09,
+            "positionProbabilities": {
+              "first": 45.4,
+              "second": 31.6,
+              "third": 16.2,
+              "fourth": 6.8
+            },
+            "topTwoProbability": 77,
+            "qualifyProbability": 89.3,
+            "bestThirdQualificationProbability": 12.2,
+            "reachRoundOf32Probability": 89.3,
+            "reachRoundOf16Probability": 61.7,
+            "reachQuarterFinalProbability": 38.1,
+            "reachSemiFinalProbability": 21.1,
+            "reachFinalProbability": 10.8,
+            "championProbability": 5.63
+          },
+          {
+            "team": "Colombia",
+            "group": "Group K",
+            "groupId": "K",
+            "averagePoints": 5.11,
+            "averageGoalDifference": 1.4,
+            "positionProbabilities": {
+              "first": 37.8,
+              "second": 31.8,
+              "third": 20,
+              "fourth": 10.4
+            },
+            "topTwoProbability": 69.6,
+            "qualifyProbability": 84,
+            "bestThirdQualificationProbability": 14.5,
+            "reachRoundOf32Probability": 84,
+            "reachRoundOf16Probability": 52.7,
+            "reachQuarterFinalProbability": 29.3,
+            "reachSemiFinalProbability": 14.9,
+            "reachFinalProbability": 7,
+            "championProbability": 3.15
+          },
+          {
+            "team": "Uzbekistan",
+            "group": "Group K",
+            "groupId": "K",
+            "averagePoints": 2.93,
+            "averageGoalDifference": -1.62,
+            "positionProbabilities": {
+              "first": 8.9,
+              "second": 17.9,
+              "third": 33.1,
+              "fourth": 40.1
+            },
+            "topTwoProbability": 26.9,
+            "qualifyProbability": 46.6,
+            "bestThirdQualificationProbability": 19.8,
+            "reachRoundOf32Probability": 46.6,
+            "reachRoundOf16Probability": 16.9,
+            "reachQuarterFinalProbability": 5.1,
+            "reachSemiFinalProbability": 1.6,
+            "reachFinalProbability": 0.4,
+            "championProbability": 0.1
+          },
+          {
+            "team": "IC Path 1 winner",
+            "group": "Group K",
+            "groupId": "K",
+            "averagePoints": 2.83,
+            "averageGoalDifference": -1.88,
+            "positionProbabilities": {
+              "first": 7.9,
+              "second": 18.6,
+              "third": 30.7,
+              "fourth": 42.8
+            },
+            "topTwoProbability": 26.5,
+            "qualifyProbability": 45.4,
+            "bestThirdQualificationProbability": 18.9,
+            "reachRoundOf32Probability": 45.4,
+            "reachRoundOf16Probability": 16.2,
+            "reachQuarterFinalProbability": 4.7,
+            "reachSemiFinalProbability": 1.4,
+            "reachFinalProbability": 0.4,
+            "championProbability": 0.03
+          }
+        ]
+      },
+      {
+        "id": "L",
+        "label": "Group L",
+        "teams": [
+          {
+            "team": "England",
+            "group": "Group L",
+            "groupId": "L",
+            "averagePoints": 6.19,
+            "averageGoalDifference": 2.93,
+            "positionProbabilities": {
+              "first": 58,
+              "second": 27.7,
+              "third": 11.2,
+              "fourth": 3.1
+            },
+            "topTwoProbability": 85.7,
+            "qualifyProbability": 94.3,
+            "bestThirdQualificationProbability": 8.7,
+            "reachRoundOf32Probability": 94.3,
+            "reachRoundOf16Probability": 63.8,
+            "reachQuarterFinalProbability": 40.4,
+            "reachSemiFinalProbability": 23.3,
+            "reachFinalProbability": 13.3,
+            "championProbability": 7.25
+          },
+          {
+            "team": "Croatia",
+            "group": "Group L",
+            "groupId": "L",
+            "averagePoints": 4.99,
+            "averageGoalDifference": 1.25,
+            "positionProbabilities": {
+              "first": 30,
+              "second": 39.5,
+              "third": 20.9,
+              "fourth": 9.6
+            },
+            "topTwoProbability": 69.5,
+            "qualifyProbability": 84.5,
+            "bestThirdQualificationProbability": 15,
+            "reachRoundOf32Probability": 84.5,
+            "reachRoundOf16Probability": 44.8,
+            "reachQuarterFinalProbability": 23,
+            "reachSemiFinalProbability": 10.3,
+            "reachFinalProbability": 4.9,
+            "championProbability": 2.23
+          },
+          {
+            "team": "Ghana",
+            "group": "Group L",
+            "groupId": "L",
+            "averagePoints": 2.95,
+            "averageGoalDifference": -1.78,
+            "positionProbabilities": {
+              "first": 6.8,
+              "second": 19.1,
+              "third": 37.7,
+              "fourth": 36.4
+            },
+            "topTwoProbability": 25.8,
+            "qualifyProbability": 47.4,
+            "bestThirdQualificationProbability": 21.6,
+            "reachRoundOf32Probability": 47.4,
+            "reachRoundOf16Probability": 11.9,
+            "reachQuarterFinalProbability": 2.7,
+            "reachSemiFinalProbability": 0.7,
+            "reachFinalProbability": 0.1,
+            "championProbability": 0
+          },
+          {
+            "team": "Panama",
+            "group": "Group L",
+            "groupId": "L",
+            "averagePoints": 2.4,
+            "averageGoalDifference": -2.4,
+            "positionProbabilities": {
+              "first": 5.2,
+              "second": 13.8,
+              "third": 30.2,
+              "fourth": 50.8
+            },
+            "topTwoProbability": 18.9,
+            "qualifyProbability": 34.8,
+            "bestThirdQualificationProbability": 15.9,
+            "reachRoundOf32Probability": 34.8,
+            "reachRoundOf16Probability": 7.2,
+            "reachQuarterFinalProbability": 1.4,
+            "reachSemiFinalProbability": 0.4,
+            "reachFinalProbability": 0.1,
+            "championProbability": 0
+          }
+        ]
+      }
+    ],
+    "teamStageProbabilities": [
+      {
+        "team": "Mexico",
+        "group": "Group A",
+        "groupId": "A",
+        "averagePoints": 4.64,
+        "averageGoalDifference": 0.77,
+        "positionProbabilities": {
+          "first": 30,
+          "second": 30,
+          "third": 25.2,
+          "fourth": 14.8
+        },
+        "topTwoProbability": 60,
+        "qualifyProbability": 78.4,
+        "bestThirdQualificationProbability": 18.4,
+        "reachRoundOf32Probability": 78.4,
+        "reachRoundOf16Probability": 36.4,
+        "reachQuarterFinalProbability": 13.2,
+        "reachSemiFinalProbability": 3.2,
+        "reachFinalProbability": 0.9,
+        "championProbability": 0.2
+      },
+      {
+        "team": "South Africa",
+        "group": "Group A",
+        "groupId": "A",
+        "averagePoints": 2.41,
+        "averageGoalDifference": -2.45,
+        "positionProbabilities": {
+          "first": 5.4,
+          "second": 13.5,
+          "third": 26.2,
+          "fourth": 54.9
+        },
+        "topTwoProbability": 18.9,
+        "qualifyProbability": 35,
+        "bestThirdQualificationProbability": 16.2,
+        "reachRoundOf32Probability": 35,
+        "reachRoundOf16Probability": 8.8,
+        "reachQuarterFinalProbability": 1.8,
+        "reachSemiFinalProbability": 0.3,
+        "reachFinalProbability": 0,
+        "championProbability": 0
+      },
+      {
+        "team": "South Korea",
+        "group": "Group A",
+        "groupId": "A",
+        "averagePoints": 4.26,
+        "averageGoalDifference": 0.19,
+        "positionProbabilities": {
+          "first": 24.9,
+          "second": 27.6,
+          "third": 27.7,
+          "fourth": 19.8
+        },
+        "topTwoProbability": 52.5,
+        "qualifyProbability": 71.6,
+        "bestThirdQualificationProbability": 19.1,
+        "reachRoundOf32Probability": 71.6,
+        "reachRoundOf16Probability": 34.6,
+        "reachQuarterFinalProbability": 12.9,
+        "reachSemiFinalProbability": 3.9,
+        "reachFinalProbability": 1.4,
+        "championProbability": 0.6
+      },
+      {
+        "team": "UEFA Path D winner",
+        "group": "Group A",
+        "groupId": "A",
+        "averagePoints": 5.13,
+        "averageGoalDifference": 1.49,
+        "positionProbabilities": {
+          "first": 39.8,
+          "second": 28.9,
+          "third": 20.9,
+          "fourth": 10.4
+        },
+        "topTwoProbability": 68.7,
+        "qualifyProbability": 84.6,
+        "bestThirdQualificationProbability": 16,
+        "reachRoundOf32Probability": 84.6,
+        "reachRoundOf16Probability": 46.4,
+        "reachQuarterFinalProbability": 21.1,
+        "reachSemiFinalProbability": 6.9,
+        "reachFinalProbability": 3,
+        "championProbability": 0.9
+      },
+      {
+        "team": "Canada",
+        "group": "Group B",
+        "groupId": "B",
+        "averagePoints": 4.39,
+        "averageGoalDifference": 0.44,
+        "positionProbabilities": {
+          "first": 25.3,
+          "second": 28.9,
+          "third": 29.2,
+          "fourth": 16.7
+        },
+        "topTwoProbability": 54.1,
+        "qualifyProbability": 75.6,
+        "bestThirdQualificationProbability": 21.4,
+        "reachRoundOf32Probability": 75.6,
+        "reachRoundOf16Probability": 34,
+        "reachQuarterFinalProbability": 13.1,
+        "reachSemiFinalProbability": 3.4,
+        "reachFinalProbability": 1.1,
+        "championProbability": 0.38
+      },
+      {
+        "team": "UEFA Path A winner",
+        "group": "Group B",
+        "groupId": "B",
+        "averagePoints": 4.71,
+        "averageGoalDifference": 0.88,
+        "positionProbabilities": {
+          "first": 32.6,
+          "second": 29.1,
+          "third": 24.3,
+          "fourth": 14.1
+        },
+        "topTwoProbability": 61.7,
+        "qualifyProbability": 79,
+        "bestThirdQualificationProbability": 17.3,
+        "reachRoundOf32Probability": 79,
+        "reachRoundOf16Probability": 44.5,
+        "reachQuarterFinalProbability": 21.5,
+        "reachSemiFinalProbability": 7.5,
+        "reachFinalProbability": 3.3,
+        "championProbability": 1.05
+      },
+      {
+        "team": "Qatar",
+        "group": "Group B",
+        "groupId": "B",
+        "averagePoints": 2.31,
+        "averageGoalDifference": -2.57,
+        "positionProbabilities": {
+          "first": 5,
+          "second": 13.4,
+          "third": 24.2,
+          "fourth": 57.4
+        },
+        "topTwoProbability": 18.4,
+        "qualifyProbability": 32.8,
+        "bestThirdQualificationProbability": 14.3,
+        "reachRoundOf32Probability": 32.8,
+        "reachRoundOf16Probability": 8.3,
+        "reachQuarterFinalProbability": 1.8,
+        "reachSemiFinalProbability": 0.3,
+        "reachFinalProbability": 0,
+        "championProbability": 0
+      },
+      {
+        "team": "Switzerland",
+        "group": "Group B",
+        "groupId": "B",
+        "averagePoints": 5,
+        "averageGoalDifference": 1.25,
+        "positionProbabilities": {
+          "first": 37.1,
+          "second": 28.6,
+          "third": 22.3,
+          "fourth": 11.9
+        },
+        "topTwoProbability": 65.8,
+        "qualifyProbability": 82.7,
+        "bestThirdQualificationProbability": 16.9,
+        "reachRoundOf32Probability": 82.7,
+        "reachRoundOf16Probability": 46.6,
+        "reachQuarterFinalProbability": 22.5,
+        "reachSemiFinalProbability": 8,
+        "reachFinalProbability": 3,
+        "championProbability": 1.38
+      },
+      {
+        "team": "Brazil",
+        "group": "Group C",
+        "groupId": "C",
+        "averagePoints": 5.84,
+        "averageGoalDifference": 2.58,
+        "positionProbabilities": {
+          "first": 49.6,
+          "second": 29.4,
+          "third": 17.6,
+          "fourth": 3.3
+        },
+        "topTwoProbability": 79.1,
+        "qualifyProbability": 92.9,
+        "bestThirdQualificationProbability": 13.8,
+        "reachRoundOf32Probability": 92.9,
+        "reachRoundOf16Probability": 61.6,
+        "reachQuarterFinalProbability": 40.8,
+        "reachSemiFinalProbability": 25.8,
+        "reachFinalProbability": 16.4,
+        "championProbability": 9.28
+      },
+      {
+        "team": "Morocco",
+        "group": "Group C",
+        "groupId": "C",
+        "averagePoints": 4.97,
+        "averageGoalDifference": 1.31,
+        "positionProbabilities": {
+          "first": 28.4,
+          "second": 34.6,
+          "third": 30.3,
+          "fourth": 6.7
+        },
+        "topTwoProbability": 63,
+        "qualifyProbability": 86.7,
+        "bestThirdQualificationProbability": 23.6,
+        "reachRoundOf32Probability": 86.7,
+        "reachRoundOf16Probability": 46.9,
+        "reachQuarterFinalProbability": 28.2,
+        "reachSemiFinalProbability": 14.8,
+        "reachFinalProbability": 8.3,
+        "championProbability": 4.15
+      },
+      {
+        "team": "Haiti",
+        "group": "Group C",
+        "groupId": "C",
+        "averagePoints": 1.39,
+        "averageGoalDifference": -4.3,
+        "positionProbabilities": {
+          "first": 1.5,
+          "second": 4.5,
+          "third": 16.6,
+          "fourth": 77.4
+        },
+        "topTwoProbability": 6,
+        "qualifyProbability": 14.2,
+        "bestThirdQualificationProbability": 8.2,
+        "reachRoundOf32Probability": 14.2,
+        "reachRoundOf16Probability": 2.1,
+        "reachQuarterFinalProbability": 0.4,
+        "reachSemiFinalProbability": 0,
+        "reachFinalProbability": 0,
+        "championProbability": 0
+      },
+      {
+        "team": "Scotland",
+        "group": "Group C",
+        "groupId": "C",
+        "averagePoints": 4.4,
+        "averageGoalDifference": 0.42,
+        "positionProbabilities": {
+          "first": 20.4,
+          "second": 31.5,
+          "third": 35.5,
+          "fourth": 12.7
+        },
+        "topTwoProbability": 51.9,
+        "qualifyProbability": 76.1,
+        "bestThirdQualificationProbability": 24.2,
+        "reachRoundOf32Probability": 76.1,
+        "reachRoundOf16Probability": 33,
+        "reachQuarterFinalProbability": 15.3,
+        "reachSemiFinalProbability": 6.2,
+        "reachFinalProbability": 2.5,
+        "championProbability": 1.13
+      },
+      {
+        "team": "USA",
+        "group": "Group D",
+        "groupId": "D",
+        "averagePoints": 4.95,
+        "averageGoalDifference": 1.22,
+        "positionProbabilities": {
+          "first": 39.7,
+          "second": 25.7,
+          "third": 20.3,
+          "fourth": 14.3
+        },
+        "topTwoProbability": 65.3,
+        "qualifyProbability": 80.9,
+        "bestThirdQualificationProbability": 15.5,
+        "reachRoundOf32Probability": 80.9,
+        "reachRoundOf16Probability": 48.1,
+        "reachQuarterFinalProbability": 23.4,
+        "reachSemiFinalProbability": 10.2,
+        "reachFinalProbability": 3.8,
+        "championProbability": 1.52
+      },
+      {
+        "team": "Paraguay",
+        "group": "Group D",
+        "groupId": "D",
+        "averagePoints": 3.71,
+        "averageGoalDifference": -0.56,
+        "positionProbabilities": {
+          "first": 18.9,
+          "second": 23.8,
+          "third": 26.7,
+          "fourth": 30.7
+        },
+        "topTwoProbability": 42.7,
+        "qualifyProbability": 61,
+        "bestThirdQualificationProbability": 18.3,
+        "reachRoundOf32Probability": 61,
+        "reachRoundOf16Probability": 27.8,
+        "reachQuarterFinalProbability": 10.3,
+        "reachSemiFinalProbability": 3.5,
+        "reachFinalProbability": 1.3,
+        "championProbability": 0.47
+      },
+      {
+        "team": "Australia",
+        "group": "Group D",
+        "groupId": "D",
+        "averagePoints": 3.46,
+        "averageGoalDifference": -0.88,
+        "positionProbabilities": {
+          "first": 15.2,
+          "second": 23.1,
+          "third": 28.1,
+          "fourth": 33.6
+        },
+        "topTwoProbability": 38.3,
+        "qualifyProbability": 57.5,
+        "bestThirdQualificationProbability": 19.1,
+        "reachRoundOf32Probability": 57.5,
+        "reachRoundOf16Probability": 25.1,
+        "reachQuarterFinalProbability": 8.6,
+        "reachSemiFinalProbability": 3.1,
+        "reachFinalProbability": 0.9,
+        "championProbability": 0.27
+      },
+      {
+        "team": "UEFA Path C winner",
+        "group": "Group D",
+        "groupId": "D",
+        "averagePoints": 4.21,
+        "averageGoalDifference": 0.23,
+        "positionProbabilities": {
+          "first": 26.2,
+          "second": 27.5,
+          "third": 24.9,
+          "fourth": 21.4
+        },
+        "topTwoProbability": 53.6,
+        "qualifyProbability": 71.7,
+        "bestThirdQualificationProbability": 18.1,
+        "reachRoundOf32Probability": 71.7,
+        "reachRoundOf16Probability": 34.3,
+        "reachQuarterFinalProbability": 12.7,
+        "reachSemiFinalProbability": 4.2,
+        "reachFinalProbability": 1.4,
+        "championProbability": 0.38
+      },
+      {
+        "team": "Germany",
+        "group": "Group E",
+        "groupId": "E",
+        "averagePoints": 6.04,
+        "averageGoalDifference": 2.87,
+        "positionProbabilities": {
+          "first": 54.8,
+          "second": 27,
+          "third": 14.3,
+          "fourth": 4
+        },
+        "topTwoProbability": 81.8,
+        "qualifyProbability": 93,
+        "bestThirdQualificationProbability": 11.3,
+        "reachRoundOf32Probability": 93,
+        "reachRoundOf16Probability": 67.1,
+        "reachQuarterFinalProbability": 41,
+        "reachSemiFinalProbability": 26.8,
+        "reachFinalProbability": 16,
+        "championProbability": 9.4
+      },
+      {
+        "team": "Curaçao",
+        "group": "Group E",
+        "groupId": "E",
+        "averagePoints": 1.75,
+        "averageGoalDifference": -3.7,
+        "positionProbabilities": {
+          "first": 1.9,
+          "second": 7.8,
+          "third": 22.3,
+          "fourth": 68
+        },
+        "topTwoProbability": 9.8,
+        "qualifyProbability": 21.1,
+        "bestThirdQualificationProbability": 11.3,
+        "reachRoundOf32Probability": 21.1,
+        "reachRoundOf16Probability": 4,
+        "reachQuarterFinalProbability": 0.7,
+        "reachSemiFinalProbability": 0.1,
+        "reachFinalProbability": 0,
+        "championProbability": 0
+      },
+      {
+        "team": "Ivory Coast",
+        "group": "Group E",
+        "groupId": "E",
+        "averagePoints": 4.09,
+        "averageGoalDifference": -0.03,
+        "positionProbabilities": {
+          "first": 17.5,
+          "second": 30.3,
+          "third": 34.8,
+          "fourth": 17.3
+        },
+        "topTwoProbability": 47.9,
+        "qualifyProbability": 71.2,
+        "bestThirdQualificationProbability": 23.4,
+        "reachRoundOf32Probability": 71.2,
+        "reachRoundOf16Probability": 33.5,
+        "reachQuarterFinalProbability": 13,
+        "reachSemiFinalProbability": 5.6,
+        "reachFinalProbability": 2.2,
+        "championProbability": 0.7
+      },
+      {
+        "team": "Ecuador",
+        "group": "Group E",
+        "groupId": "E",
+        "averagePoints": 4.67,
+        "averageGoalDifference": 0.87,
+        "positionProbabilities": {
+          "first": 25.8,
+          "second": 34.9,
+          "third": 28.6,
+          "fourth": 10.8
+        },
+        "topTwoProbability": 60.7,
+        "qualifyProbability": 81.4,
+        "bestThirdQualificationProbability": 20.8,
+        "reachRoundOf32Probability": 81.4,
+        "reachRoundOf16Probability": 43.4,
+        "reachQuarterFinalProbability": 19.2,
+        "reachSemiFinalProbability": 9,
+        "reachFinalProbability": 4,
+        "championProbability": 1.7
+      },
+      {
+        "team": "Netherlands",
+        "group": "Group F",
+        "groupId": "F",
+        "averagePoints": 5.79,
+        "averageGoalDifference": 2.31,
+        "positionProbabilities": {
+          "first": 52.3,
+          "second": 27.3,
+          "third": 14.5,
+          "fourth": 5.9
+        },
+        "topTwoProbability": 79.6,
+        "qualifyProbability": 91.3,
+        "bestThirdQualificationProbability": 11.7,
+        "reachRoundOf32Probability": 91.3,
+        "reachRoundOf16Probability": 51.5,
+        "reachQuarterFinalProbability": 34.1,
+        "reachSemiFinalProbability": 18.7,
+        "reachFinalProbability": 10.9,
+        "championProbability": 5.75
+      },
+      {
+        "team": "Japan",
+        "group": "Group F",
+        "groupId": "F",
+        "averagePoints": 4.32,
+        "averageGoalDifference": 0.28,
+        "positionProbabilities": {
+          "first": 22.6,
+          "second": 31.8,
+          "third": 28.4,
+          "fourth": 17.2
+        },
+        "topTwoProbability": 54.4,
+        "qualifyProbability": 74,
+        "bestThirdQualificationProbability": 19.6,
+        "reachRoundOf32Probability": 74,
+        "reachRoundOf16Probability": 31.2,
+        "reachQuarterFinalProbability": 15.2,
+        "reachSemiFinalProbability": 6.4,
+        "reachFinalProbability": 2.9,
+        "championProbability": 1.43
+      },
+      {
+        "team": "UEFA Path B winner",
+        "group": "Group F",
+        "groupId": "F",
+        "averagePoints": 4.05,
+        "averageGoalDifference": -0.08,
+        "positionProbabilities": {
+          "first": 19.8,
+          "second": 28.2,
+          "third": 31.2,
+          "fourth": 20.8
+        },
+        "topTwoProbability": 48,
+        "qualifyProbability": 69.7,
+        "bestThirdQualificationProbability": 21.7,
+        "reachRoundOf32Probability": 69.7,
+        "reachRoundOf16Probability": 26.2,
+        "reachQuarterFinalProbability": 13,
+        "reachSemiFinalProbability": 5.5,
+        "reachFinalProbability": 2.5,
+        "championProbability": 1
+      },
+      {
+        "team": "Tunisia",
+        "group": "Group F",
+        "groupId": "F",
+        "averagePoints": 2.3,
+        "averageGoalDifference": -2.51,
+        "positionProbabilities": {
+          "first": 5.3,
+          "second": 12.7,
+          "third": 25.9,
+          "fourth": 56.1
+        },
+        "topTwoProbability": 18,
+        "qualifyProbability": 33,
+        "bestThirdQualificationProbability": 15,
+        "reachRoundOf32Probability": 33,
+        "reachRoundOf16Probability": 6.7,
+        "reachQuarterFinalProbability": 1.8,
+        "reachSemiFinalProbability": 0.4,
+        "reachFinalProbability": 0.1,
+        "championProbability": 0.03
+      },
+      {
+        "team": "Belgium",
+        "group": "Group G",
+        "groupId": "G",
+        "averagePoints": 6.03,
+        "averageGoalDifference": 2.66,
+        "positionProbabilities": {
+          "first": 56.5,
+          "second": 27,
+          "third": 11.8,
+          "fourth": 4.7
+        },
+        "topTwoProbability": 83.5,
+        "qualifyProbability": 93,
+        "bestThirdQualificationProbability": 9.5,
+        "reachRoundOf32Probability": 93,
+        "reachRoundOf16Probability": 64.2,
+        "reachQuarterFinalProbability": 34.8,
+        "reachSemiFinalProbability": 17.8,
+        "reachFinalProbability": 8.6,
+        "championProbability": 4.23
+      },
+      {
+        "team": "Egypt",
+        "group": "Group G",
+        "groupId": "G",
+        "averagePoints": 3.64,
+        "averageGoalDifference": -0.69,
+        "positionProbabilities": {
+          "first": 14.2,
+          "second": 26.1,
+          "third": 34.2,
+          "fourth": 25.6
+        },
+        "topTwoProbability": 40.3,
+        "qualifyProbability": 62.4,
+        "bestThirdQualificationProbability": 22.1,
+        "reachRoundOf32Probability": 62.4,
+        "reachRoundOf16Probability": 22.9,
+        "reachQuarterFinalProbability": 6.5,
+        "reachSemiFinalProbability": 2.1,
+        "reachFinalProbability": 0.4,
+        "championProbability": 0.18
+      },
+      {
+        "team": "Iran",
+        "group": "Group G",
+        "groupId": "G",
+        "averagePoints": 4.4,
+        "averageGoalDifference": 0.43,
+        "positionProbabilities": {
+          "first": 24.1,
+          "second": 33.1,
+          "third": 27.1,
+          "fourth": 15.7
+        },
+        "topTwoProbability": 57.2,
+        "qualifyProbability": 75.7,
+        "bestThirdQualificationProbability": 18.6,
+        "reachRoundOf32Probability": 75.7,
+        "reachRoundOf16Probability": 36.5,
+        "reachQuarterFinalProbability": 13.7,
+        "reachSemiFinalProbability": 5.3,
+        "reachFinalProbability": 1.8,
+        "championProbability": 0.55
+      },
+      {
+        "team": "New Zealand",
+        "group": "Group G",
+        "groupId": "G",
+        "averagePoints": 2.4,
+        "averageGoalDifference": -2.4,
+        "positionProbabilities": {
+          "first": 5.1,
+          "second": 13.9,
+          "third": 26.9,
+          "fourth": 54
+        },
+        "topTwoProbability": 19.1,
+        "qualifyProbability": 35.2,
+        "bestThirdQualificationProbability": 16.2,
+        "reachRoundOf32Probability": 35.2,
+        "reachRoundOf16Probability": 8,
+        "reachQuarterFinalProbability": 0.9,
+        "reachSemiFinalProbability": 0.2,
+        "reachFinalProbability": 0,
+        "championProbability": 0
+      },
+      {
+        "team": "Spain",
+        "group": "Group H",
+        "groupId": "H",
+        "averagePoints": 6.05,
+        "averageGoalDifference": 2.88,
+        "positionProbabilities": {
+          "first": 51.6,
+          "second": 34,
+          "third": 10.8,
+          "fourth": 3.5
+        },
+        "topTwoProbability": 85.7,
+        "qualifyProbability": 94.2,
+        "bestThirdQualificationProbability": 8.6,
+        "reachRoundOf32Probability": 94.2,
+        "reachRoundOf16Probability": 57.2,
+        "reachQuarterFinalProbability": 36.2,
+        "reachSemiFinalProbability": 24.2,
+        "reachFinalProbability": 12.8,
+        "championProbability": 7.17
+      },
+      {
+        "team": "Cape Verde",
+        "group": "Group H",
+        "groupId": "H",
+        "averagePoints": 2.79,
+        "averageGoalDifference": -2.06,
+        "positionProbabilities": {
+          "first": 5.8,
+          "second": 16.2,
+          "third": 40.5,
+          "fourth": 37.6
+        },
+        "topTwoProbability": 21.9,
+        "qualifyProbability": 44.5,
+        "bestThirdQualificationProbability": 22.5,
+        "reachRoundOf32Probability": 44.5,
+        "reachRoundOf16Probability": 10.3,
+        "reachQuarterFinalProbability": 3.1,
+        "reachSemiFinalProbability": 0.9,
+        "reachFinalProbability": 0.3,
+        "championProbability": 0.05
+      },
+      {
+        "team": "Saudi Arabia",
+        "group": "Group H",
+        "groupId": "H",
+        "averagePoints": 2.28,
+        "averageGoalDifference": -2.69,
+        "positionProbabilities": {
+          "first": 3.8,
+          "second": 12,
+          "third": 32,
+          "fourth": 52.2
+        },
+        "topTwoProbability": 15.8,
+        "qualifyProbability": 33.1,
+        "bestThirdQualificationProbability": 17.3,
+        "reachRoundOf32Probability": 33.1,
+        "reachRoundOf16Probability": 6.8,
+        "reachQuarterFinalProbability": 1.9,
+        "reachSemiFinalProbability": 0.4,
+        "reachFinalProbability": 0.1,
+        "championProbability": 0.03
+      },
+      {
+        "team": "Uruguay",
+        "group": "Group H",
+        "groupId": "H",
+        "averagePoints": 5.44,
+        "averageGoalDifference": 1.87,
+        "positionProbabilities": {
+          "first": 38.8,
+          "second": 37.8,
+          "third": 16.8,
+          "fourth": 6.7
+        },
+        "topTwoProbability": 76.6,
+        "qualifyProbability": 88.5,
+        "bestThirdQualificationProbability": 11.9,
+        "reachRoundOf32Probability": 88.5,
+        "reachRoundOf16Probability": 43.8,
+        "reachQuarterFinalProbability": 25,
+        "reachSemiFinalProbability": 14.7,
+        "reachFinalProbability": 6.5,
+        "championProbability": 3.23
+      },
+      {
+        "team": "France",
+        "group": "Group I",
+        "groupId": "I",
+        "averagePoints": 5.67,
+        "averageGoalDifference": 2.23,
+        "positionProbabilities": {
+          "first": 49.6,
+          "second": 27.2,
+          "third": 16.6,
+          "fourth": 6.6
+        },
+        "topTwoProbability": 76.8,
+        "qualifyProbability": 90,
+        "bestThirdQualificationProbability": 13.2,
+        "reachRoundOf32Probability": 90,
+        "reachRoundOf16Probability": 63.3,
+        "reachQuarterFinalProbability": 36,
+        "reachSemiFinalProbability": 23.8,
+        "reachFinalProbability": 14.9,
+        "championProbability": 8.75
+      },
+      {
+        "team": "Senegal",
+        "group": "Group I",
+        "groupId": "I",
+        "averagePoints": 3.92,
+        "averageGoalDifference": -0.3,
+        "positionProbabilities": {
+          "first": 18.4,
+          "second": 26.9,
+          "third": 33.4,
+          "fourth": 21.4
+        },
+        "topTwoProbability": 45.2,
+        "qualifyProbability": 67.9,
+        "bestThirdQualificationProbability": 22.7,
+        "reachRoundOf32Probability": 67.9,
+        "reachRoundOf16Probability": 32.9,
+        "reachQuarterFinalProbability": 13.9,
+        "reachSemiFinalProbability": 5.8,
+        "reachFinalProbability": 2.3,
+        "championProbability": 0.88
+      },
+      {
+        "team": "IC Path 2 winner",
+        "group": "Group I",
+        "groupId": "I",
+        "averagePoints": 2.27,
+        "averageGoalDifference": -2.65,
+        "positionProbabilities": {
+          "first": 4.7,
+          "second": 12.9,
+          "third": 25.5,
+          "fourth": 57
+        },
+        "topTwoProbability": 17.6,
+        "qualifyProbability": 33,
+        "bestThirdQualificationProbability": 15.4,
+        "reachRoundOf32Probability": 33,
+        "reachRoundOf16Probability": 9.3,
+        "reachQuarterFinalProbability": 2.2,
+        "reachSemiFinalProbability": 0.6,
+        "reachFinalProbability": 0,
+        "championProbability": 0
+      },
+      {
+        "team": "Norway",
+        "group": "Group I",
+        "groupId": "I",
+        "averagePoints": 4.59,
+        "averageGoalDifference": 0.72,
+        "positionProbabilities": {
+          "first": 27.4,
+          "second": 33,
+          "third": 24.6,
+          "fourth": 15
+        },
+        "topTwoProbability": 60.4,
+        "qualifyProbability": 77.8,
+        "bestThirdQualificationProbability": 17.3,
+        "reachRoundOf32Probability": 77.8,
+        "reachRoundOf16Probability": 42.2,
+        "reachQuarterFinalProbability": 19.8,
+        "reachSemiFinalProbability": 9.5,
+        "reachFinalProbability": 5.1,
+        "championProbability": 2.43
+      },
+      {
+        "team": "Argentina",
+        "group": "Group J",
+        "groupId": "J",
+        "averagePoints": 6.26,
+        "averageGoalDifference": 3.04,
+        "positionProbabilities": {
+          "first": 57.7,
+          "second": 28.2,
+          "third": 10.7,
+          "fourth": 3.3
+        },
+        "topTwoProbability": 86,
+        "qualifyProbability": 94.5,
+        "bestThirdQualificationProbability": 8.5,
+        "reachRoundOf32Probability": 94.5,
+        "reachRoundOf16Probability": 60.3,
+        "reachQuarterFinalProbability": 42.4,
+        "reachSemiFinalProbability": 29.5,
+        "reachFinalProbability": 16.4,
+        "championProbability": 8.82
+      },
+      {
+        "team": "Algeria",
+        "group": "Group J",
+        "groupId": "J",
+        "averagePoints": 3.37,
+        "averageGoalDifference": -1.14,
+        "positionProbabilities": {
+          "first": 9.6,
+          "second": 23.6,
+          "third": 41.1,
+          "fourth": 25.7
+        },
+        "topTwoProbability": 33.1,
+        "qualifyProbability": 58.5,
+        "bestThirdQualificationProbability": 25.4,
+        "reachRoundOf32Probability": 58.5,
+        "reachRoundOf16Probability": 17.3,
+        "reachQuarterFinalProbability": 5.6,
+        "reachSemiFinalProbability": 2,
+        "reachFinalProbability": 0.6,
+        "championProbability": 0.13
+      },
+      {
+        "team": "Austria",
+        "group": "Group J",
+        "groupId": "J",
+        "averagePoints": 5.1,
+        "averageGoalDifference": 1.45,
+        "positionProbabilities": {
+          "first": 30.6,
+          "second": 40.1,
+          "third": 21.2,
+          "fourth": 8.1
+        },
+        "topTwoProbability": 70.8,
+        "qualifyProbability": 86.7,
+        "bestThirdQualificationProbability": 16,
+        "reachRoundOf32Probability": 86.7,
+        "reachRoundOf16Probability": 44.5,
+        "reachQuarterFinalProbability": 27.2,
+        "reachSemiFinalProbability": 16,
+        "reachFinalProbability": 7.2,
+        "championProbability": 3.5
+      },
+      {
+        "team": "Jordan",
+        "group": "Group J",
+        "groupId": "J",
+        "averagePoints": 1.85,
+        "averageGoalDifference": -3.36,
+        "positionProbabilities": {
+          "first": 2.1,
+          "second": 8.1,
+          "third": 27,
+          "fourth": 62.9
+        },
+        "topTwoProbability": 10.2,
+        "qualifyProbability": 23.3,
+        "bestThirdQualificationProbability": 13.2,
+        "reachRoundOf32Probability": 23.3,
+        "reachRoundOf16Probability": 3.6,
+        "reachQuarterFinalProbability": 0.5,
+        "reachSemiFinalProbability": 0.1,
+        "reachFinalProbability": 0,
+        "championProbability": 0
+      },
+      {
+        "team": "Portugal",
+        "group": "Group K",
+        "groupId": "K",
+        "averagePoints": 5.57,
+        "averageGoalDifference": 2.09,
+        "positionProbabilities": {
+          "first": 45.4,
+          "second": 31.6,
+          "third": 16.2,
+          "fourth": 6.8
+        },
+        "topTwoProbability": 77,
+        "qualifyProbability": 89.3,
+        "bestThirdQualificationProbability": 12.2,
+        "reachRoundOf32Probability": 89.3,
+        "reachRoundOf16Probability": 61.7,
+        "reachQuarterFinalProbability": 38.1,
+        "reachSemiFinalProbability": 21.1,
+        "reachFinalProbability": 10.8,
+        "championProbability": 5.63
+      },
+      {
+        "team": "IC Path 1 winner",
+        "group": "Group K",
+        "groupId": "K",
+        "averagePoints": 2.83,
+        "averageGoalDifference": -1.88,
+        "positionProbabilities": {
+          "first": 7.9,
+          "second": 18.6,
+          "third": 30.7,
+          "fourth": 42.8
+        },
+        "topTwoProbability": 26.5,
+        "qualifyProbability": 45.4,
+        "bestThirdQualificationProbability": 18.9,
+        "reachRoundOf32Probability": 45.4,
+        "reachRoundOf16Probability": 16.2,
+        "reachQuarterFinalProbability": 4.7,
+        "reachSemiFinalProbability": 1.4,
+        "reachFinalProbability": 0.4,
+        "championProbability": 0.03
+      },
+      {
+        "team": "Uzbekistan",
+        "group": "Group K",
+        "groupId": "K",
+        "averagePoints": 2.93,
+        "averageGoalDifference": -1.62,
+        "positionProbabilities": {
+          "first": 8.9,
+          "second": 17.9,
+          "third": 33.1,
+          "fourth": 40.1
+        },
+        "topTwoProbability": 26.9,
+        "qualifyProbability": 46.6,
+        "bestThirdQualificationProbability": 19.8,
+        "reachRoundOf32Probability": 46.6,
+        "reachRoundOf16Probability": 16.9,
+        "reachQuarterFinalProbability": 5.1,
+        "reachSemiFinalProbability": 1.6,
+        "reachFinalProbability": 0.4,
+        "championProbability": 0.1
+      },
+      {
+        "team": "Colombia",
+        "group": "Group K",
+        "groupId": "K",
+        "averagePoints": 5.11,
+        "averageGoalDifference": 1.4,
+        "positionProbabilities": {
+          "first": 37.8,
+          "second": 31.8,
+          "third": 20,
+          "fourth": 10.4
+        },
+        "topTwoProbability": 69.6,
+        "qualifyProbability": 84,
+        "bestThirdQualificationProbability": 14.5,
+        "reachRoundOf32Probability": 84,
+        "reachRoundOf16Probability": 52.7,
+        "reachQuarterFinalProbability": 29.3,
+        "reachSemiFinalProbability": 14.9,
+        "reachFinalProbability": 7,
+        "championProbability": 3.15
+      },
+      {
+        "team": "England",
+        "group": "Group L",
+        "groupId": "L",
+        "averagePoints": 6.19,
+        "averageGoalDifference": 2.93,
+        "positionProbabilities": {
+          "first": 58,
+          "second": 27.7,
+          "third": 11.2,
+          "fourth": 3.1
+        },
+        "topTwoProbability": 85.7,
+        "qualifyProbability": 94.3,
+        "bestThirdQualificationProbability": 8.7,
+        "reachRoundOf32Probability": 94.3,
+        "reachRoundOf16Probability": 63.8,
+        "reachQuarterFinalProbability": 40.4,
+        "reachSemiFinalProbability": 23.3,
+        "reachFinalProbability": 13.3,
+        "championProbability": 7.25
+      },
+      {
+        "team": "Croatia",
+        "group": "Group L",
+        "groupId": "L",
+        "averagePoints": 4.99,
+        "averageGoalDifference": 1.25,
+        "positionProbabilities": {
+          "first": 30,
+          "second": 39.5,
+          "third": 20.9,
+          "fourth": 9.6
+        },
+        "topTwoProbability": 69.5,
+        "qualifyProbability": 84.5,
+        "bestThirdQualificationProbability": 15,
+        "reachRoundOf32Probability": 84.5,
+        "reachRoundOf16Probability": 44.8,
+        "reachQuarterFinalProbability": 23,
+        "reachSemiFinalProbability": 10.3,
+        "reachFinalProbability": 4.9,
+        "championProbability": 2.23
+      },
+      {
+        "team": "Ghana",
+        "group": "Group L",
+        "groupId": "L",
+        "averagePoints": 2.95,
+        "averageGoalDifference": -1.78,
+        "positionProbabilities": {
+          "first": 6.8,
+          "second": 19.1,
+          "third": 37.7,
+          "fourth": 36.4
+        },
+        "topTwoProbability": 25.8,
+        "qualifyProbability": 47.4,
+        "bestThirdQualificationProbability": 21.6,
+        "reachRoundOf32Probability": 47.4,
+        "reachRoundOf16Probability": 11.9,
+        "reachQuarterFinalProbability": 2.7,
+        "reachSemiFinalProbability": 0.7,
+        "reachFinalProbability": 0.1,
+        "championProbability": 0
+      },
+      {
+        "team": "Panama",
+        "group": "Group L",
+        "groupId": "L",
+        "averagePoints": 2.4,
+        "averageGoalDifference": -2.4,
+        "positionProbabilities": {
+          "first": 5.2,
+          "second": 13.8,
+          "third": 30.2,
+          "fourth": 50.8
+        },
+        "topTwoProbability": 18.9,
+        "qualifyProbability": 34.8,
+        "bestThirdQualificationProbability": 15.9,
+        "reachRoundOf32Probability": 34.8,
+        "reachRoundOf16Probability": 7.2,
+        "reachQuarterFinalProbability": 1.4,
+        "reachSemiFinalProbability": 0.4,
+        "reachFinalProbability": 0.1,
+        "championProbability": 0
+      }
+    ],
+    "titleContenders": [
+      {
+        "team": "Germany",
+        "group": "Group E",
+        "groupId": "E",
+        "averagePoints": 6.04,
+        "averageGoalDifference": 2.87,
+        "positionProbabilities": {
+          "first": 54.8,
+          "second": 27,
+          "third": 14.3,
+          "fourth": 4
+        },
+        "topTwoProbability": 81.8,
+        "qualifyProbability": 93,
+        "bestThirdQualificationProbability": 11.3,
+        "reachRoundOf32Probability": 93,
+        "reachRoundOf16Probability": 67.1,
+        "reachQuarterFinalProbability": 41,
+        "reachSemiFinalProbability": 26.8,
+        "reachFinalProbability": 16,
+        "championProbability": 9.4
+      },
+      {
+        "team": "Brazil",
+        "group": "Group C",
+        "groupId": "C",
+        "averagePoints": 5.84,
+        "averageGoalDifference": 2.58,
+        "positionProbabilities": {
+          "first": 49.6,
+          "second": 29.4,
+          "third": 17.6,
+          "fourth": 3.3
+        },
+        "topTwoProbability": 79.1,
+        "qualifyProbability": 92.9,
+        "bestThirdQualificationProbability": 13.8,
+        "reachRoundOf32Probability": 92.9,
+        "reachRoundOf16Probability": 61.6,
+        "reachQuarterFinalProbability": 40.8,
+        "reachSemiFinalProbability": 25.8,
+        "reachFinalProbability": 16.4,
+        "championProbability": 9.28
+      },
+      {
+        "team": "Argentina",
+        "group": "Group J",
+        "groupId": "J",
+        "averagePoints": 6.26,
+        "averageGoalDifference": 3.04,
+        "positionProbabilities": {
+          "first": 57.7,
+          "second": 28.2,
+          "third": 10.7,
+          "fourth": 3.3
+        },
+        "topTwoProbability": 86,
+        "qualifyProbability": 94.5,
+        "bestThirdQualificationProbability": 8.5,
+        "reachRoundOf32Probability": 94.5,
+        "reachRoundOf16Probability": 60.3,
+        "reachQuarterFinalProbability": 42.4,
+        "reachSemiFinalProbability": 29.5,
+        "reachFinalProbability": 16.4,
+        "championProbability": 8.82
+      },
+      {
+        "team": "France",
+        "group": "Group I",
+        "groupId": "I",
+        "averagePoints": 5.67,
+        "averageGoalDifference": 2.23,
+        "positionProbabilities": {
+          "first": 49.6,
+          "second": 27.2,
+          "third": 16.6,
+          "fourth": 6.6
+        },
+        "topTwoProbability": 76.8,
+        "qualifyProbability": 90,
+        "bestThirdQualificationProbability": 13.2,
+        "reachRoundOf32Probability": 90,
+        "reachRoundOf16Probability": 63.3,
+        "reachQuarterFinalProbability": 36,
+        "reachSemiFinalProbability": 23.8,
+        "reachFinalProbability": 14.9,
+        "championProbability": 8.75
+      },
+      {
+        "team": "England",
+        "group": "Group L",
+        "groupId": "L",
+        "averagePoints": 6.19,
+        "averageGoalDifference": 2.93,
+        "positionProbabilities": {
+          "first": 58,
+          "second": 27.7,
+          "third": 11.2,
+          "fourth": 3.1
+        },
+        "topTwoProbability": 85.7,
+        "qualifyProbability": 94.3,
+        "bestThirdQualificationProbability": 8.7,
+        "reachRoundOf32Probability": 94.3,
+        "reachRoundOf16Probability": 63.8,
+        "reachQuarterFinalProbability": 40.4,
+        "reachSemiFinalProbability": 23.3,
+        "reachFinalProbability": 13.3,
+        "championProbability": 7.25
+      },
+      {
+        "team": "Spain",
+        "group": "Group H",
+        "groupId": "H",
+        "averagePoints": 6.05,
+        "averageGoalDifference": 2.88,
+        "positionProbabilities": {
+          "first": 51.6,
+          "second": 34,
+          "third": 10.8,
+          "fourth": 3.5
+        },
+        "topTwoProbability": 85.7,
+        "qualifyProbability": 94.2,
+        "bestThirdQualificationProbability": 8.6,
+        "reachRoundOf32Probability": 94.2,
+        "reachRoundOf16Probability": 57.2,
+        "reachQuarterFinalProbability": 36.2,
+        "reachSemiFinalProbability": 24.2,
+        "reachFinalProbability": 12.8,
+        "championProbability": 7.17
+      },
+      {
+        "team": "Netherlands",
+        "group": "Group F",
+        "groupId": "F",
+        "averagePoints": 5.79,
+        "averageGoalDifference": 2.31,
+        "positionProbabilities": {
+          "first": 52.3,
+          "second": 27.3,
+          "third": 14.5,
+          "fourth": 5.9
+        },
+        "topTwoProbability": 79.6,
+        "qualifyProbability": 91.3,
+        "bestThirdQualificationProbability": 11.7,
+        "reachRoundOf32Probability": 91.3,
+        "reachRoundOf16Probability": 51.5,
+        "reachQuarterFinalProbability": 34.1,
+        "reachSemiFinalProbability": 18.7,
+        "reachFinalProbability": 10.9,
+        "championProbability": 5.75
+      },
+      {
+        "team": "Portugal",
+        "group": "Group K",
+        "groupId": "K",
+        "averagePoints": 5.57,
+        "averageGoalDifference": 2.09,
+        "positionProbabilities": {
+          "first": 45.4,
+          "second": 31.6,
+          "third": 16.2,
+          "fourth": 6.8
+        },
+        "topTwoProbability": 77,
+        "qualifyProbability": 89.3,
+        "bestThirdQualificationProbability": 12.2,
+        "reachRoundOf32Probability": 89.3,
+        "reachRoundOf16Probability": 61.7,
+        "reachQuarterFinalProbability": 38.1,
+        "reachSemiFinalProbability": 21.1,
+        "reachFinalProbability": 10.8,
+        "championProbability": 5.63
+      },
+      {
+        "team": "Belgium",
+        "group": "Group G",
+        "groupId": "G",
+        "averagePoints": 6.03,
+        "averageGoalDifference": 2.66,
+        "positionProbabilities": {
+          "first": 56.5,
+          "second": 27,
+          "third": 11.8,
+          "fourth": 4.7
+        },
+        "topTwoProbability": 83.5,
+        "qualifyProbability": 93,
+        "bestThirdQualificationProbability": 9.5,
+        "reachRoundOf32Probability": 93,
+        "reachRoundOf16Probability": 64.2,
+        "reachQuarterFinalProbability": 34.8,
+        "reachSemiFinalProbability": 17.8,
+        "reachFinalProbability": 8.6,
+        "championProbability": 4.23
+      },
+      {
+        "team": "Morocco",
+        "group": "Group C",
+        "groupId": "C",
+        "averagePoints": 4.97,
+        "averageGoalDifference": 1.31,
+        "positionProbabilities": {
+          "first": 28.4,
+          "second": 34.6,
+          "third": 30.3,
+          "fourth": 6.7
+        },
+        "topTwoProbability": 63,
+        "qualifyProbability": 86.7,
+        "bestThirdQualificationProbability": 23.6,
+        "reachRoundOf32Probability": 86.7,
+        "reachRoundOf16Probability": 46.9,
+        "reachQuarterFinalProbability": 28.2,
+        "reachSemiFinalProbability": 14.8,
+        "reachFinalProbability": 8.3,
+        "championProbability": 4.15
+      },
+      {
+        "team": "Austria",
+        "group": "Group J",
+        "groupId": "J",
+        "averagePoints": 5.1,
+        "averageGoalDifference": 1.45,
+        "positionProbabilities": {
+          "first": 30.6,
+          "second": 40.1,
+          "third": 21.2,
+          "fourth": 8.1
+        },
+        "topTwoProbability": 70.8,
+        "qualifyProbability": 86.7,
+        "bestThirdQualificationProbability": 16,
+        "reachRoundOf32Probability": 86.7,
+        "reachRoundOf16Probability": 44.5,
+        "reachQuarterFinalProbability": 27.2,
+        "reachSemiFinalProbability": 16,
+        "reachFinalProbability": 7.2,
+        "championProbability": 3.5
+      },
+      {
+        "team": "Uruguay",
+        "group": "Group H",
+        "groupId": "H",
+        "averagePoints": 5.44,
+        "averageGoalDifference": 1.87,
+        "positionProbabilities": {
+          "first": 38.8,
+          "second": 37.8,
+          "third": 16.8,
+          "fourth": 6.7
+        },
+        "topTwoProbability": 76.6,
+        "qualifyProbability": 88.5,
+        "bestThirdQualificationProbability": 11.9,
+        "reachRoundOf32Probability": 88.5,
+        "reachRoundOf16Probability": 43.8,
+        "reachQuarterFinalProbability": 25,
+        "reachSemiFinalProbability": 14.7,
+        "reachFinalProbability": 6.5,
+        "championProbability": 3.23
+      }
+    ]
+  }
 }

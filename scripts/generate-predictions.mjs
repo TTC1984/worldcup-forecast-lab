@@ -333,6 +333,7 @@ function parseKnockoutFixtures(text) {
       const [homeTeam, awayTeam] = matchup.split(/\s+v\s+/);
       fixtures.push({
         id: `knockout-${matchNumber}`,
+        matchNumber: Number(matchNumber),
         stage: currentStage,
         date: currentDate,
         kickoff,
@@ -351,6 +352,7 @@ function parseKnockoutFixtures(text) {
       const [homeTeam, awayTeam] = matchup.split(/\s+v\s+/);
       fixtures.push({
         id: `knockout-${fixtures.length + 1}`,
+        matchNumber: null,
         stage: currentStage,
         date: currentDate,
         kickoff,
@@ -407,7 +409,7 @@ function deriveRiskNotes({
   const fallbackNotes = [
     "当前版本尚未接入赔率与伤停流，赛前更新频率仍需继续补强。",
     "当前版本仍未纳入赛前首发与伤停流，关键球员缺阵会显著影响模型输出。",
-    "淘汰赛模拟将在下一阶段接入，当前版本先聚焦真实小组赛赛程预测。",
+    "当前版本已接入小组出线与冠军概率模拟，但最佳第三名对阵仍采用近似分配。",
   ];
 
   for (const note of fallbackNotes) {
@@ -450,7 +452,7 @@ function deriveBestPick({
   return `比分关注 ${topScore}`;
 }
 
-function generateFixturePrediction(fixture) {
+function buildMatchModel(fixture) {
   const homeTeam = teamMap.get(fixture.homeTeam);
   const awayTeam = teamMap.get(fixture.awayTeam);
 
@@ -486,9 +488,11 @@ function generateFixturePrediction(fixture) {
   );
 
   const matrix = normalize(createScoreMatrix(homeLambda, awayLambda, 6));
+  const cumulativeMatrix = [];
   const outcomeTotals = { home: 0, draw: 0, away: 0 };
   const totalGoalsMap = new Map();
   let bothTeamsToScore = 0;
+  let cumulativeProbability = 0;
 
   matrix.forEach((entry) => {
     outcomeTotals[outcomeKey(entry.homeGoals, entry.awayGoals)] += entry.probability;
@@ -498,9 +502,35 @@ function generateFixturePrediction(fixture) {
     if (entry.homeGoals >= 1 && entry.awayGoals >= 1) {
       bothTeamsToScore += entry.probability;
     }
+
+    cumulativeProbability += entry.probability;
+    cumulativeMatrix.push({
+      homeGoals: entry.homeGoals,
+      awayGoals: entry.awayGoals,
+      cumulativeProbability,
+    });
   });
 
-  const topScores = [...matrix]
+  return {
+    homeTeam,
+    awayTeam,
+    homeLambda,
+    awayLambda,
+    hostAdvantage,
+    matrix,
+    cumulativeMatrix,
+    outcomeTotals,
+    totalGoalsDistribution: [...totalGoalsMap.entries()]
+      .map(([goals, probability]) => ({ goals, probability }))
+      .sort((left, right) => right.probability - left.probability),
+    bothTeamsToScore,
+  };
+}
+
+function generateFixturePrediction(fixture) {
+  const matchModel = buildMatchModel(fixture);
+
+  const topScores = [...matchModel.matrix]
     .sort((left, right) => right.probability - left.probability)
     .slice(0, 3)
     .map((entry) => ({
@@ -508,28 +538,24 @@ function generateFixturePrediction(fixture) {
       probability: percentage(entry.probability),
     }));
 
-  const totalGoalsDistribution = [...totalGoalsMap.entries()]
-    .map(([goals, probability]) => ({ goals, probability }))
-    .sort((left, right) => right.probability - left.probability);
-
-  const mostLikelyTotals = totalGoalsDistribution.slice(0, 2).map((entry) => ({
+  const mostLikelyTotals = matchModel.totalGoalsDistribution.slice(0, 2).map((entry) => ({
     label: `${entry.goals} 球`,
     note: percentage(entry.probability),
   }));
 
-  const over25Probability = totalGoalsDistribution
+  const over25Probability = matchModel.totalGoalsDistribution
     .filter((entry) => entry.goals >= 3)
     .reduce((sum, entry) => sum + entry.probability, 0);
   const under25Probability = 1 - over25Probability;
   const confidence = rankOutcomeConfidence([
-    outcomeTotals.home,
-    outcomeTotals.draw,
-    outcomeTotals.away,
+    matchModel.outcomeTotals.home,
+    matchModel.outcomeTotals.draw,
+    matchModel.outcomeTotals.away,
   ]);
   const bestPick = deriveBestPick({
-    homeWinProbability: outcomeTotals.home,
-    drawProbability: outcomeTotals.draw,
-    awayWinProbability: outcomeTotals.away,
+    homeWinProbability: matchModel.outcomeTotals.home,
+    drawProbability: matchModel.outcomeTotals.draw,
+    awayWinProbability: matchModel.outcomeTotals.away,
     over25Probability,
     under25Probability,
     topScore: topScores[0].score,
@@ -542,11 +568,11 @@ function generateFixturePrediction(fixture) {
     meta: `${fixture.group} · ${fixture.date} ${fixture.kickoff} ${fixture.utcOffset} · ${fixture.venue}`,
     bestPick,
     signal: confidence,
-    modelDetail: `Baseline xG ${homeLambda.toFixed(2)} : ${awayLambda.toFixed(2)}`,
+    modelDetail: `Baseline xG ${matchModel.homeLambda.toFixed(2)} : ${matchModel.awayLambda.toFixed(2)}`,
     outcomes: [
-      { label: "主胜", value: Number((outcomeTotals.home * 100).toFixed(1)) },
-      { label: "平", value: Number((outcomeTotals.draw * 100).toFixed(1)) },
-      { label: "客胜", value: Number((outcomeTotals.away * 100).toFixed(1)) },
+      { label: "主胜", value: Number((matchModel.outcomeTotals.home * 100).toFixed(1)) },
+      { label: "平", value: Number((matchModel.outcomeTotals.draw * 100).toFixed(1)) },
+      { label: "客胜", value: Number((matchModel.outcomeTotals.away * 100).toFixed(1)) },
     ],
     scores: topScores,
     goals: [
@@ -555,19 +581,435 @@ function generateFixturePrediction(fixture) {
         label: over25Probability >= under25Probability ? "大 2.5" : "小 2.5",
         note: percentage(Math.max(over25Probability, under25Probability)),
       },
-      { label: "双方进球", note: percentage(bothTeamsToScore) },
+      { label: "双方进球", note: percentage(matchModel.bothTeamsToScore) },
     ],
-    halftime: buildHalftimeFulltime(homeLambda, awayLambda),
+    halftime: buildHalftimeFulltime(matchModel.homeLambda, matchModel.awayLambda),
     risks: deriveRiskNotes({
       fixture,
-      homeWinProbability: outcomeTotals.home,
-      drawProbability: outcomeTotals.draw,
-      awayWinProbability: outcomeTotals.away,
+      homeWinProbability: matchModel.outcomeTotals.home,
+      drawProbability: matchModel.outcomeTotals.draw,
+      awayWinProbability: matchModel.outcomeTotals.away,
       over25Probability,
       under25Probability,
       topScoreProbability: Number(topScores[0].probability.replace("%", "")) / 100,
-      hostAdvantage: hostAdvantage > 0,
+      hostAdvantage: matchModel.hostAdvantage > 0,
     }),
+    _simulation: {
+      cumulativeMatrix: matchModel.cumulativeMatrix,
+      outcomeTotals: matchModel.outcomeTotals,
+      venueCountry: fixture.venueCountry,
+    },
+  };
+}
+
+function stripInternalFixture(prediction) {
+  const { _simulation, ...publicPrediction } = prediction;
+  return publicPrediction;
+}
+
+function createSeededRandom(seed) {
+  let state = seed >>> 0;
+
+  return () => {
+    state += 0x6d2b79f5;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function sampleScore(cumulativeMatrix, random) {
+  const value = random();
+
+  for (const entry of cumulativeMatrix) {
+    if (value <= entry.cumulativeProbability) {
+      return entry;
+    }
+  }
+
+  return cumulativeMatrix[cumulativeMatrix.length - 1];
+}
+
+function createGroupTable(group) {
+  return new Map(
+    group.teams.map((teamName) => [
+      teamName,
+      {
+        groupId: group.id,
+        group: group.label,
+        team: teamName,
+        rating: teamMap.get(teamName)?.rating || 1700,
+        points: 0,
+        wins: 0,
+        draws: 0,
+        losses: 0,
+        gf: 0,
+        ga: 0,
+        gd: 0,
+      },
+    ])
+  );
+}
+
+function applyFixtureToGroupTable(table, fixture, sample) {
+  const homeRow = table.get(fixture.homeTeam);
+  const awayRow = table.get(fixture.awayTeam);
+
+  homeRow.gf += sample.homeGoals;
+  homeRow.ga += sample.awayGoals;
+  homeRow.gd = homeRow.gf - homeRow.ga;
+
+  awayRow.gf += sample.awayGoals;
+  awayRow.ga += sample.homeGoals;
+  awayRow.gd = awayRow.gf - awayRow.ga;
+
+  if (sample.homeGoals > sample.awayGoals) {
+    homeRow.points += 3;
+    homeRow.wins += 1;
+    awayRow.losses += 1;
+  } else if (sample.homeGoals < sample.awayGoals) {
+    awayRow.points += 3;
+    awayRow.wins += 1;
+    homeRow.losses += 1;
+  } else {
+    homeRow.points += 1;
+    awayRow.points += 1;
+    homeRow.draws += 1;
+    awayRow.draws += 1;
+  }
+}
+
+function compareStandings(left, right) {
+  return (
+    right.points - left.points ||
+    right.gd - left.gd ||
+    right.gf - left.gf ||
+    right.wins - left.wins ||
+    right.rating - left.rating ||
+    left.team.localeCompare(right.team)
+  );
+}
+
+function extractThirdPlaceTokens(fixtures) {
+  return [...new Set(
+    fixtures
+      .slice(0, 16)
+      .flatMap((fixture) => [fixture.homeTeam, fixture.awayTeam])
+      .filter((token) => /^3[A-L](?:\/[A-L])+$/i.test(token))
+  )];
+}
+
+function assignThirdPlaceSlots(tokens, qualifiedThirdRows) {
+  const rankIndex = new Map(qualifiedThirdRows.map((row, index) => [row.groupId, index]));
+  const qualifiedGroups = new Set(qualifiedThirdRows.map((row) => row.groupId));
+  const tokenOptions = new Map(
+    tokens.map((token) => [
+      token,
+      token
+        .slice(1)
+        .split("/")
+        .filter((groupId) => qualifiedGroups.has(groupId)),
+    ])
+  );
+  const orderedTokens = [...tokens].sort(
+    (left, right) => tokenOptions.get(left).length - tokenOptions.get(right).length
+  );
+  const assignment = {};
+  const usedGroups = new Set();
+
+  function backtrack(index) {
+    if (index >= orderedTokens.length) {
+      return true;
+    }
+
+    const token = orderedTokens[index];
+    const options = [...tokenOptions.get(token)].sort(
+      (left, right) => (rankIndex.get(left) ?? 999) - (rankIndex.get(right) ?? 999)
+    );
+
+    for (const option of options) {
+      if (usedGroups.has(option)) {
+        continue;
+      }
+
+      usedGroups.add(option);
+      assignment[token] = option;
+
+      if (backtrack(index + 1)) {
+        return true;
+      }
+
+      usedGroups.delete(option);
+      delete assignment[token];
+    }
+
+    return false;
+  }
+
+  if (!backtrack(0)) {
+    throw new Error("Unable to assign best third-place teams into knockout template slots.");
+  }
+
+  return assignment;
+}
+
+function resolveKnockoutToken(token, context) {
+  if (/^W\d+$/.test(token)) {
+    return context.winners[token];
+  }
+
+  if (/^L\d+$/.test(token)) {
+    return context.losers[token];
+  }
+
+  if (/^[123][A-L]$/.test(token)) {
+    return context.qualifiers[token];
+  }
+
+  if (/^3[A-L](?:\/[A-L])+$/.test(token)) {
+    const assignedGroup = context.thirdAssignment[token];
+    return assignedGroup ? context.qualifiers[`3${assignedGroup}`] : null;
+  }
+
+  return token;
+}
+
+const knockoutModelCache = new Map();
+
+function simulateKnockoutWinner(homeTeamName, awayTeamName, venueCountry, random) {
+  const cacheKey = `${homeTeamName}__${awayTeamName}__${venueCountry}`;
+
+  if (!knockoutModelCache.has(cacheKey)) {
+    knockoutModelCache.set(
+      cacheKey,
+      buildMatchModel({
+        homeTeam: homeTeamName,
+        awayTeam: awayTeamName,
+        venueCountry,
+      })
+    );
+  }
+
+  const matchModel = knockoutModelCache.get(cacheKey);
+  const sample = sampleScore(matchModel.cumulativeMatrix, random);
+
+  if (sample.homeGoals > sample.awayGoals) {
+    return { winner: homeTeamName, loser: awayTeamName };
+  }
+
+  if (sample.homeGoals < sample.awayGoals) {
+    return { winner: awayTeamName, loser: homeTeamName };
+  }
+
+  const homeAdvanceProbability =
+    (matchModel.outcomeTotals.home + matchModel.outcomeTotals.away) === 0
+      ? 0.5
+      : matchModel.outcomeTotals.home / (matchModel.outcomeTotals.home + matchModel.outcomeTotals.away);
+
+  return random() < homeAdvanceProbability
+    ? { winner: homeTeamName, loser: awayTeamName }
+    : { winner: awayTeamName, loser: homeTeamName };
+}
+
+function runTournamentSimulation(predictions, groupDefinitions, knockoutFixtures) {
+  const iterations = 4000;
+  const seed = 20260320;
+  const random = createSeededRandom(seed);
+  const groupList = [...groupDefinitions.values()];
+  const teamStats = new Map();
+
+  groupList.forEach((group) => {
+    group.teams.forEach((teamName) => {
+      teamStats.set(teamName, {
+        team: teamName,
+        group: group.label,
+        groupId: group.id,
+        rating: teamMap.get(teamName)?.rating || 1700,
+        positionCounts: [0, 0, 0, 0],
+        winGroupCount: 0,
+        topTwoCount: 0,
+        qualifyCount: 0,
+        bestThirdCount: 0,
+        reachRoundOf32Count: 0,
+        reachRoundOf16Count: 0,
+        reachQuarterFinalCount: 0,
+        reachSemiFinalCount: 0,
+        reachFinalCount: 0,
+        championCount: 0,
+        totalPoints: 0,
+        totalGoalDifference: 0,
+      });
+    });
+  });
+
+  const thirdPlaceTokens = extractThirdPlaceTokens(knockoutFixtures);
+
+  for (let iteration = 0; iteration < iterations; iteration += 1) {
+    const groupTables = new Map(groupList.map((group) => [group.label, createGroupTable(group)]));
+
+    predictions.forEach((prediction) => {
+      const score = sampleScore(prediction._simulation.cumulativeMatrix, random);
+      applyFixtureToGroupTable(groupTables.get(prediction.group), prediction, score);
+    });
+
+    const rankedGroups = groupList.map((group) => ({
+      group,
+      standings: [...groupTables.get(group.label).values()].sort(compareStandings),
+    }));
+
+    const qualifiers = {};
+    const thirdPlaceRows = [];
+
+    rankedGroups.forEach(({ group, standings }) => {
+      standings.forEach((row, index) => {
+        const stat = teamStats.get(row.team);
+        stat.positionCounts[index] += 1;
+        stat.totalPoints += row.points;
+        stat.totalGoalDifference += row.gd;
+
+        if (index === 0) {
+          stat.winGroupCount += 1;
+        }
+
+        if (index < 2) {
+          stat.topTwoCount += 1;
+          stat.qualifyCount += 1;
+          qualifiers[`${index + 1}${group.id}`] = row.team;
+        }
+
+        if (index === 2) {
+          thirdPlaceRows.push(row);
+        }
+      });
+    });
+
+    const rankedThirdPlaceRows = [...thirdPlaceRows].sort(compareStandings);
+    const qualifiedThirdRows = rankedThirdPlaceRows.slice(0, 8);
+
+    qualifiedThirdRows.forEach((row) => {
+      qualifiers[`3${row.groupId}`] = row.team;
+      const stat = teamStats.get(row.team);
+      stat.bestThirdCount += 1;
+      stat.qualifyCount += 1;
+    });
+
+    const thirdAssignment = assignThirdPlaceSlots(thirdPlaceTokens, qualifiedThirdRows);
+    const winners = {};
+    const losers = {};
+    const stageReachers = {
+      roundOf32: new Set(Object.values(qualifiers)),
+      roundOf16: new Set(),
+      quarterFinal: new Set(),
+      semiFinal: new Set(),
+      final: new Set(),
+      champion: new Set(),
+    };
+
+    knockoutFixtures.forEach((fixture) => {
+      const homeTeamName = resolveKnockoutToken(fixture.homeTeam, { qualifiers, thirdAssignment, winners, losers });
+      const awayTeamName = resolveKnockoutToken(fixture.awayTeam, { qualifiers, thirdAssignment, winners, losers });
+
+      if (!homeTeamName || !awayTeamName) {
+        throw new Error(`Unable to resolve knockout fixture: ${fixture.homeTeam} vs ${fixture.awayTeam}`);
+      }
+
+      const outcome = simulateKnockoutWinner(homeTeamName, awayTeamName, detectVenueCountry(fixture.venue), random);
+
+      if (fixture.matchNumber !== null) {
+        winners[`W${fixture.matchNumber}`] = outcome.winner;
+        losers[`L${fixture.matchNumber}`] = outcome.loser;
+      }
+
+      if (fixture.stage === "Round of 32") {
+        stageReachers.roundOf16.add(outcome.winner);
+      } else if (fixture.stage === "Round of 16") {
+        stageReachers.quarterFinal.add(outcome.winner);
+      } else if (fixture.stage === "Quarter-final") {
+        stageReachers.semiFinal.add(outcome.winner);
+      } else if (fixture.stage === "Semi-final") {
+        stageReachers.final.add(outcome.winner);
+      } else if (fixture.stage === "Final") {
+        stageReachers.champion.add(outcome.winner);
+      }
+    });
+
+    stageReachers.roundOf32.forEach((teamName) => {
+      teamStats.get(teamName).reachRoundOf32Count += 1;
+    });
+    stageReachers.roundOf16.forEach((teamName) => {
+      teamStats.get(teamName).reachRoundOf16Count += 1;
+    });
+    stageReachers.quarterFinal.forEach((teamName) => {
+      teamStats.get(teamName).reachQuarterFinalCount += 1;
+    });
+    stageReachers.semiFinal.forEach((teamName) => {
+      teamStats.get(teamName).reachSemiFinalCount += 1;
+    });
+    stageReachers.final.forEach((teamName) => {
+      teamStats.get(teamName).reachFinalCount += 1;
+    });
+    stageReachers.champion.forEach((teamName) => {
+      teamStats.get(teamName).championCount += 1;
+    });
+  }
+
+  const teamStageProbabilities = [...teamStats.values()].map((stat) => ({
+    team: stat.team,
+    group: stat.group,
+    groupId: stat.groupId,
+    averagePoints: Number((stat.totalPoints / iterations).toFixed(2)),
+    averageGoalDifference: Number((stat.totalGoalDifference / iterations).toFixed(2)),
+    positionProbabilities: {
+      first: Number(((stat.positionCounts[0] / iterations) * 100).toFixed(1)),
+      second: Number(((stat.positionCounts[1] / iterations) * 100).toFixed(1)),
+      third: Number(((stat.positionCounts[2] / iterations) * 100).toFixed(1)),
+      fourth: Number(((stat.positionCounts[3] / iterations) * 100).toFixed(1)),
+    },
+    topTwoProbability: Number(((stat.topTwoCount / iterations) * 100).toFixed(1)),
+    qualifyProbability: Number(((stat.qualifyCount / iterations) * 100).toFixed(1)),
+    bestThirdQualificationProbability: Number(((stat.bestThirdCount / iterations) * 100).toFixed(1)),
+    reachRoundOf32Probability: Number(((stat.reachRoundOf32Count / iterations) * 100).toFixed(1)),
+    reachRoundOf16Probability: Number(((stat.reachRoundOf16Count / iterations) * 100).toFixed(1)),
+    reachQuarterFinalProbability: Number(((stat.reachQuarterFinalCount / iterations) * 100).toFixed(1)),
+    reachSemiFinalProbability: Number(((stat.reachSemiFinalCount / iterations) * 100).toFixed(1)),
+    reachFinalProbability: Number(((stat.reachFinalCount / iterations) * 100).toFixed(1)),
+    championProbability: Number(((stat.championCount / iterations) * 100).toFixed(2)),
+  }));
+
+  const groupProjections = groupList.map((group) => ({
+    id: group.id,
+    label: group.label,
+    teams: teamStageProbabilities
+      .filter((team) => team.groupId === group.id)
+      .sort(
+        (left, right) =>
+          right.qualifyProbability - left.qualifyProbability ||
+          right.averagePoints - left.averagePoints ||
+          right.championProbability - left.championProbability
+      ),
+  }));
+
+  const titleContenders = [...teamStageProbabilities]
+    .sort(
+      (left, right) =>
+        right.championProbability - left.championProbability ||
+        right.reachFinalProbability - left.reachFinalProbability ||
+        right.qualifyProbability - left.qualifyProbability
+    )
+    .slice(0, 12);
+
+  return {
+    iterations,
+    seed,
+    notes: [
+      "小组赛按每场比分分布进行 Monte Carlo 采样，累计积分、净胜球与进球数后排序。",
+      "最佳第三名晋级位采用基于允许分组集合的约束匹配近似分配，当前版本尚未编码 FIFA 正式分配矩阵。",
+      "淘汰赛若常规时间打平，按非平局胜率比例近似决定加时/点球晋级方。",
+    ],
+    groupProjections,
+    teamStageProbabilities,
+    titleContenders,
   };
 }
 
@@ -578,12 +1020,14 @@ const groupFixtures = parseGroupFixtures(groupStageSource, groupDefinitions).map
     teamMap.get(fixture.homeTeam)?.placeholder === true || teamMap.get(fixture.awayTeam)?.placeholder === true,
 }));
 const knockoutFixtures = parseKnockoutFixtures(finalsSource);
-const predictions = groupFixtures.map(generateFixturePrediction);
+const generatedPredictions = groupFixtures.map(generateFixturePrediction);
+const predictions = generatedPredictions.map(stripInternalFixture);
+const simulation = runTournamentSimulation(generatedPredictions, groupDefinitions, knockoutFixtures);
 
 const output = {
   model: {
     name: "Baseline Elo-Poisson 2026 Snapshot",
-    version: "v0.2.0",
+    version: "v0.4.0",
     generatedAt: new Date().toISOString(),
     notes: tournamentConfig.tournament.assumptions,
     sources: tournamentConfig.sources,
@@ -594,16 +1038,18 @@ const output = {
     fixtureCount: predictions.length,
     groupCount: groupDefinitions.size,
     knockoutFixtureCount: knockoutFixtures.length,
+    simulationCount: simulation.iterations,
     scopeNote: tournamentConfig.tournament.scopeNote,
   },
   groups: [...groupDefinitions.values()],
   fixtures: predictions,
   knockoutFixtures,
+  simulation,
 };
 
 mkdirSync(outputDir, { recursive: true });
 writeFileSync(resolve(outputDir, "worldcup-forecast.json"), JSON.stringify(output, null, 2));
 
 console.log(
-  `Generated ${predictions.length} group-stage predictions across ${groupDefinitions.size} groups and ${knockoutFixtures.length} knockout fixtures.`
+  `Generated ${predictions.length} group-stage predictions, ${knockoutFixtures.length} knockout fixtures, and ${simulation.iterations} tournament simulations.`
 );
