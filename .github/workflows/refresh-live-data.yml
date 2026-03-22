@@ -1,0 +1,97 @@
+name: Refresh Live Forecast Data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 */6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: live-refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Detect Provider Secrets
+        id: providers
+        shell: bash
+        run: |
+          has_any_provider=0
+
+          if [ -n "${{ secrets.API_FOOTBALL_KEY }}" ] && [ -n "${{ secrets.API_FOOTBALL_WORLD_CUP_LEAGUE_ID }}" ]; then
+            echo "has_api_football=true" >> "$GITHUB_OUTPUT"
+            has_any_provider=1
+          else
+            echo "has_api_football=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if [ -n "${{ secrets.SPORTMONKS_API_TOKEN }}" ] && [ -n "${{ secrets.SPORTMONKS_WORLD_CUP_LEAGUE_ID }}" ]; then
+            echo "has_sportmonks=true" >> "$GITHUB_OUTPUT"
+            has_any_provider=1
+          else
+            echo "has_sportmonks=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          if [ -n "${{ secrets.THE_ODDS_API_KEY }}" ] && [ -n "${{ secrets.THE_ODDS_API_SPORT_KEY }}" ]; then
+            echo "has_the_odds=true" >> "$GITHUB_OUTPUT"
+            has_any_provider=1
+          else
+            echo "has_the_odds=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "has_any_provider=${has_any_provider}" >> "$GITHUB_OUTPUT"
+
+      - name: Skip When No Provider Secrets Exist
+        if: steps.providers.outputs.has_any_provider != '1'
+        run: echo "No live data provider secrets configured. Skipping scheduled refresh."
+
+      - name: Refresh Live Data And Predictions
+        if: steps.providers.outputs.has_any_provider == '1'
+        env:
+          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
+          API_FOOTBALL_WORLD_CUP_LEAGUE_ID: ${{ secrets.API_FOOTBALL_WORLD_CUP_LEAGUE_ID }}
+          API_FOOTBALL_SEASON: ${{ secrets.API_FOOTBALL_SEASON }}
+          API_FOOTBALL_TIMEZONE: ${{ secrets.API_FOOTBALL_TIMEZONE }}
+          API_FOOTBALL_BASE_URL: ${{ secrets.API_FOOTBALL_BASE_URL }}
+          API_FOOTBALL_IDS_SEPARATOR: ${{ secrets.API_FOOTBALL_IDS_SEPARATOR }}
+          SPORTMONKS_API_TOKEN: ${{ secrets.SPORTMONKS_API_TOKEN }}
+          SPORTMONKS_WORLD_CUP_LEAGUE_ID: ${{ secrets.SPORTMONKS_WORLD_CUP_LEAGUE_ID }}
+          THE_ODDS_API_KEY: ${{ secrets.THE_ODDS_API_KEY }}
+          THE_ODDS_API_SPORT_KEY: ${{ secrets.THE_ODDS_API_SPORT_KEY }}
+          THE_ODDS_REGIONS: ${{ secrets.THE_ODDS_REGIONS }}
+          THE_ODDS_MARKETS: ${{ secrets.THE_ODDS_MARKETS }}
+        run: npm run refresh:live
+
+      - name: Commit Refreshed Artifacts
+        if: steps.providers.outputs.has_any_provider == '1'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/generated/worldcup-forecast.json
+          git add data/source/prematch-signals.live.json
+          git add data/source/provider-fixture-map.json
+
+          if git diff --cached --quiet; then
+            echo "No forecast artifacts changed."
+            exit 0
+          fi
+
+          git commit -m "chore: refresh live forecast data"
+          git push

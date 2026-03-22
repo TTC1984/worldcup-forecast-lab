@@ -48,6 +48,20 @@ export function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
 }
 
+export function chunkArray(values, size) {
+  if (!Array.isArray(values) || size <= 0) {
+    return [];
+  }
+
+  const chunks = [];
+
+  for (let index = 0; index < values.length; index += size) {
+    chunks.push(values.slice(index, index + size));
+  }
+
+  return chunks;
+}
+
 export function readJson(filePath, fallback = null) {
   if (!existsSync(filePath)) {
     return fallback;

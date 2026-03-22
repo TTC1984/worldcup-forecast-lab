@@ -670,12 +670,15 @@ function simplifyBacktestNote(note) {
 
 function simplifySourceLabel(label) {
   return label
+    .replace("api-football fixtures", "API-Football 赛前数据")
+    .replace("api-football odds", "API-Football 赔率")
     .replace("sportmonks fixtures", "Sportmonks 赛前数据")
     .replace("the odds api", "The Odds API 赔率")
     .replace("market consensus", "市场共识")
     .replace("official lineups", "官方首发")
     .replace("expected lineups", "预计首发")
     .replace("prematch news", "赛前新闻")
+    .replace("injuries", "伤停名单")
     .replace("sidelined", "伤停名单")
     .replace("live sync", "实时同步")
     .replace("manual desk", "人工整理")

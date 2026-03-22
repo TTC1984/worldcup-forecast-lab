@@ -30,10 +30,11 @@
 - `data/source/history-teams.json`：历史球队强度补充种子
 - `data/source/prematch-signals.json`：赛前动态情报 seed feed
 - `data/source/prematch-signals.live.json`：由真实供应商快照合成的 live feed
+- `data/source/provider-fixture-map.json`：本地赛程和供应商 fixture id 对照表
 - `data/source/tournament.json`：赛事元数据与来源说明
 - `scripts/sync-2026-source.mjs`：同步 openfootball 最新快照
 - `scripts/validate-prematch-signals.mjs`：校验赛前情报 feed 结构与场次命中
-- `scripts/sync-live-snapshots.mjs`：抓取 Sportmonks / The Odds API 原始快照
+- `scripts/sync-live-snapshots.mjs`：抓取 API-Football / Sportmonks / The Odds API 原始快照
 - `scripts/build-live-signals.mjs`：把供应商快照映射成前台可消费的 live signal
 - `scripts/generate-predictions.mjs`：baseline 预测生成脚本
 - `data/generated/worldcup-forecast.json`：前端直接消费的预测结果
@@ -41,6 +42,7 @@
 - `delivery-board.html` / `delivery-board.js`：客户交付看板
 - `docs/worldcup-client-delivery-report-2026-03-20.md`：第一阶段客户交付报告
 - `docs/realtime-data-integration-plan.md`：真实动态数据接入实施稿
+- `.github/workflows/refresh-live-data.yml`：定时刷新 live feed 和预测结果
 
 ## Data Source
 
@@ -55,11 +57,17 @@
 
 赛前动态层目前使用仓库内的 `prematch-signals.json` 作为 seed feed，用来演示后续接入真实赔率、伤停和首发确认度的结构。
 
-现在仓库已经补了真实动态数据的接入脚手架。接入顺序是：
+现在仓库已经补了真实动态数据的接入脚手架，支持两种路线：
+
+- `API-Football` 单供应商模式：成本更低，适合 MVP 和先跑通
+- `Sportmonks + The Odds API` 双供应商模式：结构化足球数据和赔率分开，更适合正式交付
+
+接入顺序是：
 
 1. 通过供应商抓取原始快照，写入 `data/source/live/*.json`
 2. 把原始快照映射成 `data/source/prematch-signals.live.json`
 3. 预测生成脚本优先读取 live feed；如果没有，再回退到 seed feed
+4. 构建 live feed 时会顺手更新 `provider-fixture-map.json`，后续优先按供应商 id 对齐，不再只靠队名
 
 如需刷新快照：
 
@@ -91,10 +99,38 @@ npm run check
 
 先把 [.env.example](/Users/ttc/Documents/New%20project/worldcup-predictor-mvp/.env.example) 复制成 `.env.local`，填入供应商密钥。
 
+最低成本的单供应商方案：
+
+```bash
+API_FOOTBALL_KEY=...
+API_FOOTBALL_WORLD_CUP_LEAGUE_ID=...
+```
+
+正式交付更稳的双供应商方案：
+
+```bash
+SPORTMONKS_API_TOKEN=...
+SPORTMONKS_WORLD_CUP_LEAGUE_ID=...
+THE_ODDS_API_KEY=...
+THE_ODDS_API_SPORT_KEY=soccer_fifa_world_cup
+```
+
 抓取供应商快照：
 
 ```bash
 npm run sync:live:snapshots
+```
+
+只跑 `API-Football` 单供应商链路：
+
+```bash
+npm run sync:live:api-football
+```
+
+只跑 `Sportmonks + The Odds API` 双供应商链路：
+
+```bash
+npm run sync:live:hybrid
 ```
 
 把快照转成前台可消费的 live signal：
@@ -107,6 +143,12 @@ npm run build:live:signals
 
 ```bash
 npm run sync:live
+```
+
+刷新 live feed 并顺手重生成预测结果：
+
+```bash
+npm run refresh:live
 ```
 
 实施细节见：
@@ -143,5 +185,7 @@ python3 -m http.server 4173
 - 历史回测仍使用统一静态球队强度向过去回放，不是按当届赛前 Elo 逐年重建
 - 赛前动态目前还是本地 seed feed，尚未接真实赔率、伤停流、首发接口与自动刷新数据库
 - 真实动态数据的抓取与映射脚手架已经补上，但仍需配置真实供应商账号和密钥才能开始拉数
+- `API-Football` 单供应商链路已经接进来，但是否能拿到赔率 / 伤停 / 首发，仍取决于赛事覆盖和账号套餐
+- `provider-fixture-map.json` 已接进构建链路，但第一次映射仍需要先靠日期 + 队名完成种子对齐
 - 情报控制台当前是“编辑 + 导出 JSON”模式，还没有账号体系、审核流和直接回写仓库能力
 - 当前已经提供草稿对比、发布说明和发布包导出，但仍属于静态工作流，不会直接写回仓库
